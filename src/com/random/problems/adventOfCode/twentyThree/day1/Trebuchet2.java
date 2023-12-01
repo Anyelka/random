@@ -35,6 +35,14 @@ public class Trebuchet2 extends AOCProblem {
   @Override
   public String runMethod(String input) {
     String[] rows = input.split("\n");
+    return getValueInOneStep(rows);
+  }
+
+  /**
+   * 1.Solution: converting each row to contain only numbers with digits &
+   *              running the original algorithm on them one-by-one
+   * */
+  private String getValueWithConversion(String[] rows) {
     int result = Arrays.stream(rows)
         .map(this::convertLine)
         .map(trebuchet1::getValue)
@@ -69,6 +77,62 @@ public class Trebuchet2 extends AOCProblem {
     }
     return result.toString();
   }
+
+  /**
+   * 2.Solution: getting the result for each row in one step
+   * */
+  private String getValueInOneStep(String[] rows) {
+    int result = Arrays.stream(rows)
+        .map(this::getValue)
+        .map(Integer::parseInt)
+        .reduce(0, Integer::sum);
+    return "" + result;
+  }
+
+  private String getValue(String line) {
+    char[] chars = line.toCharArray();
+    int firstNum = 0;
+    int lastNum = 0;
+    for(int i = 0; i < chars.length; i++) {
+      char first = chars[i];
+      char last = chars[chars.length-i-1];
+      if(firstNum == 0) {
+        if(isInt(first)) {
+          firstNum = Integer.parseInt(first + "");
+        } else {
+          for(int j = 0; j < stringNumberList.size(); j++) {
+            String numberAsString = stringNumberList.get(j);
+            int numberLength = numberAsString.length();
+            if(i + numberLength <= line.length() && line.substring(i, i + numberLength).equals(numberAsString)) {
+              firstNum = j + 1;
+              break;
+            }
+          }
+        }
+      }
+      if(lastNum == 0) {
+        if(isInt(last)) {
+          lastNum = Integer.parseInt(last + "");
+        } else {
+          for(int j = 0; j < stringNumberList.size(); j++) {
+            String numberAsString = stringNumberList.get(j);
+            int numberLength = numberAsString.length();
+            if(chars.length - i - numberLength >= 0 && line.substring(chars.length - i - numberLength, chars.length - i).equals(numberAsString)) {
+              lastNum = j + 1;
+              break;
+            }
+          }
+        }
+      }
+      if(firstNum != 0 && lastNum != 0) {
+        break;
+      }
+    }
+
+    String result = (firstNum > 0 ? firstNum : "") + "" + (lastNum > 0 ? lastNum : "");
+    return result.equals("") ? "0" : result;
+  }
+
 
   private List<String> stringNumberList = List.of(
       "one",
