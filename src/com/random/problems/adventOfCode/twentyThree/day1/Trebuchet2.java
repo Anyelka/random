@@ -96,6 +96,7 @@ public class Trebuchet2 extends AOCProblem {
     for(int i = 0; i < chars.length; i++) {
       char first = chars[i];
       char last = chars[chars.length-i-1];
+
       if(firstNum == 0) {
         if(isInt(first)) {
           firstNum = Integer.parseInt(first + "");

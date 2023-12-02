@@ -1,12 +1,12 @@
 package com.random;
 
-import com.random.problems.adventOfCode.twentyThree.day1.Trebuchet1;
-import com.random.problems.adventOfCode.twentyThree.day1.Trebuchet2;
+import com.random.problems.adventOfCode.twentyThree.day2.CubeConondrum1;
+import com.random.problems.adventOfCode.twentyThree.day2.CubeConondrum2;
 
 
 public class Main {
     public static void main(String[] args) {
-        new Trebuchet2().run(1);
+        new CubeConondrum2().run(0,1);
     }
 
 }
