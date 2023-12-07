@@ -14,4 +14,13 @@ public class NumberUtil {
       return false;
     }
   }
+
+  public static boolean isLong(String s) {
+    try {
+      Long.parseLong(s);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
 }
