@@ -16,4 +16,9 @@ public enum CardType {
       return Integer.parseInt("" + card);
     }
   }
+
+  static int getRankWithJokers(char card) {
+    int rank = getRank(card);
+    return rank == 11 ? 1 : rank;
+  }
 }

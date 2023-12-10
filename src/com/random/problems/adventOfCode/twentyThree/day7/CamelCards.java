@@ -3,17 +3,10 @@ package com.random.problems.adventOfCode.twentyThree.day7;
 import com.random.problems.adventOfCode.AOCProblem;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
-public class CamelCards extends AOCProblem {
+public abstract class CamelCards extends AOCProblem {
   private static final String ROOT = "adventOfCode/2023/day7";
 
   @Override
@@ -24,7 +17,7 @@ public class CamelCards extends AOCProblem {
   @Override
   public String runMethod(String input) {
     List<Hand> hands = getHands(input);
-    List<Hand> handsSortedByRank = hands.stream().sorted(Hand::sortByRank).collect(Collectors.toList());
+    List<Hand> handsSortedByRank = hands.stream().sorted(sortHandComparator()).collect(Collectors.toList());
 
     return "" + getTotalWinnings(handsSortedByRank);
   }
@@ -35,7 +28,7 @@ public class CamelCards extends AOCProblem {
 
   private Hand getHand(String row) {
     String[] sections = row.split(" ");
-    return new Hand(sections[0], Long.parseLong(sections[1]));
+    return getHand(sections);
   }
 
   private Long getTotalWinnings(List<Hand> handsSortedByRank) {
@@ -46,4 +39,8 @@ public class CamelCards extends AOCProblem {
     }
     return result;
   }
+
+  abstract Comparator<Hand> sortHandComparator();
+
+  abstract Hand getHand(String[] sections);
 }

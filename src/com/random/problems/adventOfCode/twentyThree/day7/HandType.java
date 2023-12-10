@@ -6,9 +6,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.ToIntFunction;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public enum HandType {
   FIVE_OF_A_KIND(1),
@@ -25,15 +24,23 @@ public enum HandType {
     this.rank = rank;
   }
 
-  static Stream<Character> charStream(char[] charArray) {
-    return IntStream.range(0, charArray.length).mapToObj(i -> charArray[i]);
+  static HandType getHandType1(String hand) {
+    return getHandType(hand, null);
   }
 
+  public static HandType getHandType2(String hand) {
+    return getHandType(hand, transformJs());
+  }
 
-  static HandType getHandType(String hand) {
-    char[] cards = hand.toCharArray();
-    Map<Integer, Integer> cardRanksWithCount = getCardRankMap(cards);
+  public static HandType getHandType(String hand, Function<Map<Integer, Integer>, Map<Integer, Integer>> transformFunction) {
+    Map<Integer, Integer> cardRanksWithCount = getCardRankMap(hand.toCharArray());
+    if(transformFunction != null) {
+      cardRanksWithCount = transformFunction.apply(cardRanksWithCount);
+    }
+    return getHandType(cardRanksWithCount);
+  }
 
+  private static HandType getHandType(Map<Integer, Integer> cardRanksWithCount) {
     if(cardRanksWithCount.size()==1) {
       return HandType.FIVE_OF_A_KIND;
     }
@@ -70,8 +77,51 @@ public enum HandType {
         cardRanksWithCount.put(rank, 1);
       }
     }
-    return cardRanksWithCount.entrySet().stream()
-        .sorted(Comparator.comparingInt(Map.Entry::getKey))
+    return sortByRank(cardRanksWithCount);
+  }
+
+    private static Function<Map<Integer, Integer>, Map<Integer, Integer>> transformJs() {
+    return map -> {
+      Map<Integer, Integer> resultMap = sortByCount(map);
+      Map.Entry<Integer, Integer> jumboEntry = resultMap.entrySet().stream().filter(entry -> entry.getKey() == 11).findFirst().orElse(null);
+      if (jumboEntry == null) {
+        return map;
+      } else {
+        Map.Entry<Integer, Integer> highestRankEntry = resultMap.entrySet().stream().filter(entry -> entry.getKey() != 11).findFirst().orElse(null);
+        if(highestRankEntry == null) {
+          return map;
+        }
+        resultMap.remove(jumboEntry.getKey());
+        resultMap.put(highestRankEntry.getKey(), highestRankEntry.getValue() + jumboEntry.getValue());
+        return sortByRank(resultMap);
+      }
+    };
+  }
+
+  private static Map<Integer, Integer> sortByCount(Map<Integer, Integer> map) {
+    return sortBy(map, compareByCount());
+  }
+
+  private static Map<Integer, Integer> sortByRank(Map<Integer, Integer> map) {
+    return sortBy(map, compareByRank());
+  }
+
+  private static Map<Integer, Integer> sortBy(Map<Integer, Integer> map, Comparator<Map.Entry<Integer, Integer>> comparator) {
+    return map.entrySet().stream()
+        .sorted(comparator)
         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (v1, v2)->v1, LinkedHashMap::new));
+  }
+
+  private static Comparator<Map.Entry<Integer, Integer>> compareByCount() {
+    return getComparator(Map.Entry::getValue, true);
+  }
+
+  private static Comparator<Map.Entry<Integer, Integer>> compareByRank() {
+    return getComparator(Map.Entry::getKey, false);
+  }
+
+  private static Comparator<Map.Entry<Integer, Integer>> getComparator(ToIntFunction<Map.Entry<Integer, Integer>> comparing, boolean isReversed) {
+    Comparator<Map.Entry<Integer, Integer>> comparator = Comparator.comparingInt(comparing);
+    return isReversed ? comparator.reversed() : comparator;
   }
 }
