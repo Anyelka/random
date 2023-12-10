@@ -1,6 +1,5 @@
 package com.random.problems.adventOfCode.twentyThree.day6;
 
-import com.random.problems.adventOfCode.AOCProblem;
 import com.random.util.NumberUtil;
 import java.util.Arrays;
 import java.util.List;
