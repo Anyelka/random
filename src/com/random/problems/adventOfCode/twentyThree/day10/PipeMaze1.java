@@ -2,88 +2,115 @@ package com.random.problems.adventOfCode.twentyThree.day10;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class PipeMaze1 extends PipeMaze {
   @Override
   protected String findFurthestPointInPipe(String input) {
     char[][] map = getMap(input);
-    List<List<Tile>> tiles = getTiles(map);
-    Tile start = getStart(tiles);
-    return "" + getFurthestPointDistance(tiles, start);
+
+    Tile startTile = getStart(map);
+
+    return "" + getFurthestPointDistance(map, startTile);
   }
 
-  private long getFurthestPointDistance(List<List<Tile>> tiles, Tile start) {
-    return getDistance(0, tiles, start) / 2;
-  }
-
-  private long getDistance(int i, List<List<Tile>> tiles, Tile currentTile) {
-    Tile nextTile = getNextTile(tiles, currentTile);
-    if(nextTile.isStart()) {
-      return 1;
-    }
-    return 1 + getDistance(i+1, tiles, nextTile);
-  }
-
-  private Tile getNextTile(List<List<Tile>> tiles, Tile currentTile) {
-    int centerRow = currentTile.row;
-    int centerColumn = currentTile.column;
-    for(int i = centerRow - 1 ; i <= centerRow + 1; i++) {
-      for(int j = centerColumn - 1 ; j <= centerColumn + 1; j++) {
-        if(i >= 0 && i < tiles.size()) {
-          List<Tile> row = tiles.get(i);
-          if(j >= 0 && j < row.size()) {
-            Tile adjacentTile = row.get(j);
-            if(!currentTile.equals(adjacentTile) && currentTile.canStepToTile(adjacentTile)) {
-              return adjacentTile;
-            }
-          }
+  private Tile getStart(char[][] map) {
+    for(int i = 0 ; i < map.length; i++) {
+      char[] row = map[i];
+      for(int j = 0; j <  row.length; j++) {
+        if(map[i][j] == 'S') {
+          return new Tile(i,j, 'S');
         }
       }
     }
     return null;
   }
 
-  private Tile getStart(List<List<Tile>> tiles) {
-    return tiles.stream().flatMap(Collection::stream).filter(tile -> tile.character == 'S').findFirst().get();
+  private long getFurthestPointDistance(char[][] tiles, Tile startTile) {
+    return getPipe(tiles, startTile).size() / 2;
   }
 
-  private List<List<Tile>> getTiles(char[][] map) {
-    return IntStream.range(0, map.length).mapToObj(
-        i -> IntStream.range(0, map[i].length)
-            .mapToObj(j -> getTile(i, j, map))
-            .collect(Collectors.toList()))
-        .collect(Collectors.toList());
+  private List<Tile> getPipe(char[][] tiles, Tile startTile) {
+    List<Tile> pipe = new ArrayList<>();
+
+    Tile prevTile = null;
+
+    Tile currentTile = startTile;
+
+    boolean loopClosed = false;
+    while(!loopClosed) {
+      for(int i = currentTile.row - 1; i <= currentTile.row + 1; i++) {
+        for(int j = currentTile.column - 1; j <= currentTile.column + 1; j++) {
+          if(i >= 0 && i < tiles.length) {
+            char[] row = tiles[i];
+            if(j >= 0 && j < row.length) {
+              Tile nextTile = new Tile(i, j, tiles[i][j]);
+              if(!(i == currentTile.row && j == currentTile.column)
+                  && canStepToNextTile(prevTile, currentTile, nextTile)) {
+
+                prevTile = currentTile;
+
+                pipe.add(nextTile);
+
+                currentTile = nextTile;
+
+                if(currentTile.isStart()) {
+                  loopClosed = true;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return pipe;
   }
 
-  private Tile getTile(int i, int j, char[][] map) {
-    char character = map[i][j];
-    return new Tile(i, j, character);
+  private boolean canStepToNextTile(Tile prevTile, Tile currentTile, Tile nextTile) {
+    for(Direction forwardDirection: currentTile.getAllowedDirections()) {
+      for(Direction backwardDirection: nextTile.getAllowedDirections()) {
+        if(!isAllowedMove(currentTile, prevTile, forwardDirection)
+            && isAllowedMove(currentTile, nextTile, forwardDirection)
+            && isAllowedMove(nextTile, currentTile, backwardDirection)
+        ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  private boolean isAllowedMove(Tile from, Tile to, Direction direction) {
+    return to != null && isAllowedMove(from.row, from.column, to.row, to.column, direction);
+  }
+
+  private boolean isAllowedMove(int fromRow, int fromColumn, int toRow, int toColumn, Direction direction) {
+    return fromRow + direction.rowMove == toRow &&
+        fromColumn + direction.columnMove == toColumn;
   }
 
   private char[][] getMap(String input) {
     return Arrays.stream(input.split("\n")).map(String::toCharArray).toArray(char[][]::new);
   }
 
-  class Tile {
+  private class Tile {
     int row;
     int column;
-    char character;
-    List<Direction> allowedDirections;
+    char symbol;
 
-    public Tile(int row, int column, char character) {
+    public Tile(int row, int column, char symbol) {
       this.row = row;
       this.column = column;
-      this.character = character;
-      this.allowedDirections = new ArrayList<>(initAllowedDirections());
+      this.symbol = symbol;
     }
 
-    public List<Direction> initAllowedDirections() {
-      switch (this.character) {
+    public boolean isStart() {
+      return this.symbol == 'S';
+    }
+
+    public List<Direction> getAllowedDirections() {
+      switch (this.symbol) {
         case 'F': return List.of(Direction.RIGHT, Direction.DOWN);
         case 'J': return List.of(Direction.LEFT, Direction.UP);
         case '7': return List.of(Direction.LEFT, Direction.DOWN);
@@ -92,76 +119,6 @@ public class PipeMaze1 extends PipeMaze {
         case '-': return List.of(Direction.RIGHT, Direction.LEFT);
         case 'S': return List.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT);
         default: return Collections.emptyList();
-      }
-    }
-
-    public List<Direction> getAllowedDirections() {
-      return this.allowedDirections;
-    }
-
-    public boolean isStart() {
-      return this.character == 'S';
-    }
-    
-    public List<Direction> getForwardDirections(Tile previousTile) {
-      return previousTile == null ? Direction.all() : this.getAllowedDirections().stream()
-          .filter(direction -> isMoveToDirection(previousTile, direction))
-          .collect(Collectors.toList());
-    }
-
-    private boolean isMoveToDirection(Tile previousTile, Direction direction) {
-      return this.column == previousTile.column + direction.columnMove
-          && this.row == previousTile.row + direction.rowMove;
-    }
-
-    private boolean isAdjacentTo(int i, int j) {
-      return this.row == i && (this.column <= j +1 && this.column >= j -1) ||
-          this.column == j && (this.row <= i +1 && this.row >= i -1);
-    }
-
-    private boolean isAdjacentTo(Tile adjacentTile) {
-      return isAdjacentTo(adjacentTile.row, adjacentTile.column);
-    }
-
-    public boolean canStepToTile(Tile adjacentTile) {
-      if(this.isAdjacentTo(adjacentTile)) {
-        for(Direction direction : this.getAllowedDirections()){
-          boolean canStepOnNextTile = this.row + direction.rowMove == adjacentTile.row &&
-              this.column + direction.columnMove == adjacentTile.column;
-          if(canStepOnNextTile) {
-            for(Direction adjacentTileDirection : adjacentTile.getAllowedDirections()){
-              boolean canAcceptStep = adjacentTile.row + adjacentTileDirection.rowMove == this.row &&
-                  adjacentTile.column + adjacentTileDirection.columnMove == this.column;
-              if(canAcceptStep) {
-                adjacentTile.removeAllowedDirection(adjacentTileDirection);
-                return true;
-              }
-            }
-          }
-        }
-      }
-      return false;
-    }
-
-    private boolean canMoveInDirectionOfTile(Tile adjacentTile) {
-      for(Direction direction1 : this.getAllowedDirections()){
-        for(Direction direction2 : adjacentTile.getAllowedDirections()){
-          boolean canStepTo = direction1.canStepTo(direction2);
-          if (canStepTo) {
-            adjacentTile.removeAllowedDirection(direction2);
-          }
-          return canStepTo;
-        }
-      }
-      return false;
-    }
-
-    private void removeAllowedDirection(Direction direction) {
-      try {
-        this.getAllowedDirections().remove(direction);
-
-      } catch (StackOverflowError e) {
-        System.out.println("stackoverflow: " + e);
       }
     }
   }
@@ -180,9 +137,18 @@ public class PipeMaze1 extends PipeMaze {
       return List.of(Direction.values());
     }
 
-    public boolean canStepTo(Direction next) {
-      return (this.rowMove == next.rowMove && this.columnMove == -next.columnMove) ||
-          (this.rowMove == -next.rowMove && this.columnMove == next.columnMove);
+  }
+
+  public List<Direction> getAllowedDirections(char character) {
+    switch (character) {
+      case 'F': return List.of(Direction.RIGHT, Direction.DOWN);
+      case 'J': return List.of(Direction.LEFT, Direction.UP);
+      case '7': return List.of(Direction.LEFT, Direction.DOWN);
+      case 'L': return List.of(Direction.RIGHT, Direction.UP);
+      case '|': return List.of(Direction.UP, Direction.DOWN);
+      case '-': return List.of(Direction.RIGHT, Direction.LEFT);
+      case 'S': return List.of(Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT);
+      default: return Collections.emptyList();
     }
   }
 
