@@ -1,5 +1,6 @@
 package com.random.problems.adventOfCode.twentyThree.day10;
 
+import com.random.util.InputUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -8,7 +9,7 @@ import java.util.List;
 public class PipeMaze1 extends PipeMaze {
   @Override
   protected String findFurthestPointInPipe(String input) {
-    char[][] map = getMap(input);
+    char[][] map = InputUtil.toCharMatrix(input);
 
     Tile startTile = getStart(map);
 
@@ -41,8 +42,8 @@ public class PipeMaze1 extends PipeMaze {
     boolean loopClosed = false;
     while(!loopClosed) {
       for(int i = currentTile.row - 1; i <= currentTile.row + 1; i++) {
-        for(int j = currentTile.column - 1; j <= currentTile.column + 1; j++) {
-          if(i >= 0 && i < tiles.length) {
+        if(i >= 0 && i < tiles.length) {
+          for(int j = currentTile.column - 1; j <= currentTile.column + 1; j++) {
             char[] row = tiles[i];
             if(j >= 0 && j < row.length) {
               Tile nextTile = new Tile(i, j, tiles[i][j]);
@@ -88,10 +89,6 @@ public class PipeMaze1 extends PipeMaze {
   private boolean isAllowedMove(int fromRow, int fromColumn, int toRow, int toColumn, Direction direction) {
     return fromRow + direction.rowMove == toRow &&
         fromColumn + direction.columnMove == toColumn;
-  }
-
-  private char[][] getMap(String input) {
-    return Arrays.stream(input.split("\n")).map(String::toCharArray).toArray(char[][]::new);
   }
 
   private class Tile {
