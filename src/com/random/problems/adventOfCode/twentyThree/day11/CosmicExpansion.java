@@ -5,7 +5,7 @@ import com.random.util.InputUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CosmicExpansion extends AOCProblem {
+public abstract class CosmicExpansion extends AOCProblem {
   private static final String ROOT = "adventOfCode/2023/day11";
 
   @Override
@@ -15,10 +15,11 @@ public class CosmicExpansion extends AOCProblem {
 
   @Override
   public String runMethod(String input) {
-    char[][] map = InputUtil.toCharMatrix(input);
-    List<List<Character>> expandedMap = Expander.expandMillionTimes(map);
-    List<Galaxy> galaxies = getGalaxies(expandedMap);
-    return "" + getTotalDistances(galaxies);
+    List<List<Character>> map = InputUtil.toMatrixList(InputUtil.toCharMatrix(input));
+    List<Galaxy> galaxies = getGalaxies(map);
+    List<Integer> expandingRows = Expander.getExpandingRows(map);
+    List<Integer> expandingColumns = Expander.getExpandingColumns(map);
+    return "" + getTotalDistances(galaxies, expandingRows, expandingColumns);
   }
 
   private List<Galaxy> getGalaxies(List<List<Character>> expandedMap) {
@@ -35,19 +36,45 @@ public class CosmicExpansion extends AOCProblem {
     return galaxies;
   }
 
-
-  private long getTotalDistances(List<Galaxy> galaxies) {
-    return galaxies.stream().map(galaxy -> getDistance(galaxy, galaxies)).reduce(0L, Long::sum) / 2;
+  private long getTotalDistances(List<Galaxy> galaxies,
+                                 List<Integer> expandingRows,
+                                 List<Integer> expandingColumns) {
+    return galaxies.stream()
+        .map(galaxy -> getDistance(galaxy, galaxies, expandingRows, expandingColumns))
+        .reduce(0L, Long::sum) / 2;
   }
 
-  private long getDistance(Galaxy galaxy, List<Galaxy> galaxies) {
-    return galaxies.stream().map(otherGalaxy -> getDistance(galaxy, otherGalaxy)).reduce(0L, Long::sum);
+  private long getDistance(Galaxy galaxy, List<Galaxy> galaxies,
+                           List<Integer> expandingRows,
+                           List<Integer> expandingColumns) {
+    return galaxies.stream()
+        .map(otherGalaxy -> getDistance(galaxy, otherGalaxy, expandingRows, expandingColumns))
+        .reduce(0L, Long::sum);
   }
 
-  private long getDistance(Galaxy galaxy, Galaxy otherGalaxy) {
+  private long getDistance(Galaxy galaxy, Galaxy otherGalaxy,
+                           List<Integer> expandingRows,
+                           List<Integer> expandingColumns) {
     if(galaxy.equals(otherGalaxy)) {
       return 0;
     }
-    return Math.abs(otherGalaxy.row-galaxy.row) + Math.abs(otherGalaxy.column-galaxy.column);
+    return getDistance(otherGalaxy.row, galaxy.row, expandingRows)
+        + getDistance(otherGalaxy.column, galaxy.column, expandingColumns);
   }
+
+  private int getDistance(int coordinate1, int coordinate2, List<Integer> expandingCoordinates) {
+    int baseDistance = Math.abs(coordinate1 - coordinate2);
+    for(int i = 0; i < expandingCoordinates.size(); i++) {
+      if(isBetween(expandingCoordinates.get(i), coordinate1, coordinate2)) {
+        baseDistance += getExpandedCoordinateCount();
+      }
+    }
+    return baseDistance;
+  }
+
+  private boolean isBetween(Integer number, int edge1, int edge2) {
+    return (edge1 > number && number > edge2) || (edge1 < number && number < edge2);
+  }
+
+  abstract long getExpandedCoordinateCount();
 }

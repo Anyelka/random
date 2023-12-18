@@ -19,7 +19,7 @@ public class Expander {
       List<Character> row = expandedMap.get(i);
       if(isClear(i, row)) {
         for(int j = 0; j < times; j++) {
-          expandedMap = expandRow(expandedMap.get(i), i+j, expandedMap);
+          expandRow(expandedMap.get(i), i+j, expandedMap);
         }
         i++;
       }
@@ -28,7 +28,7 @@ public class Expander {
       List<Character> column = InputUtil.getColumn(expandedMap, i);
       if(isClear(i, column)) {
         for(int j = 0; j < times; j++) {
-          expandedMap = expandColumn(i+j, expandedMap);
+          expandColumn(i+j, expandedMap);
         }
         i++;
       }
@@ -36,17 +36,37 @@ public class Expander {
     return expandedMap;
   }
 
+  public static List<Integer> getExpandingRows(List<List<Character>> map) {
+    List<Integer> expandingRows = new ArrayList<>();
+    for(int i = 0; i < map.size(); i++) {
+      List<Character> row = map.get(i);
+      if(isClear(i, row)) {
+        expandingRows.add(i);
+      }
+    }
+    return expandingRows;
+  }
+
+  public static List<Integer> getExpandingColumns(List<List<Character>> map) {
+    List<Integer> expandingColumns = new ArrayList<>();
+    for(int i = 0; i < map.get(0).size(); i++) {
+      List<Character> column = InputUtil.getColumn(map, i);
+      if(isClear(i, column)) {
+        expandingColumns.add(i);
+      }
+    }
+    return expandingColumns;
+  }
+
   private static boolean isClear(int i, List<Character> list) {
     return list.stream().allMatch(character -> character=='.');
   }
 
-  private static List<List<Character>> expandRow(List<Character> row, int index, List<List<Character>> map) {
+  private static void expandRow(List<Character> row, int index, List<List<Character>> map) {
     map.add(index+1, new ArrayList<>(row));
-    return map;
   }
 
-  private static List<List<Character>> expandColumn(int index, List<List<Character>> map) {
+  private static void expandColumn(int index, List<List<Character>> map) {
     map.forEach(row -> row.add(index+1, '.'));
-    return map;
   }
 }
