@@ -16,7 +16,7 @@ public class CosmicExpansion extends AOCProblem {
   @Override
   public String runMethod(String input) {
     char[][] map = InputUtil.toCharMatrix(input);
-    List<List<Character>> expandedMap = Expander.expand(map);
+    List<List<Character>> expandedMap = Expander.expandMillionTimes(map);
     List<Galaxy> galaxies = getGalaxies(expandedMap);
     return "" + getTotalDistances(galaxies);
   }
