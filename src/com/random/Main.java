@@ -1,12 +1,12 @@
 package com.random;
 
-import com.random.problems.adventOfCode.twentyThree.day11.CosmicExpansion1;
-import com.random.problems.adventOfCode.twentyThree.day11.CosmicExpansion2;
+import com.random.problems.adventOfCode.twentyThree.day12.HotSprings1;
+import com.random.problems.adventOfCode.twentyThree.day12.HotSprings11;
 
 
 public class Main {
     public static void main(String[] args) {
-        new CosmicExpansion2().run( 0,1);
+        new HotSprings11().run( 1);
     }
 
 }
