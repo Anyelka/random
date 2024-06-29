@@ -1,12 +1,12 @@
 package com.random;
 
-import com.random.problems.adventOfCode.twentyThree.day12.HotSprings1;
-import com.random.problems.adventOfCode.twentyThree.day12.HotSprings11;
+import com.random.problems.adventOfCode.twentyThree.day8.HauntedWasteland1;
+import com.random.problems.adventOfCode.twentyThree.day8.HauntedWasteland2;
 
 
 public class Main {
     public static void main(String[] args) {
-        new HotSprings11().run( 1);
+        new HauntedWasteland2().run( 2);
     }
 
 }
