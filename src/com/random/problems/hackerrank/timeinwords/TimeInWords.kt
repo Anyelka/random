@@ -1,5 +1,7 @@
 package com.random.problems.hackerrank.timeinwords
 
+import com.random.problems.getResourceAsText
+
 val FILE_PATH = "/hackerrank/timeinminutes/TestCase0"
 
 fun main() {
@@ -8,16 +10,13 @@ fun main() {
     file?.split("\n")?.map { printLineResult(it) }
 }
 
-fun getResourceAsText(path: String): String? =
-        object {}.javaClass.getResource(path)?.readText()
-
 fun printLineResult(line: String) {
     if(line != "") {
         printTimeInWords(line.split(":")[0], line.split(":")[1])
     }
 }
 
-fun main(args: Array<String>) {
+/*fun main(args: Array<String>) {
     val h = readLine()!!.trim().toInt()
 
     val m = readLine()!!.trim().toInt()
@@ -25,7 +24,7 @@ fun main(args: Array<String>) {
     val result = timeInWords(h, m)
 
     println(result)
-}
+}*/
 
 fun printTimeInWords (h: String, m: String) {
     println(timeInWords(h.toInt(), m.toInt()))
