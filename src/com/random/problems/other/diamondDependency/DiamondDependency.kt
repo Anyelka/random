@@ -28,7 +28,7 @@ fun main() {
             currentDictionarySize--
         }
         if(currentDictionarySize == 0) {
-            val hasDiamondDependency = hasDiamondDependency(currentDictionary)
+            val hasDiamondDependency = hasAnyCommonDependency(currentDictionary)
             if(outputFileLines[outputIndex] == "yes" != hasDiamondDependency) {
                 println("Wrong result for dictionary: $currentDictionary")
                 println(" --------- should be: " + outputFileLines[outputIndex] + " but hasDiamondDependency is $hasDiamondDependency")
@@ -46,7 +46,7 @@ fun main() {
 
 }
 
-fun hasDiamondDependency(dictionary: Map<String, List<String>>): Boolean {
+fun hasAnyCommonDependency(dictionary: Map<String, List<String>>): Boolean {
     for (entry in dictionary) {
         if(hasDiamondDependency(entry, dictionary)) {
             return true
@@ -57,11 +57,11 @@ fun hasDiamondDependency(dictionary: Map<String, List<String>>): Boolean {
 
 fun hasDiamondDependency(entry: Map.Entry<String, List<String>>, dictionary: Map<String, List<String>>): Boolean {
     val dependencies = entry.value
-    return dependencies.isNotEmpty() && dependencies.any{ hasDiamondDependency(it, dependencies, dictionary) }
+    return dependencies.isNotEmpty() && dependencies.any{ hasAnyCommonDependency(it, dependencies, dictionary) }
 }
 
-fun hasDiamondDependency(library: String, dependencies: List<String>, dictionary: Map<String, List<String>>): Boolean {
-    return dependencies.any{ otherLibrary -> otherLibrary != library
+fun hasAnyCommonDependency(library: String, dependencies: List<String>, dictionary: Map<String, List<String>>): Boolean {
+    return dependencies.any { otherLibrary -> otherLibrary != library
             && hasCommonDependency(otherLibrary, library, dictionary)
     }
 }
