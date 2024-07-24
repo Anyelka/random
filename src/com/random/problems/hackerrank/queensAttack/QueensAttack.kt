@@ -1,7 +1,6 @@
 package com.random.problems.hackerrank.queensAttack
 
-import com.random.problems.getResourceAsText
-import kotlin.math.abs
+import com.random.util.getResourceAsText
 import kotlin.math.absoluteValue
 import kotlin.time.measureTime
 

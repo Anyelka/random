@@ -1,6 +1,6 @@
 package com.random.problems.hackerrank.timeinwords
 
-import com.random.problems.getResourceAsText
+import com.random.util.getResourceAsText
 
 val FILE_PATH = "/hackerrank/timeinminutes/TestCase0"
 

@@ -1,4 +1,4 @@
-package com.random.problems
+package com.random.util
 
 fun getResourceAsText(path: String): String? =
         object {}.javaClass.getResource(path)?.readText()

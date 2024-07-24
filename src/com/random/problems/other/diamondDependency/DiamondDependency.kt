@@ -1,6 +1,6 @@
 package com.random.problems.other.diamondDependency
 
-import com.random.problems.getResourceAsText
+import com.random.util.getResourceAsText
 
 val FILE_PATH = "/other/diamondDependency/TestCase99"
 
