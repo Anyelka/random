@@ -1,9 +1,12 @@
 package com.random.problems.hackerrank.powerSum
 
 import com.random.util.getResourceAsText
+import kotlin.math.floor
 import kotlin.math.pow
+import kotlin.math.sqrt
+import kotlin.time.measureTime
 
-const val FILE_PATH = "/hackerrank/powerSum/TestCase3"
+const val FILE_PATH = "/hackerrank/powerSum/TestCase0"
 
 fun main() {
     val file = getResourceAsText(FILE_PATH)
@@ -11,9 +14,11 @@ fun main() {
     val x = file!!.lines()[0].toInt()
     val n = file.lines()[1].toInt()
 
-    val result = powerSum(x, n)
-
-    println(result)
+    val time = measureTime {
+        val result = powerSum(x, n)
+        println(result)
+    }
+    println("Time taken: $time")
 }
 
 fun powerSum(X: Int, N: Int): Int {
@@ -24,6 +29,7 @@ fun powerSum(X: Int, N: Int): Int {
 
 fun collectPows(number: Int, remainingSum: Int, power: Int, previousPows: MutableList<Int>, collectedPows: MutableList<MutableList<Int>>) {
     val numberPower = number.pow(power)
+    val nextRemainingSum = remainingSum - numberPower
     if(numberPower > remainingSum) {
         return
     }
@@ -33,7 +39,6 @@ fun collectPows(number: Int, remainingSum: Int, power: Int, previousPows: Mutabl
             collectedPows.add(previousPows)
         }
     }
-    val nextRemainingSum = remainingSum - numberPower
     val nextPreviousPows = previousPows.toMutableList()
     nextPreviousPows.add(numberPower)
     collectPows(number + 1, nextRemainingSum, power, nextPreviousPows, collectedPows)
@@ -44,8 +49,8 @@ fun Int.pow(power: Int): Int {
     return this.toDouble().pow(power).toInt()
 }
 
-fun Double.pow(power: Int): Double {
-    if(power == 0) {
+fun Double.pow(power: Double): Double {
+    if(power == 0.0) {
         return 1.0
     }
     return this * this.pow(power - 1)
