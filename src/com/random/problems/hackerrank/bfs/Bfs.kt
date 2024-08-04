@@ -43,7 +43,7 @@ fun bfs(n: Int, m: Int, edges: Array<Array<Int>>, s: Int): Array<Int> {
 }
 
 fun breadthFirstSearch(nodeCount: Int, edgeCount: Int, edges: Array<Array<Int>>, startNode: Int): Array<Int> {
-    var graph = getGraph(nodeCount, edges)
+    val graph = getGraph(nodeCount, edges)
     return getDistances(startNode, graph).toTypedArray()
 }
 
