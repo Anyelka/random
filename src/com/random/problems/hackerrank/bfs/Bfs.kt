@@ -3,7 +3,7 @@ package com.random.problems.hackerrank.bfs
 import com.random.util.getResourceAsText
 import kotlin.collections.ArrayDeque
 
-const val FILE_PATH = "/hackerrank/bfs/TestCase0"
+const val FILE_PATH = "/hackerrank/bfs/TestCase1"
 
 const val EDGE_LENGTH = 6
 

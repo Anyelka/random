@@ -113,15 +113,14 @@ fun roadsAndLibrariesBfs(n: Int, c_lib: Int, c_road: Int, cities: Array<Array<In
     val readInGraphTime = measureTime { graph = getGraph(cities, n) }
     println("Read in graph in time: $readInGraphTime")
 
-    val nodes = mutableListOf<Int>()
+    var remainingNodes = graph.keys.toMutableList()
 
     var numberOfSubGraphs = 0
 
     val iterationTime = measureTime {
-    for (node in graph.keys) {
-        if(nodes.contains(node)) {
-            continue
-        }
+    while (remainingNodes.isNotEmpty()) {
+    /*for (node in remainingNodes) {*/
+        val node = remainingNodes.first()
         val visitedNodes: MutableList<Int> = mutableListOf()
 
         val queue = ArrayDeque<Int>()
@@ -141,7 +140,8 @@ fun roadsAndLibrariesBfs(n: Int, c_lib: Int, c_road: Int, cities: Array<Array<In
             visitedNodes.add(currentNode)
         }
 
-        nodes.addAll(visitedNodes)
+        remainingNodes.removeAll(visitedNodes)
+        /*nodes.addAll(visitedNodes)*/
         numberOfSubGraphs++
     } }
     println("Time taken to iterate over every node in the graph: $iterationTime")
