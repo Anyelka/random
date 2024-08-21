@@ -1,14 +1,19 @@
-package com.random.random;
+package com.random.random.sorts;
 
-import java.util.Deque;
+import java.util.stream.IntStream;
 
-public class Random {
+public class SortingAlgorithms {
 
     public static void main(String[] args) {
         int[] intArray = { 20, 35, -15, 7, -22, 1, 55 };
-        intArray = generateArray(10000000);
+        int[] intArray2 = { 25852, 18681, 34660, 83664, 4773, 29044, 41343, 73432, 27534, 69171, 35708, 4870, 60518, 82254, 37345 };
+        int[] intArray3 = { 64, -30, 22, 49, 85, 95, 45, -15, 19, 134 };
+
+        /*int[] randomArray = generateArray(10, 210);
+        printArray(randomArray);*/
+
         long start = System.nanoTime();
-        mergeSort(intArray);
+        shellSort(intArray);
         long finish = System.nanoTime();
 
         printArray(intArray);
@@ -17,10 +22,10 @@ public class Random {
         System.out.println("Elapsed time: " + elapsedTime + "s ");
     }
 
-    private static int[] generateArray(int size) {
+    private static int[] generateArray(int size, int max) {
         int[] result = new int[size];
         for(int i = 0; i < size; i++) {
-            result[i] = (int) (Math.random() * size);
+            result[i] = (int) ((Math.random() * max)-50);
         }
         return result;
     }
@@ -50,8 +55,8 @@ public class Random {
         }
     }
 
-    // 2. Insertion sort
-    //      2.a: with swap
+    // 3. Insertion sort
+    //      3.a: with swap
     private static void insertionSort(int[] array) {
         for(int firstUnsortedIndex = 1; firstUnsortedIndex < array.length  - 1; firstUnsortedIndex++) {
             for(int i = firstUnsortedIndex - 1; i >= 0; i--) {
@@ -63,7 +68,7 @@ public class Random {
             }
         }
     }
-    //      2.b: with temp element
+    //      3.b: with temp element
     private static void insertionSort2(int[] array) {
         for(int firstUnsortedIndex = 1; firstUnsortedIndex < array.length; firstUnsortedIndex++) {
             int nextElement = array[firstUnsortedIndex];
@@ -76,6 +81,29 @@ public class Random {
                 }
             }
             array[i] = nextElement;
+        }
+    }
+
+    // 4. Shell sort
+    private static void shellSort(int[] array) {
+        int gap = array.length / 2;
+        while(gap > 0) {
+            for(int firstUnsortedIndex = gap; firstUnsortedIndex < array.length; firstUnsortedIndex++) {
+                int nextElement = array[firstUnsortedIndex];
+
+                int j;
+                for(j = firstUnsortedIndex; j >= gap; j-=gap) {
+                    int element = array[j - gap];
+                    if(element > nextElement) {
+                        array[j] = element;
+                    } else {
+                        break;
+                    }
+                }
+                array[j] = nextElement;
+
+            }
+            gap = gap / 2;
         }
     }
 
@@ -131,8 +159,9 @@ public class Random {
     }
 
     private static void printArray(int[] intArray) {
-        for(int i = 0; i < intArray.length; i++) {
-            System.out.println(intArray[i]);
+        for (int j : intArray) {
+            System.out.println(j);
         }
     }
 }
+
