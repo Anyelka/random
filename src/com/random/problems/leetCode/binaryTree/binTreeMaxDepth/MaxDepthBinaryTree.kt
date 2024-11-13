@@ -1,5 +1,6 @@
-package com.random.problems.leetCode.binTreeMaxDepth
+package com.random.problems.leetCode.binaryTree.binTreeMaxDepth
 
+import com.random.problems.leetCode.binaryTree.TreeNode
 import kotlin.math.max
 
 fun main() {
@@ -84,9 +85,4 @@ class Solution {
         }
         return 1+max(getDepth(node.left), getDepth(node.right))
     }
-}
-
-class TreeNode(var value: Int) {
-    var left: TreeNode? = null
-    var right: TreeNode? = null
 }
