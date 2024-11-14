@@ -8,7 +8,7 @@ const val FILE_PATH = "/hackerrank/bfs/TestCase1"
 const val EDGE_LENGTH = 6
 
 fun printArray(array: Array<Int>) {
-    println(array.joinToString(separator =" ") + "\n")
+    println(array.joinToString(separator =", ") + "\n")
 }
 fun main() {
     val lines = getResourceAsText(FILE_PATH + "_in")!!.lines()

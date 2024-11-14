@@ -1,33 +1,48 @@
-package com.random.random.sorts;
+package com.random.algorithms.sorts;
 
-import java.util.stream.IntStream;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 public class SortingAlgorithms {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         int[] intArray = { 20, 35, -15, 7, -22, 1, 55 };
         int[] intArray2 = { 25852, 18681, 34660, 83664, 4773, 29044, 41343, 73432, 27534, 69171, 35708, 4870, 60518, 82254, 37345 };
         int[] intArray3 = { 64, -30, 22, 49, 85, 95, 45, -15, 19, 134 };
 
-        /*int[] randomArray = generateArray(10, 210);
-        printArray(randomArray);*/
+        int[] randomArray = generateIntArray(100000);
+        Files.write(Paths.get("TestInput100k"), formatArray(randomArray).getBytes(StandardCharsets.UTF_8));
+
 
         long start = System.nanoTime();
-        shellSort(intArray);
+        bubbleSort(randomArray);
         long finish = System.nanoTime();
 
-        printArray(intArray);
+        printArray(randomArray);
 
         double elapsedTime = (double) (finish - start) / 1000000000;
         System.out.println("Elapsed time: " + elapsedTime + "s ");
+
+        Files.write(Paths.get("TestOutput100k"), formatArray(randomArray).getBytes(StandardCharsets.UTF_8));
     }
 
-    private static int[] generateArray(int size, int max) {
+    private static int[] generateIntArray(int size) {
         int[] result = new int[size];
+        Random random = new Random();
         for(int i = 0; i < size; i++) {
-            result[i] = (int) ((Math.random() * max)-50);
+            result[i] = random.nextInt();
         }
         return result;
+    }
+
+    private static String formatArray(int[] array) {
+        return "[" + Arrays.toString(array) + "]";
     }
 
 
@@ -160,7 +175,7 @@ public class SortingAlgorithms {
 
     private static void printArray(int[] intArray) {
         for (int j : intArray) {
-            System.out.println(j);
+            System.out.print(j + ",");
         }
     }
 }

@@ -1,8 +1,6 @@
-package com.random.random;
+package com.random.algorithms;
 
-import java.util.Deque;
-
-public class Random {
+public class Algorithms {
 
     public static void main(String[] args) {
         int[] intArray = { 20, 35, -15, 7, -22, 1, 55 };
