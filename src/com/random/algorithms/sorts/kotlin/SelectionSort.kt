@@ -1,4 +1,4 @@
-package com.random.algorithms.sorts
+package com.random.algorithms.sorts.kotlin
 
 /**
  * We split up the array into a sorted and an unsorted partition.

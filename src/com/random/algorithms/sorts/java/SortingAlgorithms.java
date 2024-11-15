@@ -1,48 +1,56 @@
-package com.random.algorithms.sorts;
+package com.random.algorithms.sorts.java;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Random;
+import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class SortingAlgorithms {
 
     public static void main(String[] args) throws IOException {
-        int[] intArray = { 20, 35, -15, 7, -22, 1, 55 };
-        int[] intArray2 = { 25852, 18681, 34660, 83664, 4773, 29044, 41343, 73432, 27534, 69171, 35708, 4870, 60518, 82254, 37345 };
-        int[] intArray3 = { 64, -30, 22, 49, 85, 95, 45, -15, 19, 134 };
 
-        int[] randomArray = generateIntArray(100000);
-        Files.write(Paths.get("TestInput100k"), formatArray(randomArray).getBytes(StandardCharsets.UTF_8));
+        Map<int[], int[]> inputData = InputData.get100kLength();
+        Map<String, Consumer<int[]>> sortingAlgorithms = Map.of(
+                "Bubble sort", SortingAlgorithms::bubbleSort,
+                "Selection sort", SortingAlgorithms::selectionSort,
+                "Insertion sort v1: with swaps", SortingAlgorithms::insertionSort,
+                "Insertion sort v2: with shifting", SortingAlgorithms::insertionSort2,
+                "Shell sort", SortingAlgorithms::shellSort,
+                "Merge sort", SortingAlgorithms::mergeSort
+        );
 
+        inputData.forEach((input, expectedOutput) -> test(input, expectedOutput, sortingAlgorithms));
 
+        // Write the 1. Input array and the 2. Output array to files:
+        //      1. generate random array of size:
+        // int arraySize = 100000;
+        // int[] randomArray = ArrayGenerator.generateIntArray(arraySize);
+        //      2. Sort with write
+        // FileWriter.runWithInputOutputWrite("TestInput100k", "TestOutput100k", randomArray, sortingMethod);
+    }
+
+    private static void test(int[] array, int[] expectedSortedArray, Map<String, Consumer<int[]>> sortingAlgorithms) {
+        System.out.println("Array: " + shortFormatArray(array));
+        sortingAlgorithms.forEach((name, algorithm) -> {
+            System.out.print("        - Sorting with " + name + "...");
+            Double timeElapsed = runAndMeasureTime(() -> algorithm.accept(array));
+            if(!Arrays.equals(expectedSortedArray, array)) {
+                System.err.println("            -> Wrong result: " + shortFormatArray(array));
+            }
+            System.out.print("      - Time taken: " + timeElapsed + "s\n");
+        });
+    }
+
+    private static Double runAndMeasureTime(Runnable method) {
         long start = System.nanoTime();
-        bubbleSort(randomArray);
+        method.run();
         long finish = System.nanoTime();
-
-        printArray(randomArray);
-
-        double elapsedTime = (double) (finish - start) / 1000000000;
-        System.out.println("Elapsed time: " + elapsedTime + "s ");
-
-        Files.write(Paths.get("TestOutput100k"), formatArray(randomArray).getBytes(StandardCharsets.UTF_8));
+        return (double) (finish - start) / 1000000000;
     }
 
-    private static int[] generateIntArray(int size) {
-        int[] result = new int[size];
-        Random random = new Random();
-        for(int i = 0; i < size; i++) {
-            result[i] = random.nextInt();
-        }
-        return result;
-    }
-
-    private static String formatArray(int[] array) {
-        return "[" + Arrays.toString(array) + "]";
+    private static void sort(int[] array) {
+        bubbleSort(array);
     }
 
 
@@ -173,10 +181,13 @@ public class SortingAlgorithms {
         array[j] = temp;
     }
 
-    private static void printArray(int[] intArray) {
-        for (int j : intArray) {
-            System.out.print(j + ",");
-        }
+    private static String shortFormatArray(int[] intArray) {
+        return "[" + intArray[0] + "," + intArray[1] + "," + intArray[2] + "," + intArray[3] +  "," + intArray[4] +
+                "... ] (" + intArray.length + " elements)";
+    }
+
+    private static String formatArray(int[] intArray) {
+        return Arrays.stream(intArray).mapToObj(String::valueOf).collect(Collectors.joining(","));
     }
 }
 

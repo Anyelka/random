@@ -1,4 +1,4 @@
-package com.random.algorithms.sorts
+package com.random.algorithms.sorts.kotlin
 
 import kotlin.time.measureTime
 
