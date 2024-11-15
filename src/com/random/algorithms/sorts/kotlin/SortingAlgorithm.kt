@@ -7,13 +7,13 @@ abstract class SortingAlgorithm() {
     abstract fun getName(): String
 
     fun test(testData: Pair<IntArray, IntArray>) {
-        println("   - ${getName()} algorithm: sorting...")
+        print("   - ${getName()} algorithm: sorting...")
         val array = testData.first.copyOf()
         val timeTaken = measureTime {
             run(array)
         }
         if(!array.contentEquals(testData.second)) {
-            println(" wrong result: ${array.contentToString()}")
+            println(" wrong result: ${shortFormatArray(array)}")
             //error("WRONG RESULT !\n")
         } else {
             print("         - Right solution")

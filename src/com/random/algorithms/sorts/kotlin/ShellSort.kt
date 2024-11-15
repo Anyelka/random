@@ -1,16 +1,16 @@
 package com.random.algorithms.sorts.kotlin
 
 object ShellSort: SortingAlgorithm() {
-    private const val NAME = "Insertion Sort"
+    private const val NAME = "Shell Sort"
     override fun getName(): String {
         return NAME
     }
 
     override fun run(array: IntArray) {
-        sort(array)
+        sortV2(array)
     }
 
-    private fun sort(array: IntArray) {
+    private fun sortV1(array: IntArray) {
         var gap: Int = array.size/2
         while(gap > 0) {
             for(i in gap..< array.size) {
@@ -24,6 +24,22 @@ object ShellSort: SortingAlgorithm() {
                     } else {
                         break
                     }
+                }
+                array[j] = newElement
+            }
+            gap /= 2
+        }
+    }
+
+    private fun sortV2(array: IntArray) {
+        var gap: Int = array.size/2
+        while(gap > 0) {
+            for(i in gap..< array.size) {
+                val newElement = array[i]
+                var j = i
+                while(j >= gap && array[j-gap] > newElement) {
+                    array[j] = array[j-gap]
+                    j -= gap
                 }
                 array[j] = newElement
             }

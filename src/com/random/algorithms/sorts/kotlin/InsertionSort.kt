@@ -7,10 +7,10 @@ object InsertionSort: SortingAlgorithm() {
     }
 
     override fun run(array: IntArray) {
-        sort(array)
+        sortV2(array)
     }
 
-    fun sort(array: IntArray) {
+    fun sortV1(array: IntArray) {
         for(i in 1..< array.size) {
             val newElement = array[i]
             var insertionIndex = i
@@ -23,6 +23,18 @@ object InsertionSort: SortingAlgorithm() {
                 }
             }
             array[insertionIndex] = newElement
+        }
+    }
+
+    fun sortV2(array: IntArray) {
+        for(i in 1..< array.size) {
+            val newElement = array[i]
+            var j = i
+            while(j > 0 && array[j-1] > newElement) {
+                array[j] = array[j-1]
+                j--
+            }
+            array[j] = newElement
         }
     }
 }
