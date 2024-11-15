@@ -3,8 +3,8 @@ package com.random.algorithms.sorts
 
 import com.random.util.getResourceAsText
 
-val INPUT_PATH = "/algorithms/sorts/IntArray100kInput"
-val OUTPUT_PATH = "/algorithms/sorts/IntArray100kOutput"
+const val INPUT_PATH = "/algorithms/sorts/IntArray100kInput"
+const val OUTPUT_PATH = "/algorithms/sorts/IntArray100kOutput"
 
 object IntArray100k {
     fun pair(): Pair<IntArray, IntArray> {
