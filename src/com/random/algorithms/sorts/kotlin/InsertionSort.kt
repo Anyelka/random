@@ -11,7 +11,7 @@ object InsertionSort: SortingAlgorithm() {
     }
 
     fun sortV1(array: IntArray) {
-        for(i in 1..< array.size) {
+        for(i in 1 until array.size) {
             val newElement = array[i]
             var insertionIndex = i
             for(j in i - 1 downTo 0) {
@@ -27,7 +27,7 @@ object InsertionSort: SortingAlgorithm() {
     }
 
     fun sortV2(array: IntArray) {
-        for(i in 1..< array.size) {
+        for(i in 1 until array.size) {
             val newElement = array[i]
             var j = i
             while(j > 0 && array[j-1] > newElement) {
