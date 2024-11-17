@@ -35,7 +35,7 @@ fun factorial(number: Int): BigInteger {
 //  For:    generateData(100000, 5000)
 //          Total time taken: 2m 39.441653041s
 fun factorialRecursively(number: Int): BigInteger {
-    if (number <= 1) {
+    if (number <= 0) {
         return BigInteger("1")
     }
     return number.toBigInteger() * factorialRecursively(number - 1)
@@ -61,7 +61,7 @@ private fun factorialMemoizedRecursively(factorials: MutableMap<Int, BigInteger>
     if (factorials[number] != null) {
         return factorials[number]!!
     }
-    if (number <= 1) {
+    if (number <= 0) {
         return BigInteger("1")
     }
     val result = number.toBigInteger() * factorialMemoized(number - 1, factorials)

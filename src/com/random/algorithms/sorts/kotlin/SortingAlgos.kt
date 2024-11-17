@@ -4,14 +4,15 @@ import com.random.algorithms.sorts.testdata.InputData
 
 fun main() {
     val algorithms = listOf(
-            BubbleSort,
+            /*BubbleSort,
             SelectionSort,
             InsertionSort,
-            ShellSort
+            ShellSort,*/
+            MergeSort
     )
 
     // 1. Base case: basic test array of [20, 35, -15, 7, -22, 1, 55]
-    //val testData = InputData.getBase()
+    // val testData = InputData.getBase()
 
     // 2. Some basic arrays:
     //val testData = InputData.getAll()
