@@ -13,7 +13,7 @@ abstract class SortingAlgorithm() {
             run(array)
         }
         if(!array.contentEquals(testData.second)) {
-            println(" wrong result: ${shortFormatArray(array)}")
+            println(" wrong result: ${array.contentToString()}")
             //error("WRONG RESULT !\n")
         } else {
             print("         - Right solution")
