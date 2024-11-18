@@ -4,11 +4,11 @@ import com.random.algorithms.sorts.testdata.InputData
 
 fun main() {
     val algorithms = listOf(
-            BubbleSort,
+            /*BubbleSort,
             SelectionSort,
             InsertionSort,
             ShellSort,
-            MergeSort,
+            MergeSort,*/
             QuickSort
     )
 

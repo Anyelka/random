@@ -21,16 +21,16 @@ object QuickSort: SortingAlgorithm() {
         var i = start
         var j = end
         while(i < j) {
-            while(i < j && array[--j] > pivot) {}
+            while(i < j && array[--j] > pivot);
             array[i] = array[j]
 
-            while(i < j && array[++i] < pivot) {}
+            while(i < j && array[++i] < pivot);
             array[j] = array[i]
         }
-        array[i] = pivot
+        array[j] = pivot
 
-        quickSort(array, start, i)
-        quickSort(array, i+1, end)
+        quickSort(array, start, j)
+        quickSort(array, j+1, end)
 
     }
 
