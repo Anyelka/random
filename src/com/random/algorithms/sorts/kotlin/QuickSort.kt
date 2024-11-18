@@ -30,7 +30,7 @@ object QuickSort: SortingAlgorithm() {
         array[i] = pivot
 
         quickSort(array, start, i)
-        quickSort(array, j+1, end)
+        quickSort(array, i+1, end)
 
     }
 

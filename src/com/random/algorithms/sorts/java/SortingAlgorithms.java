@@ -10,7 +10,7 @@ public class SortingAlgorithms {
 
     public static void main(String[] args) throws IOException {
 
-        Map<int[], int[]> inputData = InputData.get100kLength();
+        /*Map<int[], int[]> inputData = InputData.get100kLength();
         Map<String, Consumer<int[]>> sortingAlgorithms = Map.of(
                 "Bubble sort", SortingAlgorithms::bubbleSort,
                 "Selection sort", SortingAlgorithms::selectionSort,
@@ -20,14 +20,22 @@ public class SortingAlgorithms {
                 "Merge sort", SortingAlgorithms::mergeSort
         );
 
-        inputData.forEach((input, expectedOutput) -> test(input, expectedOutput, sortingAlgorithms));
+        inputData.forEach((input, expectedOutput) -> test(input, expectedOutput, sortingAlgorithms));*/
 
+        generateRandomArrayAndWriteInputOutput(1000000, "TestInput1M", "TestOutput1M");
+    }
+
+    private static void generateRandomArrayAndWriteInputOutput(int arraySize, String inputFile, String outputFile) {
         // Write the 1. Input array and the 2. Output array to files:
         //      1. generate random array of size:
-        // int arraySize = 100000;
-        // int[] randomArray = ArrayGenerator.generateIntArray(arraySize);
-        //      2. Sort with write
-        // FileWriter.runWithInputOutputWrite("TestInput100k", "TestOutput100k", randomArray, sortingMethod);
+        int[] randomArray = ArrayGenerator.generateIntArray(arraySize);
+        Consumer<int[]> sortingMethod = SortingAlgorithms::mergeSort;
+        try {
+            //      2. Sort with write
+            FileWriter.runWithInputOutputWrite(inputFile, outputFile, randomArray, sortingMethod);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void test(int[] array, int[] expectedSortedArray, Map<String, Consumer<int[]>> sortingAlgorithms) {

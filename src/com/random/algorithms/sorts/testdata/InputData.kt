@@ -21,4 +21,8 @@ object InputData {
     fun get100kLength(): Map<IntArray, IntArray> {
         return mapOf(IntArray100k.pair())
     }
+
+    fun get1MLength(): Map<IntArray, IntArray> {
+        return mapOf(IntArray1M.pair())
+    }
 }
