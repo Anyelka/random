@@ -1,6 +1,8 @@
 package com.random.algorithms.sorts.testdata
 
-object InputData {
+const val RESOURCES_PATH = "/algorithms/sorts/"
+
+object TestDataProvider {
     private val BASE_ARRAY_PAIR = Pair(intArrayOf(20, 35, -15, 7, -22, 1, 55), intArrayOf(-22, -15, 1, 7, 20, 35, 55))
 
     fun getBase(): Map<IntArray, IntArray> {
@@ -18,11 +20,25 @@ object InputData {
         )
     }
 
+    fun getForCountingSort(): Map<IntArray, IntArray> {
+        return mapOf(Pair(intArrayOf(2,5,9,8,2,8,7,10,4,3), intArrayOf(2,2,3,4,5,7,8,8,9,10)))
+    }
+
     fun get100kLength(): Map<IntArray, IntArray> {
-        return mapOf(IntArray100k.pair())
+        val data = dataFromFile("/algorithms/sorts/IntArray100kInput", "/algorithms/sorts/IntArray100kOutput")
+        return mapOf(data.pair())
     }
 
     fun get1MLength(): Map<IntArray, IntArray> {
-        return mapOf(IntArray1M.pair())
+        val data = dataFromFile("/algorithms/sorts/IntArray1MInput", "/algorithms/sorts/IntArray1MOutput")
+        return mapOf(data.pair())
+    }
+
+    private fun dataFromFile(inputFileName: String, outputFileName: String): TestDataFromFile {
+        return TestDataFromFile(file(inputFileName), file(outputFileName))
+    }
+
+    private fun file(name: String): String {
+        return "$RESOURCES_PATH$name"
     }
 }

@@ -1,15 +1,16 @@
 package com.random.algorithms.sorts.kotlin
 
-import com.random.algorithms.sorts.testdata.InputData
+import com.random.algorithms.sorts.testdata.TestDataProvider
 
 fun main() {
     val algorithms = listOf(
-            /*BubbleSort,
+            BubbleSort,
             SelectionSort,
             InsertionSort,
             ShellSort,
-            MergeSort,*/
-            QuickSort
+            MergeSort,
+            QuickSort,
+            CountingSort
     )
 
     // 1. Base case: basic test array of [20, 35, -15, 7, -22, 1, 55]
@@ -19,10 +20,13 @@ fun main() {
     //val testData = InputData.getAll()
 
     // 3. A long array with 100 000 random integers
-    val testData = InputData.get100kLength()
+    // val testData = InputData.get100kLength()
 
     // 4. A very long array with 1 000 000 random integers
     // val testData = InputData.get1MLength()
+
+    // 5. special data set for counting sort:
+     val testData = TestDataProvider.getForCountingSort()
 
     testData.forEach{ it.toPair().test(algorithms) }
 }
