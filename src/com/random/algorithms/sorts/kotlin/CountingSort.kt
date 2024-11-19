@@ -8,7 +8,7 @@ object CountingSort: SortingAlgorithm() {
     override fun run(array: IntArray) {
         // Make assumptions: the incoming array's elements are between 1 and 10
         val min = 1
-        val max = 10
+        val max = 100000
         countingSort(array, min, max)
     }
 

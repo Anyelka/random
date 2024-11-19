@@ -25,12 +25,19 @@ object TestDataProvider {
     }
 
     fun get100kLength(): Map<IntArray, IntArray> {
-        val data = dataFromFile("/algorithms/sorts/IntArray100kInput", "/algorithms/sorts/IntArray100kOutput")
-        return mapOf(data.pair())
+        return getDataFromFile("100k")
     }
 
     fun get1MLength(): Map<IntArray, IntArray> {
-        val data = dataFromFile("/algorithms/sorts/IntArray1MInput", "/algorithms/sorts/IntArray1MOutput")
+        return getDataFromFile("1M")
+    }
+
+    fun get100kForCountingSort(): Map<IntArray, IntArray> {
+        return getDataFromFile("CountingSort100k")
+    }
+
+    private fun getDataFromFile(pattern: String): Map<IntArray, IntArray> {
+        val data = dataFromFile("IntArray${pattern}Input", "IntArray${pattern}Output")
         return mapOf(data.pair())
     }
 

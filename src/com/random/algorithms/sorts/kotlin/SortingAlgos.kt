@@ -2,6 +2,7 @@ package com.random.algorithms.sorts.kotlin
 
 import com.random.algorithms.sorts.testdata.TestDataProvider
 
+
 fun main() {
     val algorithms = listOf(
             BubbleSort,
@@ -10,23 +11,27 @@ fun main() {
             ShellSort,
             MergeSort,
             QuickSort,
-            CountingSort
+            CountingSort,
+            KotlinSort
     )
 
     // 1. Base case: basic test array of [20, 35, -15, 7, -22, 1, 55]
-    //val testData = InputData.getBase()
+    //val testData = TestDataProvider.getBase()
 
     // 2. Some basic arrays:
-    //val testData = InputData.getAll()
+    //val testData = TestDataProvider.getAll()
 
     // 3. A long array with 100 000 random integers
-    // val testData = InputData.get100kLength()
+    // val testData = TestDataProvider.get100kLength()
 
     // 4. A very long array with 1 000 000 random integers
-    // val testData = InputData.get1MLength()
+    // val testData = TestDataProvider.get1MLength()
 
     // 5. special data set for counting sort:
-     val testData = TestDataProvider.getForCountingSort()
+    // val testData = TestDataProvider.getForCountingSort()
+
+    // 6. special data set for counting sort with 100k elements:
+    val testData = TestDataProvider.get100kForCountingSort()
 
     testData.forEach{ it.toPair().test(algorithms) }
 }
@@ -56,3 +61,23 @@ fun shortFormatArray(array: IntArray): String {
 //      - Shell Sort:           123.196292ms
 //      - Merge Sort:           80.327500ms
 //      - Quick Sort:           64.113208ms
+
+// Performance for array of 100k Ints between 1 and 100 000:
+//      - Bubble Sort:          4.999140291s
+//      - Selection Sort:       2.664215667s
+//      - Insertion Sort:       447.291917s
+//      - Shell Sort:           10.545708ms
+//      - Merge Sort:           8.192625ms
+//      - Quick Sort:           8.191250ms
+//      - Counting Sort:        1.709375
+
+object KotlinSort : SortingAlgorithm() {
+    override fun run(array: IntArray) {
+        array.sort()
+    }
+
+    override fun getName(): String {
+        return "Default kotlin sort algorithm"
+    }
+
+}
