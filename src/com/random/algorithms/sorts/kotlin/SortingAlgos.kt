@@ -11,7 +11,8 @@ fun main() {
             ShellSort,
             MergeSort,
             QuickSort,
-            CountingSort,
+            //CountingSort(1, 10),
+            RadixSort(10, 10),
             KotlinSort
     )
 
@@ -31,7 +32,13 @@ fun main() {
     // val testData = TestDataProvider.getForCountingSort()
 
     // 6. special data set for counting sort with 100k elements:
-    val testData = TestDataProvider.get100kForCountingSort()
+    // val testData = TestDataProvider.get100kForCountingSort()
+
+    // 7. special data set for radix sort:
+    // val testData = TestDataProvider.getForRadixSort()
+
+    // 8. special data set for radix sort with 100k elements:
+    val testData = TestDataProvider.get100kForRadixSort()
 
     testData.forEach{ it.toPair().test(algorithms) }
 }

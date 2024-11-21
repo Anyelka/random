@@ -1,14 +1,11 @@
 package com.random.algorithms.sorts.kotlin
 
-object CountingSort: SortingAlgorithm() {
-    private const val NAME = "Counting Sort"
+class CountingSort(private val min: Int, private val max: Int): SortingAlgorithm() {
     override fun getName(): String {
-        return NAME
+        return "Counting Sort"
     }
     override fun run(array: IntArray) {
-        // Make assumptions: the incoming array's elements are between 1 and 10
-        val min = 1
-        val max = 100000
+        // Make assumptions: the incoming array's elements are between 'min' and 'max'
         countingSort(array, min, max)
     }
 

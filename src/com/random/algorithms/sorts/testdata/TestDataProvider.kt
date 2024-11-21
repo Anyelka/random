@@ -24,6 +24,10 @@ object TestDataProvider {
         return mapOf(Pair(intArrayOf(2,5,9,8,2,8,7,10,4,3), intArrayOf(2,2,3,4,5,7,8,8,9,10)))
     }
 
+    fun getForRadixSort(): Map<IntArray, IntArray> {
+        return mapOf(Pair(intArrayOf(4725, 4586, 1330, 8792, 1594, 5729), intArrayOf(1330, 1594, 4586, 4725, 5729, 8792)))
+    }
+
     fun get100kLength(): Map<IntArray, IntArray> {
         return getDataFromFile("100k")
     }
@@ -34,6 +38,10 @@ object TestDataProvider {
 
     fun get100kForCountingSort(): Map<IntArray, IntArray> {
         return getDataFromFile("CountingSort100k")
+    }
+
+    fun get100kForRadixSort(): Map<IntArray, IntArray> {
+        return getDataFromFile("RadixSort100k")
     }
 
     private fun getDataFromFile(pattern: String): Map<IntArray, IntArray> {

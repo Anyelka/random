@@ -1,6 +1,7 @@
 package com.random.problems.hackerrank.powerSum
 
 import com.random.util.getResourceAsText
+import com.random.util.pow
 import kotlin.math.floor
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -43,10 +44,6 @@ fun collectPows(number: Int, remainingSum: Int, power: Int, previousPows: Mutabl
     nextPreviousPows.add(numberPower)
     collectPows(number + 1, nextRemainingSum, power, nextPreviousPows, collectedPows)
     collectPows(number + 1, remainingSum, power, previousPows, collectedPows)
-}
-
-fun Int.pow(power: Int): Int {
-    return this.toDouble().pow(power).toInt()
 }
 
 fun Double.pow(power: Double): Double {
