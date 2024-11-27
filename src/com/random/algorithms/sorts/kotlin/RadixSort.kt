@@ -14,10 +14,10 @@ abstract class RadixSort<T>(private val radix: Int, private val width: Int): Sor
         }
     }
 
-    private fun stableCountingSort(array: Array<T>, digitIndex: Int, radix: Int) {
+    private fun stableCountingSort(array: Array<T>, position: Int, radix: Int) {
         val countingArray = IntArray(radix)
         for(i in array) {
-            countingArray[getDigitValue(i, digitIndex, radix)]++
+            countingArray[getValueAtIndex(i, position, radix)]++
         }
 
         var addition = 0
@@ -27,39 +27,30 @@ abstract class RadixSort<T>(private val radix: Int, private val width: Int): Sor
             addition += value
         }
 
-        val temp = createTempArray(array)
+        val temp = array.copyOf()
         for(k in array.size - 1 downTo 0) {
-            temp[--adjustedCountingArray[getDigitValue(array[k], digitIndex, radix)]] = array[k]
+            temp[--adjustedCountingArray[getValueAtIndex(array[k], position, radix)]] = array[k]
         }
 
         System.arraycopy(temp, 0, array, 0, temp.size)
     }
 
-    abstract fun getDigitValue(value: T, digitIndex: Int, radix: Int): Int
+    abstract fun getValueAtIndex(value: T, digitIndex: Int, radix: Int): Int
 
-    abstract fun createTempArray(array: Array<T>): Array<T>
 }
 
-class IntRadixSort(private val radix: Int, private val width: Int): RadixSort<Int>(radix, width) {
+class IntRadixSort(radix: Int, width: Int): RadixSort<Int>(radix, width) {
     override fun getName(): String { return "Radix Sort" }
-    override fun getDigitValue(value: Int, digitIndex: Int, radix: Int): Int {
+    override fun getValueAtIndex(value: Int, digitIndex: Int, radix: Int): Int {
         return value / 10.pow(digitIndex) % radix
     }
-
-    override fun createTempArray(array: Array<Int>): Array<Int> {
-        return Array(array.size) { 0 }
-    }
 }
 
-class StringRadixSort(private val width: Int): RadixSort<String>('z'.intValue(), width) {
+class StringRadixSort(width: Int): RadixSort<String>('z'.intValue(), width) {
     override fun getName(): String { return "String Radix Sort" }
 
-    override fun getDigitValue(value: String, digitIndex: Int, radix: Int): Int {
-        /*return value.chars()*/
+    override fun getValueAtIndex(value: String, digitIndex: Int, radix: Int): Int {
         return value.toCharArray()[value.length - 1 - digitIndex].intValue()
     }
 
-    override fun createTempArray(array: Array<String>): Array<String> {
-        return Array(array.size) { "" }
-    }
 }
