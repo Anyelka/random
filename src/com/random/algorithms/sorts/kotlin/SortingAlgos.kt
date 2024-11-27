@@ -4,8 +4,9 @@ import com.random.algorithms.sorts.testdata.TestDataProvider
 
 
 fun main() {
-    Pair(intArrayOf(20, 35, -15, 7, -22, 1, 55), intArrayOf(55, 35, 20, 7, 1, -15, -22))
-            .test(listOf(DescendingMergeSort))
+    // 1. Challenge: descending merge sort
+    /*Pair(intArrayOf(20, 35, -15, 7, -22, 1, 55), intArrayOf(55, 35, 20, 7, 1, -15, -22))
+            .test(listOf(DescendingMergeSort))*/
 
     val algorithms = listOf(
             BubbleSort,
@@ -14,16 +15,16 @@ fun main() {
             ShellSort,
             DefaultMergeSort,
             QuickSort,
-            //CountingSort(1, 10),
-            RadixSort(10, 10),
+            // CountingSort(1, 10),
+            // RadixSort(10, 10),
             KotlinSort
     )
 
     // 1. Base case: basic test array of [20, 35, -15, 7, -22, 1, 55]
-    //val testData = TestDataProvider.getBase()
+    // val testData = TestDataProvider.getBase()
 
     // 2. Some basic arrays:
-    //val testData = TestDataProvider.getAll()
+    val testData = TestDataProvider.getAll()
 
     // 3. A long array with 100 000 random integers
     // val testData = TestDataProvider.get100kLength()
@@ -41,9 +42,9 @@ fun main() {
     // val testData = TestDataProvider.getForRadixSort()
 
     // 8. special data set for radix sort with 100k elements:
-    val testData = TestDataProvider.get100kForRadixSort()
+    // val testData = TestDataProvider.get100kForRadixSort()
 
-    //  testData.forEach{ it.toPair().test(algorithms) }
+    testData.forEach{ it.toPair().test(algorithms) }
 }
 
 private fun Pair<IntArray, IntArray>.test(algorithms: List<SortingAlgorithm>) {
