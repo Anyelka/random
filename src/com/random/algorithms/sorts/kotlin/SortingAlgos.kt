@@ -22,7 +22,7 @@ fun main() {
             DefaultMergeSort,
             QuickSort,
             // CountingSort(1, 10),
-            // RadixSort(10, 10),
+            IntRadixSort(10, 10),
             KotlinSort
     )
 
@@ -30,7 +30,7 @@ fun main() {
     // val testData = TestDataProvider.getBase()
 
     // 2. Some basic arrays:
-    val testData = TestDataProvider.getAll()
+    // val testData = TestDataProvider.getAll()
 
     // 3. A long array with 100 000 random integers
     // val testData = TestDataProvider.get100kLength()
@@ -45,7 +45,7 @@ fun main() {
     // val testData = TestDataProvider.get100kForCountingSort()
 
     // 7. special data set for radix sort:
-    // val testData = TestDataProvider.getForRadixSort()
+    val testData = TestDataProvider.getForRadixSort()
 
     // 8. special data set for radix sort with 100k elements:
     // val testData = TestDataProvider.get100kForRadixSort()
