@@ -1,19 +1,19 @@
 package com.random.algorithms.sorts.kotlin
 
-object QuickSort: SortingAlgorithm() {
+object QuickSort: IntSortingAlgorithm() {
     private const val NAME = "Quick Sort"
     override fun getName(): String {
         return NAME
     }
-    override fun run(array: IntArray) {
+    override fun run(array: Array<Int>) {
         sort(array)
     }
 
-    private fun sort(array: IntArray) {
+    private fun sort(array: Array<Int>) {
         quickSort(array, 0, array.size)
     }
 
-    private fun quickSort(array: IntArray, start: Int, end: Int) {
+    private fun quickSort(array: Array<Int>, start: Int, end: Int) {
         if (end - start <= 1) {
             return
         }

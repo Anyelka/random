@@ -1,12 +1,18 @@
 package com.random.algorithms.sorts.kotlin
 
 import com.random.algorithms.sorts.testdata.TestDataProvider
+import com.random.util.shortFormatArray
 
 
 fun main() {
-    // 1. Challenge: descending merge sort
+    // 1st coding Challenge: descending merge sort
     /*Pair(intArrayOf(20, 35, -15, 7, -22, 1, 55), intArrayOf(55, 35, 20, 7, 1, -15, -22))
             .test(listOf(DescendingMergeSort))*/
+
+    // 3rd coding Challenge: sort 5 letter strings with radix sort
+    Pair(arrayOf("bcdef", "dbaqc", "abcde", "omadd", "bbbbb"),
+            arrayOf("abcde", "bbbbb", "bcdef", "dbaqc", "omadd"))
+            .test(listOf(StringRadixSort(5)))
 
     val algorithms = listOf(
             BubbleSort,
@@ -45,16 +51,14 @@ fun main() {
     // val testData = TestDataProvider.get100kForRadixSort()
 
     testData.forEach{ it.toPair().test(algorithms) }
+
 }
 
-private fun Pair<IntArray, IntArray>.test(algorithms: List<SortingAlgorithm>) {
+private fun <T> Pair<Array<T>, Array<T>>.test(algorithms: List<SortingAlgorithm<T>>) {
     println("Sorting array: ${shortFormatArray(first)}")
     algorithms.forEach { it.test(this) }
 }
 
-fun shortFormatArray(array: IntArray): String {
-    return "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
-}
 
 // Performance
 // Performance for array of 100k random Ints:
@@ -82,8 +86,8 @@ fun shortFormatArray(array: IntArray): String {
 //      - Quick Sort:           8.191250ms
 //      - Counting Sort:        1.709375
 
-object KotlinSort : SortingAlgorithm() {
-    override fun run(array: IntArray) {
+object KotlinSort : IntSortingAlgorithm() {
+    override fun run(array: Array<Int>) {
         array.sort()
     }
 

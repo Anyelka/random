@@ -22,10 +22,10 @@ fun generateRandomIntArray(size: Int, min: Int, max: Int): IntArray {
 }
 
 // For radix sort: for an int array the radix is always 10
-fun generateRandomIntArray(size: Int, width: Int): IntArray {
+fun generateRandomIntArray(size: Int, width: Int): Array<Int> {
     val min = 10.pow(width - 1)
     val max = 10.pow(width) - 1
-    return IntArray(size) {
+    return Array(size) {
         Random.nextInt(min, max)
     }
 }

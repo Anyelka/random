@@ -1,5 +1,7 @@
 package com.random.algorithms.sorts.kotlin
 
+import com.random.util.swap
+
 /**
  * We split up the array into a sorted and an unsorted partition.
  * At the start, the sorted partition is empty and starts at the end of the array, and
@@ -9,17 +11,17 @@ package com.random.algorithms.sorts.kotlin
  * After we iterated through the unsorted partition, the biggest number "bubbles up" to the end and
  *      it becomes the part of the sorted partition
  * */
-object BubbleSort: SortingAlgorithm() {
+object BubbleSort: IntSortingAlgorithm() {
     private const val NAME = "Bubble Sort"
     override fun getName(): String {
         return NAME
     }
 
-    override fun run(array: IntArray) {
+    override fun run(array: Array<Int>) {
         sort(array)
     }
 
-    private fun sort(array: IntArray) {
+    private fun sort(array: Array<Int>) {
         for (i in array.size - 1 downTo 0) {
             for(j in 0..<i) {
                 if(array[j] > array[j+1]) {
@@ -28,10 +30,4 @@ object BubbleSort: SortingAlgorithm() {
             }
         }
     }
-}
-
-private fun IntArray.swap(i: Int, j: Int) {
-    val temp = this[i]
-    this[i] = this[j]
-    this[j] = temp
 }

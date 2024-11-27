@@ -2,11 +2,11 @@ package com.random.algorithms.sorts.kotlin
 
 import kotlin.time.measureTime
 
-abstract class SortingAlgorithm() {
-    abstract fun run(array: IntArray)
+abstract class SortingAlgorithm<T> {
+    abstract fun run(array: Array<T>)
     abstract fun getName(): String
 
-    fun test(testData: Pair<IntArray, IntArray>) {
+    fun test(testData: Pair<Array<T>, Array<T>>) {
         print("   - ${getName()} algorithm: sorting...")
         val array = testData.first.copyOf()
         val timeTaken = measureTime {
@@ -21,3 +21,7 @@ abstract class SortingAlgorithm() {
         print("     - Time taken: $timeTaken\n")
     }
 }
+
+abstract class IntSortingAlgorithm(): SortingAlgorithm<Int>()
+
+abstract class StringSortingAlgorithm(): SortingAlgorithm<String>()
