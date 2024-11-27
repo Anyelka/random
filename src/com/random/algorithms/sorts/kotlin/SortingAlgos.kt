@@ -4,12 +4,15 @@ import com.random.algorithms.sorts.testdata.TestDataProvider
 
 
 fun main() {
+    Pair(intArrayOf(20, 35, -15, 7, -22, 1, 55), intArrayOf(55, 35, 20, 7, 1, -15, -22))
+            .test(listOf(DescendingMergeSort))
+
     val algorithms = listOf(
             BubbleSort,
             SelectionSort,
             InsertionSort,
             ShellSort,
-            MergeSort,
+            DefaultMergeSort,
             QuickSort,
             //CountingSort(1, 10),
             RadixSort(10, 10),
@@ -40,7 +43,7 @@ fun main() {
     // 8. special data set for radix sort with 100k elements:
     val testData = TestDataProvider.get100kForRadixSort()
 
-    testData.forEach{ it.toPair().test(algorithms) }
+    //  testData.forEach{ it.toPair().test(algorithms) }
 }
 
 private fun Pair<IntArray, IntArray>.test(algorithms: List<SortingAlgorithm>) {

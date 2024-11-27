@@ -1,10 +1,10 @@
 package com.random.algorithms.sorts.kotlin
 
-object MergeSort: SortingAlgorithm() {
+open class MergeSort(private val isAscending: Boolean = true): SortingAlgorithm() {
 
-    private const val NAME = "Merge Sort"
+    private val name = "Descending Merge Sort"
     override fun getName(): String {
-        return NAME
+        return name
     }
 
     override fun run(array: IntArray) {
@@ -30,7 +30,7 @@ object MergeSort: SortingAlgorithm() {
         var j = midpoint
         var k = 0
         while(i < midpoint && j < end) {
-            temp[k++] = if(array[i] <= array[j]) array[i++] else array[j++]
+            temp[k++] = if(if(isAscending) (array[i] <= array[j]) else array[i] >= array[j]) array[i++] else array[j++]
         }
         while(i < midpoint) {
             temp[k++] = array[i++]
@@ -42,7 +42,7 @@ object MergeSort: SortingAlgorithm() {
     }
 
     private fun mergeOptimized(array: IntArray, start: Int, midpoint: Int, end: Int) {
-        if(array[midpoint-1] < array[midpoint]) {
+        if(if(isAscending) (array[midpoint-1] < array[midpoint]) else (array[midpoint-1] > array[midpoint])) {
             return
         }
 
@@ -51,10 +51,14 @@ object MergeSort: SortingAlgorithm() {
         var j = midpoint
         var k = 0
         while(i < midpoint && j < end) {
-            temp[k++] = if(array[i] <= array[j]) array[i++] else array[j++]
+            temp[k++] = if(if(isAscending) (array[i] <= array[j]) else array[i] >= array[j]) array[i++] else array[j++]
         }
 
         System.arraycopy(array, i, array, start + k, midpoint - i)
         System.arraycopy(temp, 0, array, start, k)
     }
 }
+
+object DefaultMergeSort: MergeSort()
+
+object DescendingMergeSort: MergeSort(false)
