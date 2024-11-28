@@ -54,6 +54,7 @@ class DoublyLinkedList<E> {
     }
     fun deleteFromHead() {
         if(isEmpty()) {
+            System.err.println("Could not delete from empty list")
             return
         }
         val nextHead = head?.next
@@ -66,6 +67,7 @@ class DoublyLinkedList<E> {
     }
     fun deleteFromTail() {
         if(isEmpty()) {
+            System.err.println("Could not delete from empty list")
             return
         }
         val nextTail = tail?.previous
@@ -76,27 +78,35 @@ class DoublyLinkedList<E> {
         tail = nextTail
         size--
     }
+
     fun insertBetween(element: E, first: E, second: E) {
         var currentElement = head
+        var node: Node<E>? = null
         while(currentElement?.equals(tail) != true) {
             if(currentElement?.isValue(first) == true && currentElement.next?.isValue(second) == true) {
                 val current = currentElement
                 val next = currentElement.next
-                val node = Node(next, current, element)
+                node = Node(next, current, element)
                 current.next = node
                 next?.previous = node
                 break
             }
             currentElement = currentElement?.next
         }
-        size++
+        if(node != null) {
+            size++
+        } else {
+            System.err.println("Could not insert between $first and $second")
+        }
     }
 
     fun deleteBetween(first: E, second: E) {
         if(isEmpty()) {
+            System.err.println("Could not delete from empty list")
             return
         }
         var currentElement = head
+        var deleted = false
         while(currentElement?.equals(tail) != true) {
             if(currentElement?.isValue(first) == true
                     && currentElement.next?.next?.isValue(second) == true) {
@@ -104,11 +114,16 @@ class DoublyLinkedList<E> {
                 val next = currentElement.next?.next
                 current.next = next
                 next?.previous = current
+                deleted = true
                 break
             }
             currentElement = currentElement?.next
         }
-        size--
+        if(deleted) {
+            size--
+        } else {
+            System.err.println("Could not delete between $first and $second")
+        }
     }
 
 
