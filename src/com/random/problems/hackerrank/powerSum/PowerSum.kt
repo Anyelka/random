@@ -2,9 +2,7 @@ package com.random.problems.hackerrank.powerSum
 
 import com.random.util.getResourceAsText
 import com.random.util.pow
-import kotlin.math.floor
 import kotlin.math.pow
-import kotlin.math.sqrt
 import kotlin.time.measureTime
 
 const val FILE_PATH = "/hackerrank/powerSum/TestCase0"

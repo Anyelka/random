@@ -15,7 +15,7 @@ public abstract class AbstractProblem {
         Map<Integer, List<String>> inputDataForTestCases = readInputData(testCases);
         boolean allCorrect = inputDataForTestCases.entrySet().stream().allMatch(this::checkTestCase);
         if(allCorrect) {
-            if(Arrays.asList(testCases).size() == 0) {
+            if(Arrays.asList(testCases).isEmpty()) {
                 System.out.println("<<<-- CONGRATULATIONS -->>> All test results are correct");
             } else {
                 System.out.println("The given test cases are correct! Lets try all test cases..");

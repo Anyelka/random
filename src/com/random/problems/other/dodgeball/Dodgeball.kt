@@ -1,11 +1,9 @@
 package com.random.problems.other.dodgeball
 
+import com.random.util.getResourceAsText
 import kotlin.time.measureTime
 
 const val FILE_PATH = "/other/dodgeball/test"
-
-fun getResourceAsText(path: String): String? =
-        object {}.javaClass.getResource(path)?.readText()
 
 fun main() {
     val lines = getResourceAsText("$FILE_PATH.in")!!.lines()
