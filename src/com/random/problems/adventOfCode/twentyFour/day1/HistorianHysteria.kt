@@ -8,7 +8,7 @@ import kotlin.time.measureTime
 const val FILE_PATH = "/adventOfCode/2024/day1/TestCase1"
 
 fun main() {
-    val lines = getResourceAsText("$FILE_PATH")!!.lines()
+    val lines = getResourceAsText(FILE_PATH)!!.lines()
 
     val lists = getInput(lines)
 
