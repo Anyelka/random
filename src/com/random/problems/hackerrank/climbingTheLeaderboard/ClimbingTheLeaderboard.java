@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClimbingTheLeaderboard extends AbstractProblem {
-    private static final String ROOT = "climbingTheLeaderboard";
+    private static final String ROOT = "hackerrank/climbingTheLeaderboard";
 
     @Override
     public String runMethod(List<String> lines) {

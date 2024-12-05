@@ -4,7 +4,7 @@ import com.random.util.getResourceAsText
 import kotlin.math.floor
 import kotlin.time.measureTime
 
-const val FILE_PATH = "/climbingTheLeaderboard/TestCase1"
+const val FILE_PATH = "/hackerrank/climbingTheLeaderboard/TestCase1"
 
 fun main() {
     val file = getResourceAsText(FILE_PATH)

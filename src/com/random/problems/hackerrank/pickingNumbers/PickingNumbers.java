@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PickingNumbers extends AbstractProblem {
-    private static final String ROOT = "pickingNumbers";
+    private static final String ROOT = "hackerrank/pickingNumbers";
     private static final int MAX_DIFF = 1;
 
     @Override

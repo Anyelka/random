@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MigratoryBirds extends AbstractProblem {
-    private static final String ROOT = "migratoryBirds";
+    private static final String ROOT = "hackerrank/migratoryBirds";
 
     @Override
     public String runMethod(List<String> lines) {

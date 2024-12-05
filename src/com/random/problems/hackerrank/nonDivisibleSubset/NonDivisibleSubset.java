@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 
 public class NonDivisibleSubset extends AbstractProblem {
-    private static final String ROOT = "nonDivisibleSubset";
+    private static final String ROOT = "hackerrank/nonDivisibleSubset";
 
     @Override
     protected String getFolderName() {

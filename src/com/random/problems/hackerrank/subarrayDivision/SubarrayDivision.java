@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SubarrayDivision extends AbstractProblem {
-    private static final String ROOT = "subarrayDivision";
+    private static final String ROOT = "hackerrank/subarrayDivision";
 
     @Override
     protected String getFolderName() {

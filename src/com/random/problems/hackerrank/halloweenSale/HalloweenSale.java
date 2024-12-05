@@ -4,7 +4,7 @@ import com.random.problems.AbstractProblem;
 import java.util.List;
 
 public class HalloweenSale extends AbstractProblem {
-  private static final String ROOT = "halloweenSale";
+  private static final String ROOT = "hackerrank/halloweenSale";
 
   @Override
   public String runMethod(List<String> lines) {

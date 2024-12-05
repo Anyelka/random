@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class MagicSquare extends AbstractProblem {
-    private static final String ROOT = "magicSquare";
+    private static final String ROOT = "hackerrank/magicSquare";
 
     @Override
     protected String getFolderName() {
