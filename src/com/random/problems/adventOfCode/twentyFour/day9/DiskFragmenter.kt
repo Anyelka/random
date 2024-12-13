@@ -14,6 +14,18 @@ fun main() {
     }
     println("Time taken: $timeTaken1")
 
+    val timeTaken12 = measureTime {
+        val result = Part1().getChecksumDirectly1(input)
+        println("-- directly: Checksum of the compacted filesystem: ${result}")
+    }
+    println("Time taken: $timeTaken12")
+
+    val timeTaken13 = measureTime {
+        val result = Part1().getChecksumDirectly2(input)
+        println("-- directly v2: Checksum of the compacted filesystem: ${result}")
+    }
+    println("Time taken: $timeTaken13")
+
     val timeTaken2 = measureTime {
         val result = Part2().getChecksum(input)
         println("2. Only moving whole files --- Checksum of the compacted filesystem: ${result}")
@@ -24,6 +36,92 @@ fun main() {
 private const val SPACE = "."
 
 class Part1: Part() {
+
+    // Direct solution (only for Part1) without writing the diskmap to the file block representation
+    //      and then compacting it
+    // this solution takes the block size alternatively from the left and right side of the diskmap
+    //      and writes their index into the condensed
+    fun getChecksumDirectly1(diskMap: String): Long {
+        val charArray = diskMap.toCharArray()
+        var startIndex = 0
+        var endIndex = diskMap.length-1
+        val compactedLayout = mutableListOf<String>()
+        var isBlock = true
+
+        var blockLength = 0
+        while(startIndex < endIndex) {
+            if(isBlock) {
+                var startBlockLength = charArray[startIndex].digitToInt()
+                while(startBlockLength > 0) {
+                    compactedLayout.add((startIndex/2).toString())
+                    startBlockLength--
+                }
+            } else {
+                var spaceLength = charArray[startIndex].digitToInt()
+                while(spaceLength > 0) {
+                    if (blockLength == 0) {
+                        blockLength = charArray[endIndex].digitToInt()
+                    }
+                    compactedLayout.add((endIndex/2).toString())
+                    blockLength--
+                    spaceLength--
+                    if(blockLength == 0 && startIndex < endIndex) {
+                        endIndex -= 2
+                    }
+                }
+            }
+            startIndex++
+            isBlock = !isBlock
+        }
+        while(blockLength > 0) {
+            compactedLayout.add((endIndex/2).toString())
+            blockLength--
+        }
+        return compactedLayout.countChecksum()
+    }
+
+    fun getChecksumDirectly2(diskMap: String): Long {
+        val charArray = diskMap.toCharArray()
+        var startIndex = 0
+        var endIndex = diskMap.length-1
+        var isBlock = true
+        var blockLength = 0
+
+        var checksum = 0L
+        var checksumIndex = 0
+        while(startIndex < endIndex) {
+            if(isBlock) {
+                var startBlockLength = charArray[startIndex].digitToInt()
+                while(startBlockLength > 0) {
+                    checksum += checksumIndex * startIndex/2
+                    startBlockLength--
+                    checksumIndex++
+                }
+            } else {
+                var spaceLength = charArray[startIndex].digitToInt()
+                while(spaceLength > 0) {
+                    if (blockLength == 0) {
+                        blockLength = charArray[endIndex].digitToInt()
+                    }
+                    checksum += checksumIndex * endIndex/2
+                    checksumIndex++
+                    blockLength--
+                    spaceLength--
+                    if(blockLength == 0 && startIndex < endIndex) {
+                        endIndex -= 2
+                    }
+                }
+            }
+            startIndex++
+            isBlock = !isBlock
+        }
+        while(blockLength > 0) {
+            checksum += checksumIndex * endIndex/2
+            checksumIndex++
+            blockLength--
+        }
+        return checksum
+    }
 
     override fun compact(layout: MutableList<String>) {
         var firstSpaceIndex = layout.indexOfFirst { it == SPACE }
@@ -86,6 +184,7 @@ abstract class Part {
         compact(blockLayout)
         return blockLayout.countChecksum()
     }
+
     abstract fun compact(layout: MutableList<String>)
     fun getBlockLayout(diskMap: String): MutableList<String> {
         var blockId = 0
@@ -106,7 +205,7 @@ abstract class Part {
         }
         return layout
     }
-    private fun MutableList<String>.countChecksum(): Long {
+    fun MutableList<String>.countChecksum(): Long {
         return this.withIndex().sumOf {(i, it) -> if(it==SPACE) 0 else i * it.toLong()}
     }
 }
