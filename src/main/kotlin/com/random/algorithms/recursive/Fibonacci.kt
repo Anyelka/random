@@ -29,33 +29,34 @@ fun main() {
 //      1000000:    - standard: N/A;                memoization: StackOverflowError;        tabulation: OutOfMemoryError
 
 
-object FibonacciStandard: Fibonacci("Standard") {
+object FibonacciStandard : Fibonacci("Standard") {
     override fun getFibonacci(number: Int): BigInteger {
-        return if(number == 0 || number == 1)
+        return if (number == 0 || number == 1)
             BigInteger.ONE
         else getFibonacci(number - 1) + getFibonacci(number - 2)
     }
 }
 
-object FibonacciMemoization: Fibonacci("Memoization") {
+object FibonacciMemoization : Fibonacci("Memoization") {
     override fun getFibonacci(number: Int): BigInteger = getFibonacci(number, mutableMapOf())
 
     private fun getFibonacci(number: Int, memo: MutableMap<Int, BigInteger>): BigInteger {
         memo[number]?.let { return it }
-        return if(number == 0 || number == 1)
+        return if (number == 0 || number == 1)
             BigInteger.ONE
-        else (getFibonacci(number - 1, memo) + getFibonacci(number - 2, memo))
-            .also { memo[number] = it }
+        else
+            (getFibonacci(number - 1, memo) + getFibonacci(number - 2, memo))
+                .also { memo[number] = it }
     }
 }
 
-object FibonacciTabulation: Fibonacci("Tabulation") {
+object FibonacciTabulation : Fibonacci("Tabulation") {
     override fun getFibonacci(number: Int): BigInteger {
         val tab = mutableMapOf<Int, BigInteger>()
-        for(i in 0..number) {
-            tab[i] = if(i == 0 || i == 1)
+        for (i in 0..number) {
+            tab[i] = if (i == 0 || i == 1)
                 BigInteger.ONE
-            else (tab[i-1]!! + tab[i-2]!!)
+            else (tab[i - 1]!! + tab[i - 2]!!)
         }
         return tab[number]!!
     }
