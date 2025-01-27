@@ -4,6 +4,7 @@ package com.random.problems.adventOfCode.twentyFour.util
 data class Position(val x: Int, val y: Int) {
     operator fun plus(position: Position) = this.move(position)
     operator fun plus(direction: Direction) = this.move(direction)
+    operator fun times(multiplier: Int): Position = Position(this.x * multiplier, this.y * multiplier)
 
     companion object {
         val NULL = Position(0, 0)

@@ -1,5 +1,7 @@
 package com.random.problems.adventOfCode.twentyFour.day8
 
+import com.random.problems.adventOfCode.twentyFour.util.Grid
+import com.random.problems.adventOfCode.twentyFour.util.writeToFile
 import com.random.util.getResourceAsText
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -37,7 +39,7 @@ abstract class Part {
     abstract fun Position.getAntinodesWith(other: Position, map: Map): List<Position>
 
     fun generateMapWithAntinodes(filename: String, map: Map) {
-        writeToFile(filename, createMapWithAntinodes(getOccurrenceMap(map), map))
+        writeToFile(filename, Grid.of(createMapWithAntinodes(getOccurrenceMap(map), map)))
     }
 
     private fun createMapWithAntinodes(occurrenceMap: kotlin.collections.Map<Char, List<Position>>, map: Map): Map {
@@ -48,9 +50,9 @@ abstract class Part {
         return newMap
     }
 
-    private fun writeToFile(filename: String, map: Map) = Files.writeString(Paths.get(filename), getFormattedMap(map))
-
 }
+
+private fun Grid.Companion.of(map: Map): Grid = Grid(map.fields)
 
 class Part1: Part() {
     override fun run(map: Map) {
@@ -129,10 +131,4 @@ data class Position(val x: Int, val y: Int) {
         return Position((position.x + (position.x - this.x)), (position.y +(position.y - this.y)))
     }
 
-}
-
-private fun getFormattedMap(map: Map): String {
-    val fields: Array<Array<String>> = map.fields.map { it.map { i -> i.toString() }.toTypedArray() }.toTypedArray()
-    val newFields = arrayOf(fields.indices.map { it.toString() }.toTypedArray<String>()) + fields
-    return newFields.withIndex().joinToString("\n") { (i, it) -> "${(i-1)}    " + it.joinToString("  ") }
 }
