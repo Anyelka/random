@@ -1,8 +1,6 @@
 package com.random.problems.adventOfCode.twentyFour.day15
 
-import com.random.problems.adventOfCode.twentyFour.util.Direction
-import com.random.problems.adventOfCode.twentyFour.util.Grid
-import com.random.problems.adventOfCode.twentyFour.util.Position
+import com.random.problems.adventOfCode.twentyFour.util.*
 import com.random.util.getResourceAsText
 
 const val FILE_PATH = "/adventOfCode/2024/day15/TestCase1"
@@ -28,10 +26,8 @@ fun main() {
 }
 
 object InputConverter {
-    fun parseInput(lines: List<String>): Game {
-        val (map, moves) = splitInput(lines)
-        return Game(Grid.of(map), convertMoves(moves))
-    }
+    fun parseInput(lines: List<String>) =
+        splitInput(lines).let { (map, moves) -> Game(Grid.of(map), convertMoves(moves)) }
 
     private fun splitInput(lines: List<String>): Pair<List<String>, List<String>> {
         val index = lines.indexOf("")
@@ -42,14 +38,14 @@ object InputConverter {
         }
     }
 
-    private fun convertMoves(moves: List<String>): List<Direction>
-        = moves.joinToString("").toCharArray().map { Direction.of(it) }
+    private fun convertMoves(moves: List<String>): List<Direction> =
+        moves.joinToString("").toCharArray().map { Direction.of(it) }
 
     private fun Direction.Companion.of(char: Char): Direction {
-        if(char == MOVE_UP) return Direction.UP
-        if(char == MOVE_RIGHT) return Direction.RIGHT
-        if(char == MOVE_DOWN) return Direction.DOWN
-        if(char == MOVE_LEFT) return Direction.LEFT
+        if (char == MOVE_UP) return Direction.UP
+        if (char == MOVE_RIGHT) return Direction.RIGHT
+        if (char == MOVE_DOWN) return Direction.DOWN
+        if (char == MOVE_LEFT) return Direction.LEFT
         throw IllegalArgumentException("Unknown direction: $char")
     }
 }
@@ -67,11 +63,15 @@ object InputConverter {
 //                          - if its non-O, do nothing
 object Part1 {
     fun run(game: Game) {
-        game.makeMoves()
-        //writeToFile(OUTPUT_FILE_PATH, game.grid)
-        val result = game.findAllBoxes().sumOf { it.gps() }
-        println("Total gps: $result")
+        runAndLogTime(
+            Runnable {
+                game.makeMoves()
+                writeToFile(OUTPUT_FILE_PATH, game.grid)
+                val result = game.findAllBoxes().sumOf { it.gps() }
+                println("Total gps: $result")
+            })
     }
+
 }
 
 private fun Position.gps(): Long = 100 * this.y.toLong() + this.x.toLong()
@@ -86,25 +86,23 @@ data class Game(val grid: Grid, val moves: List<Direction>) {
     private fun makeMove(direction: Direction) {
         val robot = getRobotPosition()
         val nextPosition = robot.move(direction)
-        var nextInLineSkippingBoxes = getNextInLineSkippingBoxes(nextPosition, direction)
+        val nextInLineSkippingBoxes = getNextInLineSkippingBoxes(nextPosition, direction)
 
-        if(grid[nextInLineSkippingBoxes] == EMPTY) {
-            grid[nextPosition] = ROBOT
-            grid[robot] = EMPTY
-            if(nextInLineSkippingBoxes != nextPosition) {
-                grid[nextInLineSkippingBoxes] = BOX
-            }
+        if (grid[nextInLineSkippingBoxes] == EMPTY) {
+            grid.moveRobot(robot, nextPosition)
+            if (nextInLineSkippingBoxes != nextPosition) grid[nextInLineSkippingBoxes] = BOX
         }
-    }
-
-    private fun getNextInLineSkippingBoxes(position: Position, direction: Direction): Position {
-        var nextInLineSkippingBoxes = position
-        while(grid[nextInLineSkippingBoxes] == BOX) {
-            nextInLineSkippingBoxes = nextInLineSkippingBoxes.move(direction)
-        }
-        return nextInLineSkippingBoxes
     }
 
     private fun getRobotPosition(): Position = grid.positionOf(ROBOT)
 
+    private fun getNextInLineSkippingBoxes(position: Position, direction: Direction): Position =
+        generateSequence(position) { it.move(direction) }
+            .dropWhile { grid[it] == BOX }
+            .first()
+
+    private fun Grid.moveRobot(position: Position, nextPosition: Position) {
+        grid[nextPosition] = ROBOT
+        grid[position] = EMPTY
+    }
 }

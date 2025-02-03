@@ -46,13 +46,4 @@ data class Grid(val fields: Array<Array<Char>>) {
         fields[nextPosition.y][nextPosition.x] = value
     }
 
-    fun getFormattedMap(): String {
-        val fields: Array<Array<String>> = this.fields.map { it.map { i -> i.toString() }.toTypedArray() }.toTypedArray()
-        val emptyLine = Array<String>(fields.size) { " "}
-        val newFields = arrayOf(fields[0].indices.map { it.toString() }.toTypedArray<String>()) + emptyLine + fields
-        return newFields.withIndex().joinToString("\n") { (i, it) -> "${getColumnRowNumberValue(i)}    " + it.joinToString("  ") }
-    }
-
-    private fun getColumnRowNumberValue(i: Int): String = if(i > 1) (i - 2).toString() else ""
-
 }
