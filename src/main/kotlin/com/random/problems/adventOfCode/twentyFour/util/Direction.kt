@@ -19,4 +19,6 @@ enum class Direction(val x: Int, val y: Int) {
         LEFT -> UP
         else -> NULL
     }
+
+    companion object
 }
