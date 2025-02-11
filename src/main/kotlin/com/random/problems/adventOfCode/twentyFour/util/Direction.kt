@@ -20,5 +20,7 @@ enum class Direction(val x: Int, val y: Int) {
         else -> NULL
     }
 
+    fun isVertical() = this == UP || this == DOWN
+
     companion object
 }
