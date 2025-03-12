@@ -19,6 +19,20 @@ fun Array<Int>.swap(i: Int, j: Int) {
     this[j] = temp
 }
 
+fun CharArray.swap(i: Int, j: Int) {
+    this[i] = this[j].also { this[j] = this[i] }
+}
+
+fun CharArray.reverse(start: Int, end: Int) {
+    var i = start
+    var j = end - 1
+    while (i < j) {
+        this[i] = this[j].also { this[j] = this[i] }
+        i++
+        j--
+    }
+}
+
 fun <T> shortFormatArray(array: Array<T>): String {
     return "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
 }

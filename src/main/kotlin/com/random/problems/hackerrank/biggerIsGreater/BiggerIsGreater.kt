@@ -1,94 +1,102 @@
 package com.random.problems.hackerrank.biggerIsGreater
 
 import com.random.util.getResourceAsText
-import java.util.*
-import kotlin.math.pow
-import kotlin.time.measureTime
+import com.random.util.swap
+import java.math.BigInteger
 
-const val FILE_PATH = "/hackerrank/biggerIsGreater/TestCase1"
+const val FILE_PATH = "/hackerrank/biggerIsGreater/TestCase"
 
 fun main() {
-    val lines = getResourceAsText(FILE_PATH + "_in")!!.lines()
-    val inputLines = lines.takeLast(lines.size-1)
-    val outputLines = getResourceAsText(FILE_PATH + "_out")!!.lines()
-
-    val runtime = measureTime {
-        var hasErrors = false
-        for((index, line) in inputLines.withIndex()) {
-            val result = getNextGreater(line)
-            println(result)
-            val outputLine = outputLines[index]
-            if(outputLine != result) {
-                hasErrors = true
-                System.err.println("$index. line is expected to be: '$outputLine', but was: '$result'")
-            }
-        }
-        if(!hasErrors) {
-            println("   =======  PERFECT SOLUTION!   =======  ")
-        }
-    }
-    println("   =======  Time taken to run: $runtime")
+    val testCases = intArrayOf(0, 1, 4)
+    testCases.forEach { it.test() }
 }
 
-fun getNextGreater(word: String): String {
-    var greaterWords = mutableListOf<String>()
-    getGreaterWords(word.toCharArray().map{it.toString()}, 0, greaterWords, word)
-    greaterWords.sortBy { it.getValue() }
-    return if(greaterWords.size > 0) greaterWords[0] else "no answer"
-}
+private fun Int.test() {
+    println("TestCase$this:")
+    val inputLines = getResourceAsText("${FILE_PATH}${this}_in")!!.lines().drop(1)
+    val outputLines = getResourceAsText("${FILE_PATH}${this}_out")!!.lines()
 
-fun getGreaterWords(word: List<String>, index: Int, greaterWords: MutableList<String>, originalLine: String) {
-    if(index == word.size) {
-        val newWord = word.joinToString("")
-        if(newWord.getValue() > originalLine.getValue()) {
-            greaterWords.add(word.joinToString(""))
-        }
-    }
-    for(i: Int in index..word.lastIndex) {
-        Collections.swap(word, index, i)
-        getGreaterWords(word, index + 1, greaterWords, originalLine)
-        Collections.swap(word, i, index)
+    val inputData = inputLines.withIndex().map { (i, line) -> line to outputLines[i] }
+    // val inputData = listOf("fedcbabcd" to "fedcbabdc")
+    inputData.forEach { (word, expectedResult) ->
+        val result = biggerIsGreater(word)
+        println("Result for $word: $result - ${correct(result, expectedResult)}")
     }
 }
 
-fun String.getValue(): Long {
-    var value = 0.0
-    val charArray = toCharArray()
-    for ((index, char) in charArray.withIndex()) {
-            value += char.getCharValue() * 100.0.pow((charArray.size - index).toDouble())
+fun correct(result: String, expected: String): String = if (result == expected) "Correct" else "WRONG SOLUTION !!!"
+
+fun biggerIsGreater(w: String): String {
+    return biggerIsGreaterNextPermutation(w)
+}
+
+// Brute Force Solution:
+//      generate all possible words from the letters
+//      calculate the lexographical value for each of the words
+//      sort the words by lexographical value
+//      get the next word after the initial word
+//  Time complexity: O(n!*log(n!))
+//  Space complexity: O(n*n!)
+private fun biggerIsGreaterBruteForce(word: String): String {
+    val charMap = getCharMap(word)
+    val allPossibleWords = generateAllPossiblePermutations(charMap)
+    val sortedWords = withLexicographicalValues(allPossibleWords).map { it.first }
+    val currentWordIndex = sortedWords.indexOf(word)
+    return if (currentWordIndex != -1 && currentWordIndex != sortedWords.size - 1) sortedWords[currentWordIndex + 1] else "no answer"
+}
+
+private fun withLexicographicalValues(allPossibleWords: List<String>) =
+    allPossibleWords.map { it to it.lexicographicValue() }.sortedBy { it.second }
+
+private fun getCharMap(word: String): MutableMap<Char, Int> {
+    val charMap = mutableMapOf<Char, Int>()
+    word.toCharArray().forEach { charMap[it] = charMap.getOrDefault(it, 0) + 1 }
+    return charMap
+}
+
+private fun String.lexicographicValue(): BigInteger = toCharArray().withIndex()
+    .sumOf { (i, char) -> 100.toBigInteger().pow(this.length - 1 - i) * char.lexicographicValue() }
+
+private fun Char.lexicographicValue(): BigInteger = (code.toBigInteger() - 'a'.code.toBigInteger() + BigInteger.ONE)
+
+fun generateAllPossiblePermutations(charMap: MutableMap<Char, Int>): List<String> {
+    val allPossiblePermutations = mutableListOf<String>()
+
+    if (charMap.values.sum() == 0) return allPossiblePermutations.also { it.add("") }
+
+    for ((char, frequency) in charMap) {
+        if (frequency == 0) continue
+        val nextCharMap = charMap.toMutableMap().also { it[char] = it[char]!! - 1 }
+        generateAllPossiblePermutations(nextCharMap).forEach { allPossiblePermutations.add(char + it) }
     }
-    return value.toLong()
+    return allPossiblePermutations
 }
 
-fun Char.getCharValue(): Int {
-    return charValueMap[this + ""]!!
-}
+// Next Permutation Solution:
+//      - find the first char from the right (lowest place value = i) that is greater than the next one
+//          - this will be the first one that can be rearranged
+//          - if no such char, the string is lexicographically ordered (descending order) - no Greater string
+//      - find the first char from the right (j) that is greater than the previous element
+//      - swap the two chars: word[i] <-> word[j]
+//      - reverse the substring from the swapped element (i+1) so that the part after the swapped element will have
+///             the lowest lexicographical value
+//    Time complexity: O(n)
+//    Space complexity: O(1)
+fun biggerIsGreaterNextPermutation(word: String): String {
+    val charArray = word.toCharArray()
+    val n = charArray.size
 
-val charValueMap = mapOf(
-        "a" to 1,
-        "b" to 2,
-        "c" to 3,
-        "d" to 4,
-        "e" to 5,
-        "f" to 6,
-        "g" to 7,
-        "h" to 8,
-        "i" to 9,
-        "j" to 10,
-        "k" to 11,
-        "l" to 12,
-        "m" to 13,
-        "n" to 14,
-        "o" to 15,
-        "p" to 16,
-        "q" to 17,
-        "r" to 18,
-        "s" to 19,
-        "t" to 20,
-        "u" to 21,
-        "v" to 22,
-        "w" to 23,
-        "x" to 24,
-        "y" to 25,
-        "z" to 26
-)
+    var i = n - 2
+    while (i >= 0 && charArray[i] >= charArray[i + 1]) i--
+
+    if (i == -1) return "no answer"
+
+    var j = n - 1
+    while (charArray[j] <= charArray[i]) j--
+
+    charArray.swap(i, j)
+
+    charArray.reverse(i + 1, n)
+
+    return String(charArray)
+}
