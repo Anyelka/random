@@ -9,6 +9,10 @@ fun Int.pow(power: Int): Int {
     return this.toDouble().pow(power).toInt()
 }
 
+fun Int.sqrt(): Int {
+    return kotlin.math.sqrt(this.toDouble()).toInt()
+}
+
 fun Char.intValue(): Int {
     return this.code - 'a'.code
 }
