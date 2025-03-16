@@ -40,3 +40,5 @@ fun CharArray.reverse(start: Int, end: Int) {
 fun <T> shortFormatArray(array: Array<T>): String {
     return "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
 }
+
+fun isCorrectString(result: Int, expectedResult: Int) = if(result == expectedResult) "Correct" else "WRONG RESULT !!!!!!"

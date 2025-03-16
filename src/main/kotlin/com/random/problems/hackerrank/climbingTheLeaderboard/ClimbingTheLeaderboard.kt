@@ -1,40 +1,44 @@
 package com.random.problems.hackerrank.climbingTheLeaderboard
 
+import com.random.util.isCorrectString
 import com.random.util.getResourceAsText
-import kotlin.math.floor
 import kotlin.time.measureTime
 
-const val FILE_PATH = "/hackerrank/climbingTheLeaderboard/TestCase1"
+const val FILE_PATH = "/hackerrank/climbingTheLeaderboard/TestCase"
 
 fun main() {
-    val file = getResourceAsText(FILE_PATH)
 
-    val ranked = file!!.lines()[1].split(" ").map { it.toInt() }.toTypedArray()
-    val player = file.lines()[3].split(" ").map { it.toInt() }.toTypedArray()
+    val testCases = arrayOf(0, 1, 6)
+
+    testCases.forEach { test(it) }
+}
+
+fun test(testCase: Int) {
+    val input = getResourceAsText("${FILE_PATH}${testCase}_in")
+    val ranked = input!!.lines()[1].split(" ").map { it.toInt() }.toTypedArray()
+    val player = input.lines()[3].split(" ").map { it.toInt() }.toTypedArray()
+
+    val output = getResourceAsText("${FILE_PATH}${testCase}_out")
+    val expectedResults = output!!.lines().map { it.toInt() }.toTypedArray()
 
     val time = measureTime {
-        val result = climbingLeaderboard(ranked, player)
-        result.forEach {  println(it) }
+        println("TestCase$testCase:")
+        val result = Solution2().climbingLeaderboard(ranked, player)
+
+        // 1. log result of each line 1-by-1:
+        result.withIndex().forEach { (i, result) ->
+            if(i < 10) println("Rank of ${i+1}. player with score: ${player[i]} is: $result. - ${isCorrectString(result, expectedResults[i])}")
+            if(result != expectedResults[i]) {
+                println("debug")
+            }
+        }
+
+        // 2. only log total result:
+        if(result.withIndex().all { (i, result) -> result == expectedResults[i] }) {
+            println("Correct solution")
+        } else {
+            println("WRONG SOLUTION!!!!!")
+        }
     }
     println("Time taken: $time")
 }
-
-fun climbingLeaderboard(ranked: Array<Int>, player: Array<Int>): Array<Int> {
-    val ranks = HashMap<Int, Int>()
-    val result = ArrayList<Int>()
-    for(playerScore in player) {
-        var playerRank = ranks[playerScore]
-        if(playerRank == null) {
-            playerRank = getRank(ranked, playerScore)
-            ranks.put(playerScore, playerRank)
-        }
-        result.add(playerRank)
-    }
-    return result.toTypedArray()
-}
-
-//default solution: too slow
-fun getRank(ranked: Array<Int>, playerScore: Int): Int {
-    return 0
-}
-
