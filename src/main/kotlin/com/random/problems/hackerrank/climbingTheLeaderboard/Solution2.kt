@@ -32,6 +32,13 @@ class Solution2 {
     // Ordered approach:
     //      in this approach we utilize the fact that the player scores are in ascending order as well as the fact that
     //      the leaderboard is in descending order
+    //
+    //
+    //      Time complexity: O(n + m)
+    //      Space complexity: O(1)
+    //          where:
+    //              - n = the number of players, and
+    //              - m = the size of the leaderboard
     private fun climbingLeaderboardOrdered(player: Array<Int>, ranked: Array<Int>): Array<Int> {
         var prevScore = Int.MAX_VALUE
         var prevRank = 0
