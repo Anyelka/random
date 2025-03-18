@@ -2,7 +2,7 @@ package com.random.problems.leetCode.medianOfTwoSortedArrays
 
 class Solution1 {
     fun findMedianSortedArrays(nums1: IntArray, nums2: IntArray): Double {
-        return findMedianSortedArraysBinary(nums1, nums2)
+        return findMedianSortedArraysMergeV2(nums1, nums2)
     }
 
     // 1. Naive merge solution:
@@ -12,9 +12,7 @@ class Solution1 {
     //      Space complexity:   O(n + m)
     fun findMedianSortedArraysMerge(nums1: IntArray, nums2: IntArray): Double {
         val mergedArray = merge(nums1, nums2)
-        return if (mergedArray.size % 2 == 0)
-            (mergedArray[mergedArray.size / 2] + mergedArray[mergedArray.size / 2 - 1]).toDouble() / 2
-        else mergedArray[mergedArray.size / 2].toDouble()
+        return mergedArray.toIntArray().median()
     }
 
     private fun merge(array1: IntArray, array2: IntArray): Array<Int> {
@@ -39,6 +37,20 @@ class Solution1 {
             j++
         }
         return result.toTypedArray()
+    }
+
+    // 1.2 Naive v2:
+    //      same as the merge solution with more concise code
+    fun findMedianSortedArraysMergeV2(nums1: IntArray, nums2: IntArray): Double {
+        var i = 0
+        var j = 0
+        fun getNext() = when {
+            i < nums1.size && j < nums2.size -> if(nums1[i] < nums2[j]) nums1[i++] else nums2[j++]
+            i < nums1.size -> nums1[i++]
+            else -> nums2[j++]
+        }
+        val mergedArray = IntArray(nums1.size + nums2.size) { getNext() }
+        return mergedArray.median()
     }
 
     // 2. "Binary search"
@@ -117,3 +129,6 @@ class Solution1 {
         throw IllegalArgumentException("Input arrays are not sorted or have invalid sizes.")
     }
 }
+
+private fun IntArray.median(): Double = if (this.size % 2 == 0) (this[this.size / 2] + this[this.size / 2 - 1]) / 2.0
+    else this[this.size / 2].toDouble()
