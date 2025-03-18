@@ -42,7 +42,7 @@ class Solution1 {
     }
 
     // 2. "Binary search"
-    //      perform a "binary" algorithm:
+    //      perform a "binary search" algorithm:
     //          - find the smaller of the two arrays and use it as the base array - 'a'
     //              we will perform a "binary search"-like algorithm on the base array with two pointers and a mid index
     //              the other array will be the secondary array - 'b'
@@ -83,6 +83,9 @@ class Solution1 {
     //                          than the left sub-array of 'a' is too big, we continue the binary search
     //                          in the LEFT sub-array of 'a' -> set the left pointer to mid + 1 in 'a'
     //                          l = i + 1
+    //
+    //      Time complexity:    O(log(min(n,m))
+    //      Space complexity:   O(1)
     fun findMedianSortedArraysBinary(array1: IntArray, array2: IntArray): Double {
         val (a, b) = if (array1.size > array2.size) array2 to array1 else array1 to array2
         var l = 0
