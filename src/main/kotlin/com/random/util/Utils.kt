@@ -44,3 +44,5 @@ fun <T> shortFormatArray(array: Array<T>): String {
 fun isCorrectString(result: Int, expectedResult: Int) = if(result == expectedResult) "Correct" else "WRONG RESULT !!!!!!"
 
 fun isCorrectString(result: Double, expectedResult: Double) = if(result == expectedResult) "Correct" else "WRONG RESULT !!!!!!"
+
+fun isCorrectString(result: Any, expectedResult: Any) = if(result == expectedResult) "Correct" else "WRONG RESULT !!!!!!"
