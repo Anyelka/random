@@ -37,12 +37,11 @@ fun CharArray.reverse(start: Int, end: Int) {
     }
 }
 
-fun <T> shortFormatArray(array: Array<T>): String {
-    return "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
-}
+fun <T> shortFormatArray(array: Array<T>) = if(array.size > 5) shortFormat(array) else array.contentToString()
 
-fun isCorrectString(result: Int, expectedResult: Int) = if(result == expectedResult) "Correct" else "WRONG RESULT !!!!!!"
+private fun <T> shortFormat(array: Array<T>) =
+    "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
 
-fun isCorrectString(result: Double, expectedResult: Double) = if(result == expectedResult) "Correct" else "WRONG RESULT !!!!!!"
+fun isCorrectStringWithExpected(result: Any, expected: Any) = isCorrectString(result, expected) + if(result != expected) " - should be $expected" else ""
 
-fun isCorrectString(result: Any, expectedResult: Any) = if(result == expectedResult) "Correct" else "WRONG RESULT !!!!!!"
+fun isCorrectString(result: Any, expected: Any) = if(result == expected) "Correct" else "WRONG RESULT !!!!!!"
