@@ -42,6 +42,21 @@ fun <T> shortFormatArray(array: Array<T>) = if(array.size > 5) shortFormat(array
 private fun <T> shortFormat(array: Array<T>) =
     "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
 
-fun isCorrectStringWithExpected(result: Any, expected: Any) = isCorrectString(result, expected) + if(result != expected) " - should be $expected" else ""
+fun isCorrectStringWithExpected(result: Any, expected: Any) = isCorrectString(result, expected) + if(!areEqual(result,expected)) " - should be ${format(expected)}" else ""
 
-fun isCorrectString(result: Any, expected: Any) = if(result == expected) "Correct" else "WRONG RESULT !!!!!!"
+fun isCorrectString(result: Any, expected: Any) = if(areEqual(result, expected)) "Correct" else "WRONG RESULT !!!!!!"
+
+fun Pair<Any, Any>.test(method: (Any) -> Any) {
+    val result = method { first }
+    println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
+}
+
+private fun format(value: Any) = if(value is Array<*>) shortFormatArray(value) else value.toString()
+
+private fun areEqual(obj1: Any?, obj2: Any?): Boolean {
+    return when {
+        obj1 is Array<*> && obj2 is Array<*> -> obj1.contentEquals(obj2)
+        obj1 is Int && obj2 is Int -> obj1 == obj2
+        else -> obj1 == obj2
+    }
+}
