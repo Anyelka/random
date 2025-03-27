@@ -51,7 +51,13 @@ fun Pair<Any, Any>.test(method: (Any) -> Any) {
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
 }
 
-private fun format(value: Any) = if(value is Array<*>) shortFormatArray(value) else value.toString()
+private fun format(value: Any): String =
+    when(value) {
+        is Array<*> -> shortFormatArray(value)
+        is IntArray -> shortFormatArray(value.toTypedArray())
+        is Pair<*,*> -> (format(value.first!!) to format(value.second!!)).toString()
+        else -> value.toString()
+    }
 
 private fun areEqual(obj1: Any?, obj2: Any?): Boolean {
     return when {
