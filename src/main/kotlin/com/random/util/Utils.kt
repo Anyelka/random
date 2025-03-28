@@ -3,7 +3,7 @@ package com.random.util
 import kotlin.math.pow
 
 fun getResourceAsText(path: String): String? =
-        object {}.javaClass.getResource(path)?.readText()
+    object {}.javaClass.getResource(path)?.readText()
 
 fun Int.pow(power: Int): Int {
     return this.toDouble().pow(power).toInt()
@@ -37,14 +37,20 @@ fun CharArray.reverse(start: Int, end: Int) {
     }
 }
 
-fun <T> shortFormatArray(array: Array<T>) = if(array.size > 5) shortFormat(array) else array.contentToString()
+operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> = first + other.first to second + other.second
+
+fun Pair<Int, Int>.isIn(board: Array<CharArray>) =
+    first < board.size && second < board[0].size && first >= 0 && second >= 0
+
+fun <T> shortFormatArray(array: Array<T>) = if (array.size > 5) shortFormat(array) else array.contentToString()
 
 private fun <T> shortFormat(array: Array<T>) =
     "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
 
-fun isCorrectStringWithExpected(result: Any, expected: Any) = isCorrectString(result, expected) + if(!areEqual(result,expected)) " - should be ${format(expected)}" else ""
+fun isCorrectStringWithExpected(result: Any, expected: Any) =
+    isCorrectString(result, expected) + if (!areEqual(result, expected)) " - should be ${format(expected)}" else ""
 
-fun isCorrectString(result: Any, expected: Any) = if(areEqual(result, expected)) "Correct" else "WRONG RESULT !!!!!!"
+fun isCorrectString(result: Any, expected: Any) = if (areEqual(result, expected)) "Correct" else "WRONG RESULT !!!!!!"
 
 fun Pair<Any, Any>.test(method: (Any) -> Any) {
     val result = method { first }
@@ -52,10 +58,10 @@ fun Pair<Any, Any>.test(method: (Any) -> Any) {
 }
 
 private fun format(value: Any): String =
-    when(value) {
+    when (value) {
         is Array<*> -> shortFormatArray(value)
         is IntArray -> shortFormatArray(value.toTypedArray())
-        is Pair<*,*> -> (format(value.first!!) to format(value.second!!)).toString()
+        is Pair<*, *> -> (format(value.first!!) to format(value.second!!)).toString()
         else -> value.toString()
     }
 
