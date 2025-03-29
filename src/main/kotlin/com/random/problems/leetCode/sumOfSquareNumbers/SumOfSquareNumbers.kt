@@ -17,7 +17,7 @@ fun main() {
 }
 
 private fun  Pair<Int, Boolean>.test() {
-    val result = Solution1().judgeSquareSum(first)
+    val result = Solution2().judgeSquareSum(first)
     println("Result for $first: $result - ${isCorrect(second, result)}" )
 }
 
