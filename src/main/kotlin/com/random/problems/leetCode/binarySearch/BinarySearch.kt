@@ -9,78 +9,18 @@ fun main() {
 }
 
 fun Pair<Pair<IntArray, Int>, Int>.test() {
-    val solution = first.first.findIndex(first.second)
+    val solution = Solution2().search(first.first, first.second)
     println("Index of: ${first.second}: $solution - ${correct(solution, second)}")
 }
 
 fun correct(solution: Int, second: Int): String = if(solution == second) "correct" else "WRONG SOLUTION!!!"
 
-fun IntArray.findIndex(num: Int): Int {
-    return findIndexBinarySearchIteratively(num)
-}
-
-// Brute Force Solution: going through all the elements
-//      Time complexity:    O(n)
-//      Space complexity:   O(1)
-
-fun IntArray.findIndexBruteForce(num:Int): Int {
-    var index = -1
-    for(i in indices) {
-        if(this[i] == num) index = i
-    }
-    return index
-}
-
-// Brute Force Solution improved: return directly
-//      Time complexity:    O(n)
-//      Space complexity:   O(1)
-fun IntArray.findIndexBruteForceDirectReturn(num:Int): Int {
-    for(i in indices) {
-        if(this[i] == num) return i
-    }
-    return -1
-}
-
-// Binary Search Solution: recursively
-//      Time complexity:    O(log(n))
-//      Space complexity:   O(log(n))
-
-fun IntArray.findIndexBinarySearchRecursively(num: Int): Int {
-    return findIndexBinarySearch(num, 0, this.size - 1)
-}
-
-fun IntArray.findIndexBinarySearch(num: Int, start: Int, end: Int): Int {
-    if(start > end) return -1
-    val mid = (start + end) / 2
-    return if(this[mid] == num) {
-        mid
-    } else if(num > this[mid]) {
-        findIndexBinarySearch(num, mid + 1, end)
-    } else {
-        findIndexBinarySearch(num, start, mid - 1)
-    }
-}
-
-// Binary Search Solution: iteratively
-//      Time complexity:    O(log(n))
-//      Space complexity:   O(1)
-
-fun IntArray.findIndexBinarySearchIteratively(num: Int): Int {
-    var start = 0
-    var end = size - 1
-    while(start <= end) {
-        val mid = (start + end) / 2
-        if (get(mid) == num) return mid
-        else if (num > get(mid)) start = mid + 1
-        else end = mid - 1
-    }
-    return -1
-}
 
 fun getInput(): List<Pair<Pair<IntArray, Int>, Int>> {
     return listOf(
-        (intArrayOf(-1,0,3,5,9,12) to 9) to 4,
-        (intArrayOf(-1,0,3,5,9,12) to 2) to -1,
+        /*(intArrayOf(-1,0,3,5,9,12) to 9) to 4,
+        (intArrayOf(-1,0,3,5,9,12) to 2) to -1,*/
+        (intArrayOf(5) to 5) to 0,
         (intArrayOf(1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29) to 29) to 14,
         (intArrayOf(1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29) to 8) to -1,
         (intArrayOf(1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29) to 1) to 0,
