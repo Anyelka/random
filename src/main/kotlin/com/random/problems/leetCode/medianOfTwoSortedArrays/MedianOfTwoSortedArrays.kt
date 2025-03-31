@@ -1,6 +1,6 @@
 package com.random.problems.leetCode.medianOfTwoSortedArrays
 
-import com.random.util.isCorrectString
+import com.random.util.test
 
 fun main() {
     val input = listOf(
@@ -11,11 +11,9 @@ fun main() {
         (intArrayOf(-1000000, 1000000) to intArrayOf(-1000000, 1000000)) to 0.0
     )
 
-    input.forEach { it.test() }
+    input.forEach {
+        val (nums1, nums2) = it.first
+        it.test { Solution2().findMedianSortedArrays(nums1, nums2) }
+    }
 }
 
-private fun Pair<Pair<IntArray, IntArray>, Double>.test() {
-    val (nums1, nums2) = first
-    val result = Solution1().findMedianSortedArrays(nums1, nums2)
-    println("Result for arrays: ${nums1.contentToString()} and ${nums2.contentToString()} is: $result - ${isCorrectString(result, second)}" )
-}
