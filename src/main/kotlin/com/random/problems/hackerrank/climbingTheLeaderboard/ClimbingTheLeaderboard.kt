@@ -23,7 +23,7 @@ fun test(testCase: Int) {
 
     val time = measureTime {
         println("TestCase$testCase:")
-        val result = Solution2().climbingLeaderboard(ranked, player)
+        val result = Solution3().climbingLeaderboard(ranked, player)
 
         // 1. log result of each line 1-by-1:
         result.withIndex().forEach { (i, result) ->
