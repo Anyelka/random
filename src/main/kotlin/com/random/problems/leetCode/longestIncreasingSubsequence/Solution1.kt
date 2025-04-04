@@ -1,7 +1,7 @@
 package com.random.problems.leetCode.longestIncreasingSubsequence
 
 class Solution1 {
-    fun lengthOfLIS(nums: IntArray) = lengthOfLISRec(nums)
+    fun lengthOfLIS(nums: IntArray) = lengthOfLISMemo(nums)
 
     // 1. Naive recursive solution
     //
