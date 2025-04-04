@@ -31,7 +31,7 @@ private fun String.test() {
     }.toTypedArray()
 
     runAndLogTime() {
-        val result = Solution3().queensAttack(n, obstacles.size, queenPosition.first, queenPosition.second, obstacles)
+        val result = Solution4().queensAttack(n, obstacles.size, queenPosition.first, queenPosition.second, obstacles)
         val expectedResult = outputFile!!.lines()[0].toInt()
         println("The queen can attack $result spaces - ${isCorrectString(result, expectedResult)}")
     }
