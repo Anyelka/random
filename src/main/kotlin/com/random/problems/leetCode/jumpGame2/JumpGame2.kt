@@ -2,6 +2,7 @@ package com.random.problems.leetCode.jumpGame2
 
 import com.random.problems.adventOfCode.twentyFour.util.runAndLogTime
 import com.random.util.isCorrectString
+import com.random.util.test
 
 fun main() {
     val input = listOf(
@@ -12,10 +13,8 @@ fun main() {
         intArrayOf(5, 6, 4, 4, 6, 9, 4, 4, 7, 4, 4, 8, 2, 6, 8, 1, 5, 9, 6) to 3
     )
 
-    input.forEach { runAndLogTime { test(it) } }
-}
-
-fun test(it: Pair<IntArray, Int>) {
-    val result = Solution1().jump(it.first)
-    println("Result for ${it.first.contentToString()}: $result - ${isCorrectString(result, it.second)}")
+    input.forEach { runAndLogTime {
+        val nums = it.first
+        it.test { Solution2().jump(nums) }
+    } }
 }
