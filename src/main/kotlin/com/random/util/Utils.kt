@@ -57,6 +57,11 @@ fun Pair<Any, Any>.test(method: (Any) -> Any) {
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
 }
 
+fun Pair<Any, Any>.testWithoutPrintInput(method: (Any) -> Any) {
+    val result = method { first }
+    println("Result is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
+}
+
 private fun format(value: Any): String =
     when (value) {
         is Array<*> -> shortFormatArray(value)
