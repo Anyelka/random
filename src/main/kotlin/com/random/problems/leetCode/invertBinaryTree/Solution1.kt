@@ -1,13 +1,6 @@
 package com.random.problems.leetCode.invertBinaryTree
 
 class Solution1 {
-    fun invertTreeWithConversions(inputArray: Array<Int?>): Array<Int?> =
-        TreeConverter.convertBack(invertTree(TreeConverter.convert(inputArray)))
-
-    fun invertTree(root: TreeNode?): TreeNode? {
-        return invert(root)
-    }
-
     private fun invert(node: TreeNode?): TreeNode? {
         if(node != null) {
             val temp = node.left
@@ -18,6 +11,10 @@ class Solution1 {
         }
         return node
     }
+
+    fun convertBack(root: TreeNode?) = TreeConverter.convertBack(root)
+
+    fun convert(array: Array<Int?>): TreeNode? = TreeConverter.convert(array)
 }
 
 // The tree converter converts the Array of Ints to a TreeNode (root node)
