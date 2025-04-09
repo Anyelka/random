@@ -1,6 +1,7 @@
 package com.random.problems.hackerrank.biggerIsGreater
 
 import com.random.util.getResourceAsText
+import com.random.util.test
 
 const val FILE_PATH = "/hackerrank/biggerIsGreater/TestCase"
 
@@ -16,9 +17,9 @@ private fun Int.test() {
 
     val inputData = inputLines.withIndex().map { (i, line) -> line to outputLines[i] }
     // val inputData = listOf("fedcbabcd" to "fedcbabdc")
-    inputData.forEach { (word, expectedResult) ->
-        val result = Solution2().biggerIsGreater(word)
-        println("Result for $word: $result - ${correct(result, expectedResult)}")
+    inputData.forEach {
+        val word = it.first
+        it.test { Solution3().biggerIsGreater(word) }
     }
 }
 
