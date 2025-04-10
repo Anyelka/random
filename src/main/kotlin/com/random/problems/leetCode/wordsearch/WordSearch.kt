@@ -13,6 +13,6 @@ fun main() {
 
     input.forEach {
         val (board, word) = it.first
-        it.test { Solution1().exist(board, word) }
+        it.test { Solution2().exist(board, word) }
     }
 }
