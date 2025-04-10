@@ -1,7 +1,7 @@
 package com.random.algorithms.sorts.kotlin
 
 import com.random.algorithms.sorts.testdata.TestDataProvider
-import com.random.util.shortFormatArray
+import com.random.util.shortFormatArrayIfNeeded
 
 
 fun main() {
@@ -55,7 +55,7 @@ fun main() {
 }
 
 private fun <T> Pair<Array<T>, Array<T>>.test(algorithms: List<SortingAlgorithm<T>>) {
-    println("Sorting array: ${shortFormatArray(first)}")
+    println("Sorting array: ${shortFormatArrayIfNeeded(first)}")
     algorithms.forEach { it.test(this) }
 }
 

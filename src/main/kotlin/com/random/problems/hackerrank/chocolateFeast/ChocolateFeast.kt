@@ -1,7 +1,7 @@
 package com.random.problems.hackerrank.chocolateFeast
 
 import com.random.util.isCorrectStringWithExpected
-import com.random.util.shortFormatArray
+import com.random.util.shortFormatArrayIfNeeded
 
 fun main() {
     val input = listOf(
@@ -16,5 +16,5 @@ fun main() {
 
 private fun Pair<IntArray, Int>.test() {
     val result = Solution1().chocolateFeast(first[0], first[1], first[2])
-    println("Result for strings: ${shortFormatArray(first.toTypedArray())} = $result - ${isCorrectStringWithExpected(result, second)}")
+    println("Result for strings: ${shortFormatArrayIfNeeded(first.toTypedArray())} = $result - ${isCorrectStringWithExpected(result, second)}")
 }

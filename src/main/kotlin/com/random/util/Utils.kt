@@ -42,9 +42,13 @@ operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> = first 
 fun Pair<Int, Int>.isIn(board: Array<CharArray>) =
     first < board.size && second < board[0].size && first >= 0 && second >= 0
 
-fun <T> shortFormatArray(array: Array<T>) = if (array.size > 5) shortFormat(array) else array.contentToString()
+fun <T> shortFormatArrayIfNeeded(array: Array<T>) = if (array.size > 10) shortFormatArray(array) else array.contentToString()
+fun shortFormatArrayIfNeeded(array: IntArray) = if (array.size > 10) shortFormatIntArray(array) else array.contentToString()
 
-private fun <T> shortFormat(array: Array<T>) =
+private fun <T> shortFormatArray(array: Array<T>) =
+    "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
+
+private fun shortFormatIntArray(array: IntArray) =
     "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
 
 fun isCorrectStringWithExpected(result: Any, expected: Any) =
@@ -64,8 +68,8 @@ fun Pair<Any, Any>.testWithoutPrintInput(method: (Any) -> Any) {
 
 private fun format(value: Any): String =
     when (value) {
-        is Array<*> -> shortFormatArray(value)
-        is IntArray -> shortFormatArray(value.toTypedArray())
+        is Array<*> -> shortFormatArrayIfNeeded(value)
+        is IntArray -> shortFormatArrayIfNeeded(value.toTypedArray())
         is Pair<*, *> -> (format(value.first!!) to format(value.second!!)).toString()
         else -> value.toString()
     }
@@ -73,6 +77,7 @@ private fun format(value: Any): String =
 private fun areEqual(obj1: Any?, obj2: Any?): Boolean {
     return when {
         obj1 is Array<*> && obj2 is Array<*> -> obj1.contentEquals(obj2)
+        obj1 is IntArray && obj2 is IntArray -> obj1.contentEquals(obj2)
         obj1 is Int && obj2 is Int -> obj1 == obj2
         else -> obj1 == obj2
     }
