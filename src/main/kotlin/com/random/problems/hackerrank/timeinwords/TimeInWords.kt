@@ -1,6 +1,7 @@
 package com.random.problems.hackerrank.timeinwords
 
 import com.random.util.getResourceAsText
+import com.random.util.toDigits
 
 val FILE_PATH = "/hackerrank/timeinminutes/TestCase0"
 
@@ -77,7 +78,6 @@ fun Int.getAsText(): String  {
     throw IllegalArgumentException("Unsupported number: $this")
 }
 
-fun Int.toDigits(): List<Int> = toString().map {it.toString().toInt()}
 
 val numberToWordMap = mapOf<Int, String>(
         0 to "o' clock",

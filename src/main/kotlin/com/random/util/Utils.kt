@@ -82,3 +82,6 @@ private fun areEqual(obj1: Any?, obj2: Any?): Boolean {
         else -> obj1 == obj2
     }
 }
+
+fun Int.toDigits(): List<Int> = toString().map {it.toString().toInt()}
+fun Long.toDigits(): List<Int> = toString().map { it.toString().toInt() }
