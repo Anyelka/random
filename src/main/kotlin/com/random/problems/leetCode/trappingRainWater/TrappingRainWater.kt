@@ -12,6 +12,6 @@ fun main() {
 
     input.forEach {
         val height = it.first
-        it.test { Solution1().trap(height) }
+        it.test { Solution2().trap(height) }
     }
 }
