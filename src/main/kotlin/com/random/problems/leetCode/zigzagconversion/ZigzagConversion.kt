@@ -16,6 +16,6 @@ fun main() {
 }
 
 private fun Pair<Pair<String, Int>, String>.test() {
-    val result = Solution1().convert(first.first, first.second)
+    val result = Solution2().convert(first.first, first.second)
     println("Result for s = '${first.first}', numRows = ${first.second}: '$result' - ${isCorrectString(result, second)}")
 }
