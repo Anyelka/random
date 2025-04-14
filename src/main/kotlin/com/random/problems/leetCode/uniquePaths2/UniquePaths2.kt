@@ -12,6 +12,6 @@ fun main() {
 
     input.forEach {
         val obstacleGrid = it.first
-        it.test { Solution1().uniquePathsWithObstacles(obstacleGrid) }
+        it.test { Solution2().uniquePathsWithObstacles(obstacleGrid) }
     }
 }
