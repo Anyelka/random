@@ -6,6 +6,9 @@ class Solution1 {
     }
 
     // Solution 1: Naive recursion
+    //
+    //      TC:     O(m ^ n)
+    //      SC:     O(n)
     private fun canJump1(nums: IntArray): Boolean {
         return canJumpFrom(nums, 0)
     }
@@ -16,6 +19,9 @@ class Solution1 {
     }
 
     // 2. Memo: Overflow
+    //
+    //      TC:     O(n ^ 2)
+    //      SC:     O(n)
     private fun canJump2(nums: IntArray): Boolean {
         return canJumpFromMemo(nums, 0, mutableMapOf())
     }
@@ -30,6 +36,9 @@ class Solution1 {
     }
 
     // 3. Tab
+    //
+    //      TC:     O(n * m)
+    //      SC:     O(n)
     private fun canJump3(nums: IntArray): Boolean {
         val dp = Array(nums.size) { false }
         dp[0] = true
