@@ -15,7 +15,7 @@ fun main() {
 
     input.forEach {
         val (s, k) = it.first
-        it.test { Solution1().nonDivisibleSubset(k, s) }
+        it.test { Solution2().nonDivisibleSubset(k, s) }
     }
 }
 
