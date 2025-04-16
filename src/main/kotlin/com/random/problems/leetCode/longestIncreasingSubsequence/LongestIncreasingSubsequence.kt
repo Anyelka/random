@@ -12,11 +12,12 @@ fun main() {
         intArrayOf(2,2) to 1,
         intArrayOf(3,1,2) to 2,
         intArrayOf(4,10,4,3,8,9) to 3,
-        intArrayOf(1,3,6,7,9,4,10,5,6) to 6
+        intArrayOf(1,3,6,7,9,4,10,5,6) to 6,
+        intArrayOf(0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15) to 6
     )
 
     input.forEach {
         val nums = it.first
-        it.test{ Solution2().lengthOfLIS(nums) }
+        it.test{ Solution3().lengthOfLIS(nums) }
     }
 }
