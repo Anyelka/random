@@ -1,5 +1,7 @@
 package com.random.problems.hackerrank.queensAttack
 
+import com.random.util.absoluteValue
+
 class Solution2 {
     fun queensAttack(n: Int, k: Int, r_q: Int, c_q: Int, obstacles: Array<Array<Int>>): Int {
         val topRightR = if(r_q > c_q) n else n+r_q-c_q
@@ -72,8 +74,4 @@ class Solution2 {
                 (lastFreeSpaces[2][1] - lastFreeSpaces[6][1]).absoluteValue() +
                 (lastFreeSpaces[3][0] - lastFreeSpaces[7][0]).absoluteValue()
     }
-}
-
-fun Int.absoluteValue(): Int {
-    return if(this < 0) -this else this
 }

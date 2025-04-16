@@ -16,6 +16,6 @@ fun main() {
 }
 
 private fun Pair<Pair<String, String>, Int>.test() {
-    val result = Solution1().makingAnagrams(first.first, first.second)
+    val result = Solution2().makingAnagrams(first.first, first.second)
     println("Result for strings: $first = $result - ${isCorrectStringWithExpected(result, second)}")
 }

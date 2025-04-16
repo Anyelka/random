@@ -42,8 +42,11 @@ operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> = first 
 fun Pair<Int, Int>.isIn(board: Array<CharArray>) =
     first < board.size && second < board[0].size && first >= 0 && second >= 0
 
-fun <T> shortFormatArrayIfNeeded(array: Array<T>) = if (array.size > 25) shortFormatArray(array) else array.contentToString()
-fun shortFormatArrayIfNeeded(array: IntArray) = if (array.size > 25) shortFormatIntArray(array) else array.contentToString()
+fun <T> shortFormatArrayIfNeeded(array: Array<T>) =
+    if (array.size > 25) shortFormatArray(array) else array.contentToString()
+
+fun shortFormatArrayIfNeeded(array: IntArray) =
+    if (array.size > 25) shortFormatIntArray(array) else array.contentToString()
 
 private fun <T> shortFormatArray(array: Array<T>) =
     "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
@@ -83,5 +86,6 @@ private fun areEqual(obj1: Any?, obj2: Any?): Boolean {
     }
 }
 
-fun Int.toDigits(): List<Int> = toString().map {it.toString().toInt()}
+fun Int.toDigits(): List<Int> = toString().map { it.toString().toInt() }
 fun Long.toDigits(): List<Int> = toString().map { it.toString().toInt() }
+fun Int.absoluteValue() = if (this < 0) -this else this
