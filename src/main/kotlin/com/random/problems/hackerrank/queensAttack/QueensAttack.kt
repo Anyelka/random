@@ -1,6 +1,7 @@
 package com.random.problems.hackerrank.queensAttack
 
 import com.random.problems.adventOfCode.twentyFour.util.runAndLogTime
+import com.random.util.areEqual
 import com.random.util.getResourceAsText
 import com.random.util.isCorrectString
 
@@ -33,6 +34,6 @@ private fun String.test() {
     runAndLogTime() {
         val result = Solution4().queensAttack(n, obstacles.size, queenPosition.first, queenPosition.second, obstacles)
         val expectedResult = outputFile!!.lines()[0].toInt()
-        println("The queen can attack $result spaces - ${isCorrectString(result, expectedResult)}")
+        println("The queen can attack $result spaces - ${isCorrectString(areEqual(result, expectedResult))}")
     }
 }

@@ -54,14 +54,27 @@ private fun <T> shortFormatArray(array: Array<T>) =
 private fun shortFormatIntArray(array: IntArray) =
     "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
 
-fun isCorrectStringWithExpected(result: Any, expected: Any) =
-    isCorrectString(result, expected) + if (!areEqual(result, expected)) " - should be ${format(expected)}" else ""
+fun isCorrectStringWithExpected(result: Any, expected: Any): String {
+    val areEqual = areEqual(result, expected)
+    return isCorrectString(areEqual) + expectedString(areEqual, expected)
+}
 
-fun isCorrectString(result: Any, expected: Any) = if (areEqual(result, expected)) "Correct" else "WRONG RESULT !!!!!!"
+fun <T> isCorrectStringWithExpectedWithSet(result: List<T>, expected: List<T>): String  {
+    val areEqual = areSetEqual(result, expected)
+    return isCorrectString(areEqual) + expectedString(areEqual, expected)
+}
+
+fun isCorrectString(areEqual: Boolean) = if (areEqual) "Correct" else "WRONG RESULT !!!!!!"
+private fun expectedString(areEqual: Boolean, expected: Any) = if (!areEqual) " - should be ${format(expected)}" else ""
 
 fun Pair<Any, Any>.test(method: (Any) -> Any) {
     val result = method { first }
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
+}
+
+fun <T> Pair<Any, List<T>>.testWithSet(method: (Any) -> List<T>) {
+    val result = method { first }
+    println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpectedWithSet(result, second)}")
 }
 
 fun Pair<Any, Any>.testWithoutPrintInput(method: (Any) -> Any) {
@@ -77,7 +90,7 @@ private fun format(value: Any): String =
         else -> value.toString()
     }
 
-private fun areEqual(obj1: Any?, obj2: Any?): Boolean {
+fun areEqual(obj1: Any?, obj2: Any?): Boolean {
     return when {
         obj1 is Array<*> && obj2 is Array<*> -> obj1.contentEquals(obj2)
         obj1 is IntArray && obj2 is IntArray -> obj1.contentEquals(obj2)
@@ -85,6 +98,8 @@ private fun areEqual(obj1: Any?, obj2: Any?): Boolean {
         else -> obj1 == obj2
     }
 }
+
+private fun <T> areSetEqual(list1: List<T>, list2: List<T>) = list1.toSet() == list2.toSet()
 
 fun Int.toDigits(): List<Int> = toString().map { it.toString().toInt() }
 fun Long.toDigits(): List<Int> = toString().map { it.toString().toInt() }

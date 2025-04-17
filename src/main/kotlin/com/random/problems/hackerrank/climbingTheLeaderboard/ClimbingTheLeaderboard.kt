@@ -1,5 +1,6 @@
 package com.random.problems.hackerrank.climbingTheLeaderboard
 
+import com.random.util.areEqual
 import com.random.util.isCorrectString
 import com.random.util.getResourceAsText
 import kotlin.time.measureTime
@@ -27,7 +28,7 @@ fun test(testCase: Int) {
 
         // 1. log result of each line 1-by-1:
         result.withIndex().forEach { (i, result) ->
-            if(i < 10) println("Rank of ${i+1}. player with score: ${player[i]} is: $result. - ${isCorrectString(result, expectedResults[i])}")
+            if(i < 10) println("Rank of ${i+1}. player with score: ${player[i]} is: $result. - ${isCorrectString(areEqual(result,expectedResults[i]))}")
             if(result != expectedResults[i]) {
                 println("debug")
             }
