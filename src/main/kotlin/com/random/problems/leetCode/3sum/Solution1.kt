@@ -54,7 +54,7 @@ class Solution1 {
                 if (threeSum == 0) {
                     triplets.add(listOf(target, nums[l], nums[r]))
                     l++
-                    while(nums[l] == nums[l - 1] && l < r) l ++
+                    while(nums[l] == nums[l - 1] && l < r) l++
                 } else if (threeSum < 0) {
                     l++
                 } else {
