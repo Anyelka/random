@@ -23,7 +23,7 @@ fun main() {
     input.forEach {
         val currentInput = it.first
         it.test {
-            Solution2().coinChange(currentInput.first, currentInput.second)
+            Solution3().coinChange(currentInput.first, currentInput.second)
         }
     }
 
