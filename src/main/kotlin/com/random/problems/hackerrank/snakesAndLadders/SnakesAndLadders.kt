@@ -17,7 +17,7 @@ private fun Int.test() {
     val games = toSnakesAndLaddersGames(inputLines)
 
     games.withIndex().forEach { (i, game) ->
-        val result = Solution2().quickestWayUp(game.first, game.second)
+        val result = Solution3().quickestWayUp(game.first, game.second)
         println("Result for ${i + 1}. game: $result - ${correct(result, outputLines[i])}")
     }
 
