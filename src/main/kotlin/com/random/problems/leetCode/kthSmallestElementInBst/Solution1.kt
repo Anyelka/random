@@ -4,7 +4,7 @@ import com.random.util.TreeNode
 
 class Solution1 {
     fun kthSmallest(root: TreeNode?, k: Int): Int {
-        return kthSmallest1(root, k)
+        return kthSmallest2(root, k)
     }
 
     // Solution 1:
@@ -14,6 +14,7 @@ class Solution1 {
     //
     //      TC:     O(n * log(n))
     //      SC:     O(n)
+    //
     private fun kthSmallest1(root: TreeNode?, k: Int) = getListBFS(root).sorted()[k - 1]
 
     private fun getListBFS(root: TreeNode?): List<Int> {
@@ -38,6 +39,7 @@ class Solution1 {
     //
     //      TC: O(n)
     //      SC: O(n)
+    //
     private fun kthSmallest2(root: TreeNode?, k: Int) = getListDFS(root)[k - 1]
 
     private fun getListDFS(root: TreeNode?): List<Int> {

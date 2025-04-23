@@ -19,7 +19,7 @@ fun main() {
     input.forEach {
         val nums = it.first.copyOf()
         val result = it.first.copyOf()
-        Solution1().nextPermutation(result)
+        Solution2().nextPermutation(result)
         println("Result for ${nums.contentToString()} is ${result.contentToString()} - ${isCorrectStringWithExpected(result, it.second)}")
     }
 }
