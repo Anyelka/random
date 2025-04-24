@@ -90,6 +90,10 @@ private fun format(value: Any): String =
         else -> value.toString()
     }
 
+fun formatArrayOfIntArrays(array: Array<IntArray>): String {
+    return shortFormatArrayIfNeeded(array.map { shortFormatArrayIfNeeded(it) }.toTypedArray())
+}
+
 fun areEqual(obj1: Any?, obj2: Any?): Boolean {
     return when {
         obj1 is Array<*> && obj2 is Array<*> -> obj1.contentEquals(obj2)

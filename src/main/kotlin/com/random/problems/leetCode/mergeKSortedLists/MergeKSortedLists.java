@@ -13,36 +13,36 @@ public class MergeKSortedLists {
                 List.of(2,6)
         );
 
-        ListNode[] transformedInput = transformAll(inputLists);
+        ListNode1[] transformedInput = transformAll(inputLists);
 
-        ListNode listNode = mergeKLists(transformedInput);
+        ListNode1 listNode = mergeKLists(transformedInput);
 
         print(listNode);
     }
 
-    private static void print(ListNode listNode) {
+    private static void print(ListNode1 listNode) {
         System.out.print("\nResult: (");
         printNode(listNode);
         System.out.print(")\n");
     }
 
-    private static void printNode(ListNode listNode) {
+    private static void printNode(ListNode1 listNode) {
         System.out.print(listNode.val + ",");
         if(listNode.next != null) {
             printNode(listNode.next);
         }
     }
 
-    private static ListNode[] transformAll(List<List<Integer>> inputLists) {
-        return inputLists.stream().map(MergeKSortedLists::transform).toList().toArray(ListNode[]::new);
+    private static ListNode1[] transformAll(List<List<Integer>> inputLists) {
+        return inputLists.stream().map(MergeKSortedLists::transform).toList().toArray(ListNode1[]::new);
     }
 
-    private static ListNode transform(List<Integer> inputLists) {
-        List<ListNode> listNodes = new ArrayList<>();
-        ListNode currentNode;
-        ListNode previousNode = null;
+    private static ListNode1 transform(List<Integer> inputLists) {
+        List<ListNode1> listNodes = new ArrayList<>();
+        ListNode1 currentNode;
+        ListNode1 previousNode = null;
         for(Integer current: inputLists) {
-            currentNode = new ListNode(current);
+            currentNode = new ListNode1(current);
             if(previousNode != null) {
                 previousNode.next = currentNode;
             }
@@ -52,17 +52,17 @@ public class MergeKSortedLists {
         return listNodes.get(0);
     }
 
-    public static ListNode mergeKLists(ListNode[] lists) {
+    public static ListNode1 mergeKLists(ListNode1[] lists) {
         if(lists.length < 1) {
             return null;
         }
-        LinkedList<ListNode> result = new LinkedList<>();
+        LinkedList<ListNode1> result = new LinkedList<>();
 
-        LinkedList<ListNode> queue = new LinkedList<>(Arrays.asList(lists));
+        LinkedList<ListNode1> queue = new LinkedList<>(Arrays.asList(lists));
 
         while (!queue.isEmpty()) {
-            ListNode nextNode = null;
-            for (ListNode currentNode : queue) {
+            ListNode1 nextNode = null;
+            for (ListNode1 currentNode : queue) {
                 int currentValue = currentNode.val;
                 if (nextNode == null || currentValue < nextNode.val) {
                     nextNode = currentNode;
@@ -85,10 +85,10 @@ public class MergeKSortedLists {
 
 }
 
-class ListNode {
+class ListNode1 {
     int val;
-    ListNode next;
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    ListNode1 next;
+    ListNode1() {}
+    ListNode1(int val) { this.val = val; }
+    ListNode1(int val, ListNode1 next) { this.val = val; this.next = next; }
 }
