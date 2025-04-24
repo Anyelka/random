@@ -31,7 +31,7 @@ class Solution1 {
     // Solution 2:
     //
     //  Store the reversed integer in an Int
-    //      iterate through the digits by increasing putting the digits one-by-one from the original to the reversed number
+    //      iterate through the digits by putting the digits one-by-one from the original to the reversed number
     //      we can check if we go out of 32 bit bound by always checking if we are above/below the 32 bit threshold / 10
     //      this is because the last digit of 32 bit bounds is 7, which is greater than the first digit (1), so the reverse
     //      could not come in as an input

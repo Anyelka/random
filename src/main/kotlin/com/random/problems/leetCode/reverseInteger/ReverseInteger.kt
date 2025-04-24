@@ -15,6 +15,6 @@ fun main() {
 
     input.forEach {
         val x = it.first
-        it.test { Solution1().reverse(x) }
+        it.test { Solution2().reverse(x) }
     }
 }
