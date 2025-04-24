@@ -11,7 +11,7 @@ fun main() {
 
     inputs.forEach {
         val (nums1, nums2) = it.first
-        it.test { Solution1().convertAndAdd(nums1, nums2) }
+        it.test { Solution3().convertAndAdd(nums1, nums2) }
     }
 }
 
