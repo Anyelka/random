@@ -16,7 +16,7 @@ fun main() {
 
     inputs.forEach {
         val nums = it.first
-        it.test { Solution1().canJump(nums) }
+        it.test { Solution2().canJump(nums) }
     }
 
 }
