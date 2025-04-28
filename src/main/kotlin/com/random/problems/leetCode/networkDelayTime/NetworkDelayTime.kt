@@ -17,7 +17,7 @@ fun main() {
     input.forEach {
         val (input1, k) = it.first
         val (times, n) = input1
-        val result = Solution1().networkDelayTime(times, n, k)
+        val result = Solution2().networkDelayTime(times, n, k)
 
         println("Result for (${formatArrayOfIntArrays(times)}, n=$n, k=$k) is: $result - ${isCorrectStringWithExpected(result, it.second)}")
     }
