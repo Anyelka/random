@@ -72,6 +72,11 @@ fun Pair<Any, Any>.test(method: (Any) -> Any) {
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
 }
 
+fun Pair<Array<IntArray>, Any>.testArrayOfIntArrays(method: (Any) -> Any) {
+    val result = method { first }
+    println("Result for ${formatArrayOfIntArrays(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
+}
+
 fun <T> Pair<Any, List<T>>.testWithSet(method: (Any) -> List<T>) {
     val result = method { first }
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpectedWithSet(result, second)}")
