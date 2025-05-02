@@ -32,6 +32,8 @@ class Solution1 {
     }
 
     // 2. Greedy approach after sorting the intervals by end date
+    //  TC: O(n*log(n))
+    //  SC: O(1)
     private fun eraseOverlapIntervals2(intervals: Array<IntArray>): Int {
         if (intervals.size <= 1) return 0
 
