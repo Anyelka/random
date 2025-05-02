@@ -9,7 +9,8 @@ class Solution1 {
     //  VERY SLOW
     //      - solves each subproblem multiple times
     //
-    //  O(n) * ((O(n) + O(1) + O(n)) = O(n ^ 3)
+    //  TC: O(n!)
+    //  SC: O(n^2)
 
     private fun eraseOverlapIntervals1(intervals: Array<IntArray>): Int {
         if (!intervals.hasOverlap()) return 0
