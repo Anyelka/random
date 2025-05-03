@@ -5,13 +5,9 @@ import kotlin.math.pow
 fun getResourceAsText(path: String): String? =
     object {}.javaClass.getResource(path)?.readText()
 
-fun Int.pow(power: Int): Int {
-    return this.toDouble().pow(power).toInt()
-}
+fun Int.pow(power: Int) = this.toDouble().pow(power).toInt()
 
-fun Int.sqrt(): Int {
-    return kotlin.math.sqrt(this.toDouble()).toInt()
-}
+fun Int.sqrt() = kotlin.math.sqrt(this.toDouble()).toInt()
 
 fun Char.intValue(): Int {
     return this.code - 'a'.code
