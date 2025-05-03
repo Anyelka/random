@@ -60,8 +60,15 @@ fun <T> isCorrectStringWithExpectedWithSet(result: List<T>, expected: List<T>): 
     return isCorrectString(areEqual) + expectedString(areEqual, expected)
 }
 
+fun isCorrectStringWithExpectedFromCollection(result: Any, expected: Array<IntArray>): String {
+    val isContained = isContained(result, expected)
+    return isCorrectString(isContained) + expectedStringFromArrayOfIntArrays(isContained, expected)
+}
+
 fun isCorrectString(areEqual: Boolean) = if (areEqual) "Correct" else "WRONG RESULT !!!!!!"
 private fun expectedString(areEqual: Boolean, expected: Any) = if (!areEqual) " - should be ${format(expected)}" else ""
+private fun expectedStringFromArrayOfIntArrays(areEqual: Boolean, expected: Array<IntArray>)
+    = if (!areEqual) " - should be any of ${formatArrayOfIntArrays(expected)}" else ""
 
 fun Pair<Any, Any>.test(method: (Any) -> Any) {
     val result = method { first }
@@ -105,6 +112,14 @@ fun areEqual(obj1: Any?, obj2: Any?): Boolean {
 }
 
 private fun <T> areSetEqual(list1: List<T>, list2: List<T>) = list1.toSet() == list2.toSet()
+
+private fun isContained(obj: Any, expected: Array<IntArray>): Boolean {
+    return isContained(obj, expected.toList())
+}
+
+private fun isContained(obj: Any, expected: Collection<Any>): Boolean {
+    return expected.any { areEqual(obj, it) }
+}
 
 fun Int.toDigits(): List<Int> = toString().map { it.toString().toInt() }
 fun Long.toDigits(): List<Int> = toString().map { it.toString().toInt() }
