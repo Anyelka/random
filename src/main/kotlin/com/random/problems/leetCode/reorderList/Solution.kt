@@ -1,5 +1,7 @@
 package com.random.problems.leetCode.reorderList
 
+import com.random.util.ListNode
+
 abstract class Solution {
     fun convertAndReorder(input: IntArray): IntArray {
         val reordered = convert(input)

@@ -1,5 +1,7 @@
 package com.random.problems.leetCode.reorderList
 
+import com.random.util.ListNode
+
 class Solution1: Solution() {
     override fun reorderList(head: ListNode?): Unit {
         reorderList1(head)

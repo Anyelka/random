@@ -1,6 +1,5 @@
 package com.random.util
 
-import com.random.problems.leetCode.reorderList.ListNode
 
 fun convert(array: Array<Int?>): TreeNode? {
     val numbers = ArrayDeque(array.toList())

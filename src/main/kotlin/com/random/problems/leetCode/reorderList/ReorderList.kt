@@ -14,11 +14,7 @@ fun main() {
 
     input.forEach {
         val input = it.first
-        val result = Solution1().convertAndReorder(input.copyOf())
+        val result = Solution2().convertAndReorder(input.copyOf())
         println("Result for ${shortFormatArrayIfNeeded(input)}: ${shortFormatArrayIfNeeded(result)} - ${isCorrectStringWithExpected(result, it.second)}")
     }
-}
-
-class ListNode(var `val`: Int) {
-    var next: ListNode? = null
 }
