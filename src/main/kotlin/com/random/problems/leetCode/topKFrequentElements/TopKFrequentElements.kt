@@ -12,7 +12,7 @@ fun main() {
 
     input.forEach {
         val (nums, k) = it.first
-        it.test { Solution1().topKFrequent(nums, k) }
+        it.test { Solution2().topKFrequent(nums, k) }
     }
 
 }
