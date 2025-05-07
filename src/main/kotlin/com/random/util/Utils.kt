@@ -60,6 +60,11 @@ fun <T> isCorrectStringWithExpectedWithSet(result: List<T>, expected: List<T>): 
     return isCorrectString(areEqual) + expectedString(areEqual, expected)
 }
 
+fun <T> isCorrectStringWithExpectedWithSetOfSets(result: List<List<T>>, expected: List<List<T>>): String  {
+    val areEqual = areSetOfSetsEqual(result, expected)
+    return isCorrectString(areEqual) + expectedString(areEqual, expected)
+}
+
 fun isCorrectStringWithExpectedFromCollection(result: Any, expected: Array<IntArray>): String {
     val isContained = isContained(result, expected)
     return isCorrectString(isContained) + expectedStringFromArrayOfIntArrays(isContained, expected)
@@ -84,6 +89,12 @@ fun <T> Pair<Any, List<T>>.testWithSet(method: (Any) -> List<T>) {
     val result = method { first }
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpectedWithSet(result, second)}")
 }
+
+fun <T> Pair<Any, List<List<T>>>.testWithSetOfSets(method: (Any) -> List<List<T>>) {
+    val result = method { first }
+    println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpectedWithSetOfSets(result, second)}")
+}
+
 
 fun Pair<Any, Any>.testWithoutPrintInput(method: (Any) -> Any) {
     val result = method { first }
@@ -112,6 +123,9 @@ fun areEqual(obj1: Any?, obj2: Any?): Boolean {
 }
 
 private fun <T> areSetEqual(list1: List<T>, list2: List<T>) = list1.toSet() == list2.toSet()
+
+private fun <T> areSetOfSetsEqual(list1: List<List<T>>, list2: List<List<T>>)
+    = list1.map { it.toSet() }.toSet() == list2.map { it.toSet() }.toSet()
 
 private fun isContained(obj: Any, expected: Array<IntArray>): Boolean {
     return isContained(obj, expected.toList())
