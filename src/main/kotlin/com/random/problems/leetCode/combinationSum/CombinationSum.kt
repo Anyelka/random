@@ -12,7 +12,7 @@ fun main() {
 
     input.forEach {
         val (candidates, target) = it.first
-        it.testWithSet { Solution1().combinationSum2(candidates, target) }
+        it.testWithSet { Solution2().combinationSum2(candidates, target) }
     }
 
 }
