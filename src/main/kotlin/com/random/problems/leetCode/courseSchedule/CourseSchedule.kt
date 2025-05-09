@@ -22,7 +22,7 @@ private fun Pair<Pair<Array<IntArray>, Int>, Array<IntArray>>.testIt(method: (Pa
     val result = method(first)
     val inputString = "${formatArrayOfIntArrays(first.first)} - ${first.second}"
     val resultString = shortFormatArrayIfNeeded(result)
-    val isCorrectString = isCorrectStringWithExpectedFromCollection(result, second)
+    val isCorrectString = isCorrectStringWithExpectedFromArrayOfIntArrays(result, second)
     println("Result for ($inputString ) is: $resultString - $isCorrectString")
 }
 
