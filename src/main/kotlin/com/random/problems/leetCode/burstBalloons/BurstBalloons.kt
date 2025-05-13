@@ -15,6 +15,6 @@ fun main() {
 
     input.forEach {
         val nums = it.first
-        runAndLogTime { it.test { Solution2().maxCoins(nums) } }
+        runAndLogTime { it.test { Solution3().maxCoins(nums) } }
     }
 }
