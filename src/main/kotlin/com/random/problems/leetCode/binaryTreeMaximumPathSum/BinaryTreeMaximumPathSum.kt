@@ -18,7 +18,7 @@ fun main() {
 
     input.forEach {
         val array = it.first
-        it.test { Solution1().convertAndFindMaxPathSum(array) }
+        it.test { Solution2().convertAndFindMaxPathSum(array) }
     }
 }
 
