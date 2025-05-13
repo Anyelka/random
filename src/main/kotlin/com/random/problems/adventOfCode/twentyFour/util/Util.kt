@@ -14,6 +14,8 @@ fun runAndLogTime(runnable: Runnable) {
 
 fun writeToFile(filename: String, map: Grid) = Files.writeString(Paths.get(filename), getFormattedMap(map))
 
+fun writeToFile(filename: String, array: IntArray) = Files.writeString(Paths.get(filename), array.contentToString())
+
 private fun getFormattedMap(map: Grid) = map.formatted()
 
 fun Grid.formatted(): String {
