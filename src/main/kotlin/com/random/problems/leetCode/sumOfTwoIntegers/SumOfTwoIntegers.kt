@@ -12,7 +12,7 @@ fun main() {
 
     input.forEach {
         val (a,b) = it.first
-        it.test { Solution1().getSum(a,b) }
+        it.test { Solution2().getSum(a,b) }
     }
 
 }
