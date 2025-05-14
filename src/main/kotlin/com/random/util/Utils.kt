@@ -38,17 +38,21 @@ operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> = first 
 fun Pair<Int, Int>.isIn(board: Array<CharArray>) =
     first < board.size && second < board[0].size && first >= 0 && second >= 0
 
+const val SHORT_FORMAT_THRESHOLD = 25
+
 fun <T> shortFormatArrayIfNeeded(array: Array<T>) =
-    if (array.size > 25) shortFormatArray(array) else array.contentToString()
+    if (array.size > SHORT_FORMAT_THRESHOLD) shortFormatArray(array) else "[${array.joinToString(", ") { format(it) }}]"
 
-fun shortFormatArrayIfNeeded(array: IntArray) =
-    if (array.size > 25) shortFormatIntArray(array) else array.contentToString()
+fun shortFormatArrayIfNeeded(array: IntArray) = shortFormatArrayIfNeeded(array.toTypedArray())
+fun shortFormatArrayIfNeeded(array: CharArray) = shortFormatArrayIfNeeded(array.toTypedArray())
 
-private fun <T> shortFormatArray(array: Array<T>) =
-    "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
-
-private fun shortFormatIntArray(array: IntArray) =
-    "[ ${array[0]}, ${array[1]}, ${array[2]}, ${array[3]}, ${array[4]}, ... ] (${array.size} elements)"
+const val DISPLAY_MAX_ELEMENTS = 5
+private fun <T> shortFormatArray(array: Array<T>): String {
+    val elements = (0 until DISPLAY_MAX_ELEMENTS).joinToString(", ") { format(array[it]) }
+    return "[$elements, ...] (${array.size} elements)"
+}
+private fun shortFormatIntArray(array: IntArray) = shortFormatArray(array.toTypedArray())
+private fun shortFormatCharArray(array: CharArray) = shortFormatArray(array.toTypedArray())
 
 fun isCorrectStringWithExpected(result: Any, expected: Any): String {
     val areEqual = areEqual(result, expected)
@@ -70,6 +74,11 @@ fun isCorrectStringWithExpectedArrayOfIntArrays(result: Array<IntArray>, expecte
     return isCorrectString(areEqual) + expectedStringArrayOfIntArrays(areEqual, expected)
 }
 
+fun isCorrectStringWithExpectedArrayOfCharArrays(result: Array<CharArray>, expected: Array<CharArray>): String {
+    val areEqual = areEqual(result, expected)
+    return isCorrectString(areEqual) + expectedStringFromArrayOfCharArrays(areEqual, expected)
+}
+
 fun isCorrectStringWithExpectedFromArrayOfIntArrays(result: Any, expected: Array<IntArray>): String {
     val isContained = isContained(result, expected)
     return isCorrectString(isContained) + expectedStringFromArrayOfIntArrays(isContained, expected)
@@ -83,9 +92,18 @@ private fun expectedStringArrayOfIntArrays(areEqual: Boolean, expected: Array<In
 private fun expectedStringFromArrayOfIntArrays(areEqual: Boolean, expected: Array<IntArray>)
     = if (!areEqual) " - should be any of ${formatArrayOfIntArrays(expected)}" else ""
 
+private fun expectedStringFromArrayOfCharArrays(areEqual: Boolean, expected: Array<CharArray>)
+        = if (!areEqual) " - should be any of ${formatArrayOfCharArrays(expected)}" else ""
+
 fun Pair<Any, Any>.test(method: (Any) -> Any) {
     val result = method { first }
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
+}
+
+fun Pair<Any, Any>.testInPlace(method: (Any) -> Unit) {
+    val initial = first.copy()
+    method { first }
+    println("Result for ${format(initial)} is: ${format(first)} - ${isCorrectStringWithExpected(first, second)}")
 }
 
 fun Pair<Array<IntArray>, Any>.testArrayOfIntArrays(method: (Any) -> Any) {
@@ -109,10 +127,11 @@ fun Pair<Any, Any>.testWithoutPrintInput(method: (Any) -> Any) {
     println("Result is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
 }
 
-private fun format(value: Any): String =
+private fun <T> format(value: T): String =
     when (value) {
         is Array<*> -> shortFormatArrayIfNeeded(value)
         is IntArray -> shortFormatArrayIfNeeded(value.toTypedArray())
+        is CharArray -> shortFormatArrayIfNeeded(value.toTypedArray())
         is Pair<*, *> -> (format(value.first!!) to format(value.second!!)).toString()
         else -> value.toString()
     }
@@ -121,10 +140,15 @@ fun formatArrayOfIntArrays(array: Array<IntArray>): String {
     return shortFormatArrayIfNeeded(array.map { shortFormatArrayIfNeeded(it) }.toTypedArray())
 }
 
+fun formatArrayOfCharArrays(array: Array<CharArray>): String {
+    return shortFormatArrayIfNeeded(array.map { shortFormatArrayIfNeeded(it) }.toTypedArray())
+}
+
 fun areEqual(obj1: Any?, obj2: Any?): Boolean {
     return when {
-        obj1 is Array<*> && obj2 is Array<*> -> obj1.contentEquals(obj2)
-        obj1 is IntArray && obj2 is IntArray -> obj1.contentEquals(obj2)
+        obj1 is Array<*> && obj2 is Array<*> -> obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]!!) }
+        obj1 is IntArray && obj2 is IntArray -> obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
+        obj1 is CharArray && obj2 is CharArray -> obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
         obj1 is Int && obj2 is Int -> obj1 == obj2
         else -> obj1 == obj2
     }
@@ -139,6 +163,12 @@ private fun <T> areSetOfSetsEqual(list1: List<List<T>>, list2: List<List<T>>)
 private fun areEqualArrayOfIntArrays(array1: Array<IntArray>, array2: Array<IntArray>)
     = array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
 
+private fun areEqualArrayOfCharArrays(array1: Array<CharArray>, array2: Array<CharArray>)
+        = array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
+
+private fun <T> areEqualArrayOfArrays(array1: Array<Array<T>>, array2: Array<Array<T>>)
+        = array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
+
 private fun isContained(obj: Any, expected: Array<IntArray>): Boolean {
     return isContained(obj, expected.toList())
 }
@@ -150,3 +180,14 @@ private fun isContained(obj: Any, expected: Collection<Any>): Boolean {
 fun Int.toDigits(): List<Int> = toString().map { it.toString().toInt() }
 fun Long.toDigits(): List<Int> = toString().map { it.toString().toInt() }
 fun Int.absoluteValue() = if (this < 0) -this else this
+
+fun Any.copy(): Any {
+    return when (this) {
+        is Array<*> -> this.map { it?.copy() }.toTypedArray().copyOf()
+        is IntArray -> this.map { it.copy() }.toTypedArray().copyOf()
+        is CharArray -> this.map { it.copy() }.toTypedArray().copyOf()
+        is Number -> this
+        is Char -> this
+        else -> this::class.java.getDeclaredConstructor().newInstance()
+    }
+}
