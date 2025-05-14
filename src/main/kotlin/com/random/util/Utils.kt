@@ -51,6 +51,7 @@ private fun <T> shortFormatArray(array: Array<T>): String {
     val elements = (0 until DISPLAY_MAX_ELEMENTS).joinToString(", ") { format(array[it]) }
     return "[$elements, ...] (${array.size} elements)"
 }
+
 private fun shortFormatIntArray(array: IntArray) = shortFormatArray(array.toTypedArray())
 private fun shortFormatCharArray(array: CharArray) = shortFormatArray(array.toTypedArray())
 
@@ -59,12 +60,12 @@ fun isCorrectStringWithExpected(result: Any, expected: Any): String {
     return isCorrectString(areEqual) + expectedString(areEqual, expected)
 }
 
-fun <T> isCorrectStringWithExpectedWithSet(result: List<T>, expected: List<T>): String  {
+fun <T> isCorrectStringWithExpectedWithSet(result: List<T>, expected: List<T>): String {
     val areEqual = areSetEqual(result, expected)
     return isCorrectString(areEqual) + expectedString(areEqual, expected)
 }
 
-fun <T> isCorrectStringWithExpectedWithSetOfSets(result: List<List<T>>, expected: List<List<T>>): String  {
+fun <T> isCorrectStringWithExpectedWithSetOfSets(result: List<List<T>>, expected: List<List<T>>): String {
     val areEqual = areSetOfSetsEqual(result, expected)
     return isCorrectString(areEqual) + expectedString(areEqual, expected)
 }
@@ -87,13 +88,14 @@ fun isCorrectStringWithExpectedFromArrayOfIntArrays(result: Any, expected: Array
 fun isCorrectString(areEqual: Boolean) = if (areEqual) "Correct" else "WRONG RESULT !!!!!!"
 private fun expectedString(areEqual: Boolean, expected: Any) = if (!areEqual) " - should be ${format(expected)}" else ""
 
-private fun expectedStringArrayOfIntArrays(areEqual: Boolean, expected: Array<IntArray>)
-    = if (!areEqual) " - should be ${formatArrayOfIntArrays(expected)}" else ""
-private fun expectedStringFromArrayOfIntArrays(areEqual: Boolean, expected: Array<IntArray>)
-    = if (!areEqual) " - should be any of ${formatArrayOfIntArrays(expected)}" else ""
+private fun expectedStringArrayOfIntArrays(areEqual: Boolean, expected: Array<IntArray>) =
+    if (!areEqual) " - should be ${formatArrayOfIntArrays(expected)}" else ""
 
-private fun expectedStringFromArrayOfCharArrays(areEqual: Boolean, expected: Array<CharArray>)
-        = if (!areEqual) " - should be any of ${formatArrayOfCharArrays(expected)}" else ""
+private fun expectedStringFromArrayOfIntArrays(areEqual: Boolean, expected: Array<IntArray>) =
+    if (!areEqual) " - should be any of ${formatArrayOfIntArrays(expected)}" else ""
+
+private fun expectedStringFromArrayOfCharArrays(areEqual: Boolean, expected: Array<CharArray>) =
+    if (!areEqual) " - should be any of ${formatArrayOfCharArrays(expected)}" else ""
 
 fun Pair<Any, Any>.test(method: (Any) -> Any) {
     val result = method { first }
@@ -108,7 +110,14 @@ fun Pair<Any, Any>.testInPlace(method: (Any) -> Unit) {
 
 fun Pair<Array<IntArray>, Any>.testArrayOfIntArrays(method: (Any) -> Any) {
     val result = method { first }
-    println("Result for ${formatArrayOfIntArrays(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
+    println(
+        "Result for ${formatArrayOfIntArrays(first)} is: ${format(result)} - ${
+            isCorrectStringWithExpected(
+                result,
+                second
+            )
+        }"
+    )
 }
 
 fun <T> Pair<Any, List<T>>.testWithSet(method: (Any) -> List<T>) {
@@ -118,7 +127,14 @@ fun <T> Pair<Any, List<T>>.testWithSet(method: (Any) -> List<T>) {
 
 fun <T> Pair<Any, List<List<T>>>.testWithSetOfSets(method: (Any) -> List<List<T>>) {
     val result = method { first }
-    println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpectedWithSetOfSets(result, second)}")
+    println(
+        "Result for ${format(first)} is: ${format(result)} - ${
+            isCorrectStringWithExpectedWithSetOfSets(
+                result,
+                second
+            )
+        }"
+    )
 }
 
 
@@ -146,28 +162,27 @@ fun formatArrayOfCharArrays(array: Array<CharArray>): String {
 
 fun areEqual(obj1: Any?, obj2: Any?): Boolean {
     return when {
-        obj1 is Array<*> && obj2 is Array<*> -> obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]!!) }
-        obj1 is IntArray && obj2 is IntArray -> obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
-        obj1 is CharArray && obj2 is CharArray -> obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
+        obj1 is Array<*> && obj2 is Array<*> -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
+        obj1 is IntArray && obj2 is IntArray -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
+        obj1 is CharArray && obj2 is CharArray -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
         obj1 is Int && obj2 is Int -> obj1 == obj2
         else -> obj1 == obj2
     }
 }
 
-
 private fun <T> areSetEqual(list1: List<T>, list2: List<T>) = list1.toSet() == list2.toSet()
 
-private fun <T> areSetOfSetsEqual(list1: List<List<T>>, list2: List<List<T>>)
-    = list1.map { it.toSet() }.toSet() == list2.map { it.toSet() }.toSet()
+private fun <T> areSetOfSetsEqual(list1: List<List<T>>, list2: List<List<T>>) =
+    list1.map { it.toSet() }.toSet() == list2.map { it.toSet() }.toSet()
 
-private fun areEqualArrayOfIntArrays(array1: Array<IntArray>, array2: Array<IntArray>)
-    = array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
+private fun areEqualArrayOfIntArrays(array1: Array<IntArray>, array2: Array<IntArray>) =
+    array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
 
-private fun areEqualArrayOfCharArrays(array1: Array<CharArray>, array2: Array<CharArray>)
-        = array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
+private fun areEqualArrayOfCharArrays(array1: Array<CharArray>, array2: Array<CharArray>) =
+    array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
 
-private fun <T> areEqualArrayOfArrays(array1: Array<Array<T>>, array2: Array<Array<T>>)
-        = array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
+private fun <T> areEqualArrayOfArrays(array1: Array<Array<T>>, array2: Array<Array<T>>) =
+    array1.withIndex().all { (i, it) -> areEqual(it, array2[i]) }
 
 private fun isContained(obj: Any, expected: Array<IntArray>): Boolean {
     return isContained(obj, expected.toList())

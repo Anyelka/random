@@ -4,7 +4,7 @@ import kotlin.collections.ArrayDeque
 
 class Solution1 {
     fun solve(board: Array<CharArray>): Unit {
-        solve1(board)
+        solve2(board)
     }
 
     // 1. BFS through regions from 'O'-s on the edges
@@ -70,4 +70,36 @@ class Solution1 {
     private fun Pair<Int, Int>.left(): Pair<Int, Int> = -second to first
     private fun Pair<Int, Int>.right(): Pair<Int, Int> = second to -first
 
+    //  2. Solution:
+    //      collect valid regions with DFS
+    //      TC:     O(m * n)
+    //      SC:     O(m * n)
+    private fun solve2(board: Array<CharArray>) {
+        val validRegions = mutableSetOf<Pair<Int,Int>>()
+        val visited = mutableSetOf<Pair<Int,Int>>()
+
+        fun fill(i : Int, j: Int, path: MutableSet<Pair<Int,Int>>): Boolean {
+            if(visited.contains(i to j)) return validRegions.contains(i to j)
+            if(i < 0 || i > board.lastIndex || j < 0 || j > board[0].lastIndex) return false
+            visited.add(i to j)
+            if(board[i][j] == 'O') {
+                if(path.contains(i to j)) return false
+                path.add(i to j)
+                val isValid = i == 0 || i == board.lastIndex || j == 0 || j == board[0].lastIndex
+                        || fill(i + 1, j, path)
+                        || fill(i - 1, j, path)
+                        || fill(i, j + 1, path)
+                        || fill(i, j - 1, path)
+                if(isValid) validRegions.addAll(path)
+            }
+            return false
+        }
+
+        fun write(i : Int, j: Int) {
+            if(board[i][j] == 'O' && !validRegions.contains(i to j)) board[i][j] = 'X'
+        }
+
+        board.indices.forEach { i -> board[i].indices.forEach { j -> fill(i, j, mutableSetOf()) } }
+        board.indices.forEach { i -> board[i].indices.forEach { j -> write(i,j) } }
+    }
 }
