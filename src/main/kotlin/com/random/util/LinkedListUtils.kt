@@ -12,6 +12,8 @@ fun convertIntArrayToListNode(array: IntArray): ListNode? {
     return root
 }
 
+fun convertArrayOfIntArraysToArrayOfListNodes(arrayOfIntArrays: Array<IntArray>) = arrayOfIntArrays.map { intArray -> convertIntArrayToListNode(intArray) }.toTypedArray()
+
 fun convertIntArrayToListNodeWithCycle(array: IntArray, lastNodeConnectingTo: Int): ListNode? {
     var root: ListNode? = null
     var current: ListNode? = null
