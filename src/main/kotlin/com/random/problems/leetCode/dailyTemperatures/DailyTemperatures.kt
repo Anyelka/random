@@ -11,6 +11,6 @@ fun main() {
 
     input.forEach {
         val temperatures = it.first
-        it.test { Solution1().dailyTemperatures(temperatures) }
+        it.test { Solution2().dailyTemperatures(temperatures) }
     }
 }
