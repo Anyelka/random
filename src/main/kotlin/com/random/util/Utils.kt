@@ -1,5 +1,6 @@
 package com.random.util
 
+import com.random.problems.leetCode.reverseLinkedList.Solution1
 import kotlin.math.pow
 
 fun getResourceAsText(path: String): String? =
@@ -135,6 +136,11 @@ fun <T> Pair<Any, List<List<T>>>.testWithSetOfSets(method: (Any) -> List<List<T>
             )
         }"
     )
+}
+
+fun Pair<IntArray, IntArray>.testLinkedListFromIntArray(method: (ListNode?) -> ListNode?) {
+    val input = first
+    this.test { convertListNodeToIntArray(method(convertIntArrayToListNode(input))) }
 }
 
 
