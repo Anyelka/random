@@ -17,7 +17,7 @@ private fun Pair<Pair<Array<Int?>, Pair<Int, Int>>, Int>.test() {
     val root = convert(array)
     val p = find(root, nodes.first)
     val q = find(root, nodes.second)
-    val result = Solution1().lowestCommonAncestor(root, p, q)!!.`val`
+    val result = Solution2().lowestCommonAncestor(root, p, q)!!.`val`
     println("Result for ${shortFormatArrayIfNeeded(array)} is: $result - ${isCorrectStringWithExpected(result, this.second)}")
 }
 
