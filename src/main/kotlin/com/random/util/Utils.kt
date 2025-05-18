@@ -76,10 +76,6 @@ fun isCorrectStringWithExpectedArrayOfIntArrays(result: Array<IntArray>, expecte
     return isCorrectString(areEqual) + expectedStringArrayOfIntArrays(areEqual, expected)
 }
 
-fun isCorrectStringWithExpectedArrayOfCharArrays(result: Array<CharArray>, expected: Array<CharArray>): String {
-    val areEqual = areEqual(result, expected)
-    return isCorrectString(areEqual) + expectedStringFromArrayOfCharArrays(areEqual, expected)
-}
 
 fun isCorrectStringWithExpectedFromArrayOfIntArrays(result: Any, expected: Array<IntArray>): String {
     val isContained = isContained(result, expected)
@@ -171,6 +167,9 @@ fun areEqual(obj1: Any?, obj2: Any?): Boolean {
         obj1 is Array<*> && obj2 is Array<*> -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
         obj1 is IntArray && obj2 is IntArray -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
         obj1 is CharArray && obj2 is CharArray -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
+        obj1 is List<*> && obj2 is List<*> -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
+        obj1 is List<*> && obj2 is Array<*> -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
+        obj1 is Array<*> && obj2 is List<*> -> obj1.size == obj2.size && obj1.withIndex().all { (i, it) -> areEqual(it, obj2[i]) }
         obj1 is Int && obj2 is Int -> obj1 == obj2
         else -> obj1 == obj2
     }
