@@ -1,7 +1,7 @@
 package com.random.util
 
 
-fun convert(array: Array<Int?>): TreeNode? {
+fun convertArrayToTreeNode(array: Array<Int?>): TreeNode? {
     val numbers = ArrayDeque(array.toList())
 
     if (array.isEmpty()) return null

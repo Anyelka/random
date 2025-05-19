@@ -14,7 +14,7 @@ fun main() {
 
 private fun Pair<Pair<Array<Int?>, Pair<Int, Int>>, Int>.test() {
     val (array, nodes) = this.first
-    val root = convert(array)
+    val root = convertArrayToTreeNode(array)
     val p = find(root, nodes.first)
     val q = find(root, nodes.second)
     val result = Solution2().lowestCommonAncestor(root, p, q)!!.`val`

@@ -1,6 +1,6 @@
 package com.random.problems.leetCode.kthSmallestElementInBst
 
-import com.random.util.convert
+import com.random.util.convertArrayToTreeNode
 import com.random.util.test
 
 fun main() {
@@ -11,7 +11,7 @@ fun main() {
 
     input.forEach {
         val (root, k) = it.first
-        it.test { Solution2().kthSmallest(convert(root), k) }
+        it.test { Solution2().kthSmallest(convertArrayToTreeNode(root), k) }
     }
 
 }

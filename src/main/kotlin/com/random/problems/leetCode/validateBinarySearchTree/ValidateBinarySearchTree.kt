@@ -1,6 +1,6 @@
 package com.random.problems.leetCode.validateBinarySearchTree
 
-import com.random.util.convert
+import com.random.util.convertArrayToTreeNode
 import com.random.util.test
 
 fun main() {
@@ -14,6 +14,6 @@ fun main() {
 
     input.forEach {
         val nums = it.first
-        it.test { Solution1().isValidBST(convert(nums)) }
+        it.test { Solution1().isValidBST(convertArrayToTreeNode(nums)) }
     }
 }
