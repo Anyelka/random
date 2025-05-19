@@ -2,17 +2,8 @@ package com.random.problems.adventOfCode.twentyFour.day13
 
 import com.random.problems.adventOfCode.twentyFour.util.PositionLong
 import com.random.util.getResourceAsText
-import org.apache.commons.math3.optim.linear.LinearConstraint
-import org.apache.commons.math3.optim.linear.LinearConstraintSet
 import java.util.LinkedList
 import kotlin.time.measureTime
-import org.apache.commons.math3.optim.linear.LinearObjectiveFunction
-import org.apache.commons.math3.optim.linear.NoFeasibleSolutionException
-import org.apache.commons.math3.optim.linear.NonNegativeConstraint
-import org.apache.commons.math3.optim.linear.Relationship
-import org.apache.commons.math3.optim.linear.SimplexSolver
-import org.apache.commons.math3.optim.nonlinear.scalar.GoalType
-import java.math.BigDecimal
 import java.math.BigInteger
 
 const val FILE_PATH = "/adventOfCode/2024/day13/TestCase1"
