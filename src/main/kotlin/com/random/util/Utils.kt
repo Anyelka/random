@@ -53,9 +53,6 @@ private fun <T> shortFormatArray(array: Array<T>): String {
     return "[$elements, ...] (${array.size} elements)"
 }
 
-private fun shortFormatIntArray(array: IntArray) = shortFormatArray(array.toTypedArray())
-private fun shortFormatCharArray(array: CharArray) = shortFormatArray(array.toTypedArray())
-
 fun isCorrectStringWithExpected(result: Any, expected: Any): String {
     val areEqual = areEqual(result, expected)
     return isCorrectString(areEqual) + expectedString(areEqual, expected)
@@ -151,6 +148,7 @@ private fun <T> format(value: T): String =
         is IntArray -> shortFormatArrayIfNeeded(value.toTypedArray())
         is CharArray -> shortFormatArrayIfNeeded(value.toTypedArray())
         is Pair<*, *> -> (format(value.first!!) to format(value.second!!)).toString()
+        is List<*> -> shortFormatArrayIfNeeded(value.toTypedArray())
         else -> value.toString()
     }
 

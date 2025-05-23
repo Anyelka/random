@@ -16,6 +16,8 @@ fun writeToFile(filename: String, map: Grid) = Files.writeString(Paths.get(filen
 
 fun writeToFile(filename: String, array: IntArray) = Files.writeString(Paths.get(filename), array.contentToString())
 
+fun writeToFile(filename: String, list: List<List<Int>>) = Files.writeString(Paths.get(filename), list.map { it.toTypedArray().contentToString() }.toString() )
+
 private fun getFormattedMap(map: Grid) = map.formatted()
 
 fun Grid.formatted(): String {
