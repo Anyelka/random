@@ -148,6 +148,7 @@ private fun <T> format(value: T): String =
         is IntArray -> shortFormatArrayIfNeeded(value.toTypedArray())
         is CharArray -> shortFormatArrayIfNeeded(value.toTypedArray())
         is Pair<*, *> -> (format(value.first!!) to format(value.second!!)).toString()
+        is Triple<*, *, *> -> "(${format(value.first)}, ${format(value.second)}, ${format(value.third)})"
         is List<*> -> shortFormatArrayIfNeeded(value.toTypedArray())
         else -> value.toString()
     }
