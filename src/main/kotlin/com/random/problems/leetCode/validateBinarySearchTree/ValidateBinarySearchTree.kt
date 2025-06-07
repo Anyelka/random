@@ -14,6 +14,6 @@ fun main() {
 
     input.forEach {
         val nums = it.first
-        it.test { Solution1().isValidBST(convertArrayToTreeNode(nums)) }
+        it.test { Solution2().isValidBST(convertArrayToTreeNode(nums)) }
     }
 }
