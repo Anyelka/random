@@ -12,6 +12,6 @@ fun main() {
 
     input.forEach {
         val nums = it.first
-        it.testWithSet { Solution1().subsets(nums) }
+        it.testWithSet { Solution2().subsets(nums) }
     }
 }
