@@ -4,25 +4,16 @@ import com.random.util.*
 
 fun main() {
     val input = listOf(
-        (arrayOf(intArrayOf(1, 0)) to 2) to arrayOf(intArrayOf(0, 1)),
-        (arrayOf(intArrayOf(1,0),intArrayOf(2,0),intArrayOf(3,1),intArrayOf(3,2)) to 4) to arrayOf(intArrayOf(0,1,2,3), intArrayOf(0,2,1,3)),
-        (arrayOf<IntArray>() to 1) to arrayOf(intArrayOf(0)),
-        (arrayOf(intArrayOf(0,1), intArrayOf(1,0)) to 2) to arrayOf(intArrayOf()),
-        (arrayOf(intArrayOf(1,0), intArrayOf(1,2), intArrayOf(0,1)) to 3) to arrayOf(intArrayOf()),
-        getTestInput()
+        (arrayOf(intArrayOf(1, 0)) to 2) to true,
+        (arrayOf(intArrayOf(1,0),intArrayOf(2,0),intArrayOf(3,1),intArrayOf(3,2)) to 4) to true,
+        (arrayOf<IntArray>() to 1) to true,
+        (arrayOf(intArrayOf(0,1), intArrayOf(1,0)) to 2) to false,
+        (arrayOf(intArrayOf(1,0), intArrayOf(1,2), intArrayOf(0,1)) to 3) to false,
+        (arrayOf(intArrayOf(1,0),intArrayOf(2,0),intArrayOf(2,1),intArrayOf(3,1),intArrayOf(3,2),intArrayOf(4,2),intArrayOf(4,3),intArrayOf(5,3),intArrayOf(5,4),intArrayOf(6,4),intArrayOf(6,5),intArrayOf(7,5),intArrayOf(7,6),intArrayOf(8,6),intArrayOf(8,7),intArrayOf(9,7),intArrayOf(9,8),intArrayOf(10,8),intArrayOf(10,9),intArrayOf(11,9),intArrayOf(11,10),intArrayOf(12,10),intArrayOf(12,11),intArrayOf(13,11),intArrayOf(13,12),intArrayOf(14,12),intArrayOf(14,13),intArrayOf(15,13),intArrayOf(15,14),intArrayOf(16,14),intArrayOf(16,15),intArrayOf(17,15),intArrayOf(17,16),intArrayOf(18,16),intArrayOf(18,17),intArrayOf(19,17),intArrayOf(19,18),intArrayOf(20,18),intArrayOf(20,19),intArrayOf(21,19),intArrayOf(21,20),intArrayOf(22,20),intArrayOf(22,21),intArrayOf(23,21),intArrayOf(23,22),intArrayOf(24,22),intArrayOf(24,23),intArrayOf(25,23),intArrayOf(25,24),intArrayOf(26,24),intArrayOf(26,25),intArrayOf(27,25),intArrayOf(27,26),intArrayOf(28,26),intArrayOf(28,27),intArrayOf(29,27),intArrayOf(29,28),intArrayOf(30,28),intArrayOf(30,29),intArrayOf(31,29),intArrayOf(31,30),intArrayOf(32,30),intArrayOf(32,31),intArrayOf(33,31),intArrayOf(33,32),intArrayOf(34,32),intArrayOf(34,33),intArrayOf(35,33),intArrayOf(35,34),intArrayOf(36,34),intArrayOf(36,35),intArrayOf(37,35),intArrayOf(37,36),intArrayOf(38,36),intArrayOf(38,37),intArrayOf(39,37),intArrayOf(39,38),intArrayOf(40,38),intArrayOf(40,39),intArrayOf(41,39),intArrayOf(41,40),intArrayOf(42,40),intArrayOf(42,41),intArrayOf(43,41),intArrayOf(43,42),intArrayOf(44,42),intArrayOf(44,43),intArrayOf(45,43),intArrayOf(45,44),intArrayOf(46,44),intArrayOf(46,45),intArrayOf(47,45),intArrayOf(47,46),intArrayOf(48,46),intArrayOf(48,47),intArrayOf(49,47),intArrayOf(49,48),intArrayOf(50,48),intArrayOf(50,49),intArrayOf(51,49),intArrayOf(51,50),intArrayOf(52,50),intArrayOf(52,51),intArrayOf(53,51),intArrayOf(53,52),intArrayOf(54,52),intArrayOf(54,53),intArrayOf(55,53),intArrayOf(55,54),intArrayOf(56,54),intArrayOf(56,55),intArrayOf(57,55),intArrayOf(57,56),intArrayOf(58,56),intArrayOf(58,57),intArrayOf(59,57),intArrayOf(59,58),intArrayOf(60,58),intArrayOf(60,59),intArrayOf(61,59),intArrayOf(61,60),intArrayOf(62,60),intArrayOf(62,61),intArrayOf(63,61),intArrayOf(63,62),intArrayOf(64,62),intArrayOf(64,63),intArrayOf(65,63),intArrayOf(65,64),intArrayOf(66,64),intArrayOf(66,65),intArrayOf(67,65),intArrayOf(67,66),intArrayOf(68,66),intArrayOf(68,67),intArrayOf(69,67),intArrayOf(69,68),intArrayOf(70,68),intArrayOf(70,69),intArrayOf(71,69),intArrayOf(71,70),intArrayOf(72,70),intArrayOf(72,71),intArrayOf(73,71),intArrayOf(73,72),intArrayOf(74,72),intArrayOf(74,73),intArrayOf(75,73),intArrayOf(75,74),intArrayOf(76,74),intArrayOf(76,75),intArrayOf(77,75),intArrayOf(77,76),intArrayOf(78,76),intArrayOf(78,77),intArrayOf(79,77),intArrayOf(79,78),intArrayOf(80,78),intArrayOf(80,79),intArrayOf(81,79),intArrayOf(81,80),intArrayOf(82,80),intArrayOf(82,81),intArrayOf(83,81),intArrayOf(83,82),intArrayOf(84,82),intArrayOf(84,83),intArrayOf(85,83),intArrayOf(85,84),intArrayOf(86,84),intArrayOf(86,85),intArrayOf(87,85),intArrayOf(87,86),intArrayOf(88,86),intArrayOf(88,87),intArrayOf(89,87),intArrayOf(89,88),intArrayOf(90,88),intArrayOf(90,89),intArrayOf(91,89),intArrayOf(91,90),intArrayOf(92,90),intArrayOf(92,91),intArrayOf(93,91),intArrayOf(93,92),intArrayOf(94,92),intArrayOf(94,93),intArrayOf(95,93),intArrayOf(95,94),intArrayOf(96,94),intArrayOf(96,95),intArrayOf(97,95),intArrayOf(97,96),intArrayOf(98,96),intArrayOf(98,97),intArrayOf(99,97)) to 100) to true
     )
 
     input.forEach {
         val (prerequisites, numCourses) = it.first
-        it.testIt { Solution1().findOrder(numCourses, prerequisites) }
+        it.test { Solution1().canFinish(numCourses, prerequisites) }
     }
 }
-
-private fun Pair<Pair<Array<IntArray>, Int>, Array<IntArray>>.testIt(method: (Pair<Array<IntArray>, Int>) -> IntArray) {
-    val result = method(first)
-    val inputString = "${formatArrayOfIntArrays(first.first)} - ${first.second}"
-    val resultString = shortFormatArrayIfNeeded(result)
-    val isCorrectString = isCorrectStringWithExpectedFromArrayOfIntArrays(result, second)
-    println("Result for ($inputString ) is: $resultString - $isCorrectString")
-}
-

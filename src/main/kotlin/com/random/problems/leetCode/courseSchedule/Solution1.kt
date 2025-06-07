@@ -1,89 +1,71 @@
 package com.random.problems.leetCode.courseSchedule
 
 class Solution1 {
-    fun findOrder(numCourses: Int, prerequisites: Array<IntArray>): IntArray {
-        return findOrder2Fun(prerequisites, numCourses)
+    fun canFinish(numCourses: Int, prerequisites: Array<IntArray>): Boolean {
+        return canFinish1(prerequisites)
     }
 
-    //  Solution 1:
-    //  Iterate over each course number
-    //      DFS through prerequisites
-    //      - write each course number into the results list if they have no more prerequisites = when we reach the bottom with DFS
-    //
+    //  1. First solution without optimization:
+    //  DFS with locally visited and global visited lists to keep track of cycles and
     //      TC: O(V + E)
-    //      SC: O(V)
-    private fun findOrder1(prerequisites: Array<IntArray>, numCourses: Int): IntArray {
-        val sequence = mutableListOf<Int>()
+    //      SC: O(V + E)
+    //      Runtime on leetcode: 62 ms
+    private fun canFinish1(prerequisites: Array<IntArray>): Boolean {
+        val adjacencyList = mutableMapOf<Int, MutableList<Int>>()
 
-        if (prerequisites.isEmpty()) return IntArray(numCourses) { it }
-
-        fun writePrerequisite(course: Int, visited: MutableList<Int>): List<Int>? {
-            val result = mutableListOf<Int>()
-            if(sequence.contains(course)) return emptyList()
-            if (visited.contains(course)) return null
-            visited.add(course)
-            for (prerequisite in prerequisites) {
-                if (prerequisite[0] == course) {
-                    result.add(prerequisite[1])
-                    result.addAll(writePrerequisite(prerequisite[1], visited) ?: return null)
-                }
-            }
-            if ((result.isEmpty() || sequence.containsAll(result))) sequence.add(course)
-            visited.remove(course)
-            return result
+        for (prerequisite in prerequisites) {
+            adjacencyList.getOrPut(prerequisite[0]) { mutableListOf() }.add(prerequisite[1])
         }
 
-        for (i in 0..<numCourses) {
-            writePrerequisite(i, mutableListOf()) ?: return intArrayOf()
-        }
-        return sequence.toIntArray()
-    }
-
-    // 2 . Topological sort with adjacency list
-    //  TC: O(V + E)
-    //  SC: O(V)
-    private fun findOrder2(prerequisites: Array<IntArray>, numCourses: Int): IntArray {
-        // 1. build adjacency list:
-        val adjacencyMap = prerequisites.groupBy { it[0] }.mapValues { it -> it.value.map { it[1] }.toMutableList() }.toMutableMap()
-
-        val result = mutableListOf<Int>()
-
-        // 2. visit all nodes BFS
-        fun visitDFS(course: Int, visited: MutableList<Int>): Boolean {
-            if(visited.contains(course)) return false
-            if(result.contains(course)) return true
-            visited.add(course)
-            val dependencies = adjacencyMap[course] ?: emptyList()
-            for(dependency in dependencies) {
-                if(!visitDFS(dependency, visited)) return false
-            }
-            result.add(course)
-            visited.remove(course)
-            return true
-        }
-
-        val hasCycle = (0..<numCourses).any { !visitDFS(it, mutableListOf()) }
-
-        return if(hasCycle) intArrayOf() else result.toIntArray()
-    }
-
-    private fun findOrder2Fun(prerequisites: Array<IntArray>, numCourses: Int): IntArray {
-        val adjacencyMap = prerequisites.groupBy { it[0] }.mapValues { it -> it.value.map { it[1] }.toMutableList() }.toMutableMap()
-
-        val result = mutableListOf<Int>()
-
-        fun visitDFS(course: Int, visited: MutableList<Int>): Boolean {
+        val visited = mutableListOf<Int>()
+        fun hasCycle(course: Int, localVisited: MutableList<Int>): Boolean {
             if (visited.contains(course)) return false
-            if (result.contains(course)) return true
+            if (localVisited.contains(course)) return true
+            localVisited.add(course)
+            val hasCycle = adjacencyList[course]?.any { hasCycle(it, localVisited) } ?: false
+            localVisited.remove(course)
             visited.add(course)
-            (adjacencyMap[course] ?: emptyList())
-                .takeIf { it.any { i -> !visitDFS(i, visited) } }
-                ?.let { return false }
-            result.add(course)
-            visited.remove(course)
-            return true
+            return hasCycle
         }
 
-        return if ((0..<numCourses).any { !visitDFS(it, mutableListOf()) }) intArrayOf() else result.toIntArray()
+        for (course in adjacencyList) {
+            if (visited.contains(course.key)) continue
+            val localVisited = mutableListOf<Int>()
+            if (hasCycle(course.key, localVisited)) return false
+        }
+
+        return true
+    }
+
+    // 2. Optimized DFS:
+    //      TC: O(V + E)
+    //      SC: O(V + E)
+    //      Runtime on leetcode: 17 ms
+    private fun canFinish2(prerequisites: Array<IntArray>): Boolean {
+        val adjacencyList = mutableMapOf<Int, MutableList<Int>>()
+
+        for (prerequisite in prerequisites) {
+            adjacencyList.getOrPut(prerequisite[0]) { mutableListOf() }.add(prerequisite[1])
+        }
+
+        val visited = mutableSetOf<Int>()
+        val visiting = mutableSetOf<Int>()
+        fun hasCycle(course: Int): Boolean {
+            if (course in visited) return false
+            if (course in visiting) return true
+            visiting.add(course)
+            for(next in adjacencyList[course] ?: emptyList()) {
+                if(hasCycle(next)) return true
+            }
+            visiting.remove(course)
+            visited.add(course)
+            return false
+        }
+
+        for (course in adjacencyList.keys) {
+            if (hasCycle(course)) return false
+        }
+
+        return true
     }
 }

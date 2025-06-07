@@ -1,4 +1,4 @@
-package com.random.problems.leetCode.courseSchedule
+package com.random.problems.leetCode.courseSchedule2
 
 import com.random.util.getResourceAsText
 
