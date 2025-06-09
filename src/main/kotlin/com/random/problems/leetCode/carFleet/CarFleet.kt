@@ -13,6 +13,6 @@ fun main() {
 
     input.forEach {
         val (target, position, speed) = it.first
-        it.test { Solution1().carFleet(target, position, speed) }
+        it.test { Solution2().carFleet(target, position, speed) }
     }
 }
