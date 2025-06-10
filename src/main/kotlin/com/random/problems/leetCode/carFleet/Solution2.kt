@@ -31,8 +31,8 @@ class Solution2 {
         sortedPos.sortBy { -it.first }
 
         var fleetCount = 0
-        for((pos, speed) in sortedPos) {
-            val ttf = (target.toDouble() - pos) / speed
+        for((pos, pace) in sortedPos) {
+            val ttf = (target.toDouble() - pos) / pace
             if(ttf > maxTTF) {
                 fleetCount++
                 maxTTF = ttf
