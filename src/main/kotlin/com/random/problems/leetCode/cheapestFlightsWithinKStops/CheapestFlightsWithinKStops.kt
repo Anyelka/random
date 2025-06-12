@@ -1,0 +1,28 @@
+package com.random.problems.leetCode.cheapestFlightsWithinKStops
+
+import com.random.util.test
+
+fun main() {
+    val input = listOf(
+        arrayOf(4,arrayOf(intArrayOf(0,1,100),intArrayOf(1,2,100),intArrayOf(2,0,100),intArrayOf(1,3,600),intArrayOf(2,3,200)),0,3,1) to 700,
+        arrayOf(3,arrayOf(intArrayOf(0,1,100),intArrayOf(1,2,100),intArrayOf(0,2,500)),0,2,1) to 200,
+        arrayOf(3,arrayOf(intArrayOf(0,1,100),intArrayOf(1,2,100),intArrayOf(0,2,500)),0,2,0) to 500,
+        arrayOf(4, arrayOf(intArrayOf(0,1,100), intArrayOf(0,2,200), intArrayOf(1,3,1000), intArrayOf(2,3,100)), 0, 3, 5) to 300,
+        arrayOf(4, arrayOf(intArrayOf(0,1,100), intArrayOf(0,2,200), intArrayOf(1,4,1000), intArrayOf(2,3,100), intArrayOf(3,4,100)), 0, 4, 1) to 1100,
+        arrayOf(4, arrayOf(intArrayOf(0,1,100), intArrayOf(0,2,200), intArrayOf(1,4,1000), intArrayOf(2,3,100), intArrayOf(3,4,100)), 0, 4, 2) to 400,
+        arrayOf(4, arrayOf(intArrayOf(0,1,100), intArrayOf(0,2,200), intArrayOf(1,3,1000), intArrayOf(2,3,100), intArrayOf(3,4,100)), 0, 4, 2) to 400,
+        arrayOf(4, arrayOf(intArrayOf(0,1,1),intArrayOf(0,2,5),intArrayOf(1,2,1),intArrayOf(2,3,1)),0,3,1) to 6,
+        arrayOf(5, arrayOf(intArrayOf(0,1,5),intArrayOf(1,2,5),intArrayOf(0,3,2),intArrayOf(3,1,2),intArrayOf(1,4,1),intArrayOf(4,2,1)), 0, 2, 2) to 7,
+        arrayOf(10,arrayOf(intArrayOf(3,4,4),intArrayOf(2,5,6),intArrayOf(4,7,10),intArrayOf(9,6,5),intArrayOf(7,4,4),intArrayOf(6,2,10),intArrayOf(6,8,6),intArrayOf(7,9,4),intArrayOf(1,5,4),intArrayOf(1,0,4),intArrayOf(9,7,3),intArrayOf(7,0,5),intArrayOf(6,5,8),intArrayOf(1,7,6),intArrayOf(4,0,9),intArrayOf(5,9,1),intArrayOf(8,7,3),intArrayOf(1,2,6),intArrayOf(4,1,5),intArrayOf(5,2,4),intArrayOf(1,9,1),intArrayOf(7,8,10),intArrayOf(0,4,2),intArrayOf(7,2,8)), 6, 0, 7) to 14,
+        arrayOf(17,
+            arrayOf(intArrayOf(0,12,28),intArrayOf(5,6,39),intArrayOf(8,6,59),intArrayOf(13,15,7),intArrayOf(13,12,38),intArrayOf(10,12,35),intArrayOf(15,3,23),intArrayOf(7,11,26),intArrayOf(9,4,65),intArrayOf(10,2,38),intArrayOf(4,7,7),intArrayOf(14,15,31),intArrayOf(2,12,44),intArrayOf(8,10,34),intArrayOf(13,6,29),intArrayOf(5,14,89),intArrayOf(11,16,13),intArrayOf(7,3,46),intArrayOf(10,15,19),intArrayOf(12,4,58),intArrayOf(13,16,11),intArrayOf(16,4,76),intArrayOf(2,0,12),intArrayOf(15,0,22),intArrayOf(16,12,13),intArrayOf(7,1,29),intArrayOf(7,14,100),intArrayOf(16,1,14),intArrayOf(9,6,74),intArrayOf(11,1,73),intArrayOf(2,11,60),intArrayOf(10,11,85),intArrayOf(2,5,49),intArrayOf(3,4,17),intArrayOf(4,9,77),intArrayOf(16,3,47),intArrayOf(15,6,78),intArrayOf(14,1,90),intArrayOf(10,5,95),intArrayOf(1,11,30),intArrayOf(11,0,37),intArrayOf(10,4,86),intArrayOf(0,8,57),intArrayOf(6,14,68),intArrayOf(16,8,3),intArrayOf(13,0,65),intArrayOf(2,13,6),intArrayOf(5,13,5),intArrayOf(8,11,31),intArrayOf(6,10,20),intArrayOf(6,2,33),intArrayOf(9,1,3),intArrayOf(14,9,58),intArrayOf(12,3,19),intArrayOf(11,2,74),intArrayOf(12,14,48),intArrayOf(16,11,100),intArrayOf(3,12,38),intArrayOf(12,13,77),intArrayOf(10,9,99),intArrayOf(15,13,98),intArrayOf(15,12,71),intArrayOf(1,4,28),intArrayOf(7,0,83),intArrayOf(3,5,100),intArrayOf(8,9,14),intArrayOf(15,11,57),intArrayOf(3,6,65),intArrayOf(1,3,45),intArrayOf(14,7,74),intArrayOf(2,10,39),intArrayOf(4,8,73),intArrayOf(13,5,77),intArrayOf(10,0,43),intArrayOf(12,9,92),intArrayOf(8,2,26),intArrayOf(1,7,7),intArrayOf(9,12,10),intArrayOf(13,11,64),intArrayOf(8,13,80),intArrayOf(6,12,74),intArrayOf(9,7,35),intArrayOf(0,15,48),intArrayOf(3,7,87),intArrayOf(16,9,42),intArrayOf(5,16,64),intArrayOf(4,5,65),intArrayOf(15,14,70),intArrayOf(12,0,13),intArrayOf(16,14,52),intArrayOf(3,10,80),intArrayOf(14,11,85),intArrayOf(15,2,77),intArrayOf(4,11,19),intArrayOf(2,7,49),intArrayOf(10,7,78),intArrayOf(14,6,84),intArrayOf(13,7,50),intArrayOf(11,6,75),intArrayOf(5,10,46),intArrayOf(13,8,43),intArrayOf(9,10,49),intArrayOf(7,12,64),intArrayOf(0,10,76),intArrayOf(5,9,77),intArrayOf(8,3,28),intArrayOf(11,9,28),intArrayOf(12,16,87),intArrayOf(12,6,24),intArrayOf(9,15,94),intArrayOf(5,7,77),intArrayOf(4,10,18),intArrayOf(7,2,11),intArrayOf(9,5,41)),
+        13, 4, 13) to 47,
+        arrayOf(13 , arrayOf(intArrayOf(11,12,74),intArrayOf(1,8,91),intArrayOf(4,6,13),intArrayOf(7,6,39),intArrayOf(5,12,8),intArrayOf(0,12,54),intArrayOf(8,4,32),intArrayOf(0,11,4),intArrayOf(4,0,91),intArrayOf(11,7,64),intArrayOf(6,3,88),intArrayOf(8,5,80),intArrayOf(11,10,91),intArrayOf(10,0,60),intArrayOf(8,7,92),intArrayOf(12,6,78),intArrayOf(6,2,8),intArrayOf(4,3,54),intArrayOf(3,11,76),intArrayOf(3,12,23),intArrayOf(11,6,79),intArrayOf(6,12,36),intArrayOf(2,11,100),intArrayOf(2,5,49),intArrayOf(7,0,17),intArrayOf(5,8,95),intArrayOf(3,9,98),intArrayOf(8,10,61),intArrayOf(2,12,38),intArrayOf(5,7,58),intArrayOf(9,4,37),intArrayOf(8,6,79),intArrayOf(9,0,1),intArrayOf(2,3,12),intArrayOf(7,10,7),intArrayOf(12,10,52),intArrayOf(7,2,68),intArrayOf(12,2,100),intArrayOf(6,9,53),intArrayOf(7,4,90),intArrayOf(0,5,43),intArrayOf(11,2,52),intArrayOf(11,8,50),intArrayOf(12,4,38),intArrayOf(7,9,94),intArrayOf(2,7,38),intArrayOf(3,7,88),intArrayOf(9,12,20),intArrayOf(12,0,26),intArrayOf(10,5,38),intArrayOf(12,8,50),intArrayOf(0,2,77),intArrayOf(11,0,13),intArrayOf(9,10,76),intArrayOf(2,6,67),intArrayOf(5,6,34),intArrayOf(9,7,62),intArrayOf(5,3,67)),
+        10, 1, 10) to -1
+    )
+
+    input.forEach {
+        val (n, flights, src, dst, k) = it.first
+        it.test { Solution1().findCheapestPrice(n as Int, flights as Array<IntArray>, src as Int, dst as Int, k as Int) }
+    }
+}
