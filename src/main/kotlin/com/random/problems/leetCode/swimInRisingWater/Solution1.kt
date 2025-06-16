@@ -8,7 +8,7 @@ class Solution1 {
         return swimInWater1(grid)
     }
 
-    // 1. MinHeap
+    // 1. MinHeap / Djikstra
     //  TC: O(n * m)
     //  SC: O(n * m)
     private fun swimInWater1(grid: Array<IntArray>): Int {
