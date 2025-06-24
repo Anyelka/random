@@ -1,4 +1,4 @@
-package com.random.problems.leetCode.combinationSum
+package com.random.problems.leetCode.combinationSum2
 
 class Solution2 {
     fun combinationSum2(candidates: IntArray, target: Int): List<List<Int>> {
