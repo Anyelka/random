@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('/static/fonts/PressStart2P-Regular.ttf') format('truetype'); /* Fallback */
+    font-weight: 400; /* Or 'normal'. This font typically only has one weight. */
+    font-style: normal;
+    font-display: swap; /* Improves performance by displaying text with a fallback font until it loads */
+} 

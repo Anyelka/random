@@ -1,0 +1,166 @@
+/*
+ * Print Stylesheet for the website
+ * Generated from main-qual.css
+ *
+ * This stylesheet optimizes the page for printing by:
+ * - Removing non-essential elements (nav, footer, decorative images, buttons).
+ * - Forcing a high-contrast, black-on-white color scheme to save ink.
+ * - Using a serif font for better readability on paper.
+ * - Expanding the content to use the full page width.
+ * - Preventing awkward page breaks.
+ */
+
+@media print {
+
+    /* --- GLOBAL RESETS & TYPOGRAPHY --- */
+
+    *,
+    *::before,
+    *::after {
+        /* Save ink and improve contrast by forcing black text on a white background. */
+        background: transparent !important;
+        color: black !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body {
+        font-family: 'Jost', sans-serif; 
+        font-size: 12pt;
+        line-height: 1.3;
+        margin: 0;
+        padding: 0;
+        /* Reset any layout properties that aren't relevant for print. */
+        min-height: 0;
+        display: block;
+        overflow: visible;
+    }
+
+    /* --- HIDE UNNECESSARY ELEMENTS --- */
+
+    nav,
+    footer,
+    .corner-image,
+    .hamburger-menu,
+    .copy-code-button,
+    .btn,
+    .message {
+        /* These elements are not useful on a printed page. */
+        display: none;
+    }
+
+
+    /* --- LAYOUT ADJUSTMENTS --- */
+
+    .container,
+    .narrow-text-content {
+        /* Expand content to fill the printable area of the page. */
+        max-width: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+    }
+
+    /* Remove float from user info if it exists */
+    .user-info {
+        float: none;
+    }
+    
+    /* Clearfix is not needed when floats are removed */
+    .clearfix::after {
+        content: "";
+        clear: none;
+        display: none;
+    }
+
+    /* --- CONTENT STYLING --- */
+    
+    h1, h2, h3, h4, h5, h6 {
+        /* Keep headings from being stranded at the bottom of a page. */
+        page-break-after: avoid;
+    }
+    
+    h2, h3 {
+        /* Keep the custom font for headings if desired, but remove uppercase for better readability. */
+        /* If you prefer a standard font, comment out the line below. */
+        font-family: 'Press Start 2P', sans-serif; 
+        text-transform: none;
+    }
+    
+    a {
+        text-decoration: underline;
+        color: black !important; /* Ensure links are black */
+    }
+
+    a[href]::after {
+        /* Show the URL for external links, so users know where they point. */
+        /* Ignores internal links (like #top) and javascript links. */
+        content: " (" attr(href) ")";
+    }
+
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after {
+        /* Do not show the href for internal or javascript links. */
+        content: "";
+    }
+    
+    /* --- TABLES --- */
+
+    table {
+        /* Ensure tables don't get cut off at the page edge. */
+        width: 100%;
+        page-break-inside: auto; /* Allow tables to break across pages if they are long */
+        border: 1px solid #ccc;
+    }
+
+    thead {
+        /* Repeat the table header on each new page for long tables. */
+        display: table-header-group;
+    }
+    
+    tr {
+        /* Try to keep table rows from breaking across pages. */
+        page-break-inside: avoid;
+    }
+    
+    th, td {
+        border: 1px solid #ccc;
+        padding: 6pt;
+    }
+    
+    th {
+        /* Remove background color for headers */
+        background-color: transparent;
+        font-weight: bold;
+    }
+
+    /* --- CODE BLOCKS --- */
+
+    pre,
+    .code-block-wrapper {
+        /* Ensure code wraps within the page boundaries instead of overflowing. */
+        white-space: pre-wrap !important;
+        word-wrap: break-word;
+        page-break-inside: avoid;
+        border: 1px solid #999;
+        padding: 8pt;
+    }
+
+    /* --- FORM ELEMENTS --- */
+
+    /* Hide form elements as they are not interactive on paper. */
+    .form-group input, 
+    .form-group select,
+    .regform {
+        display: none;
+    }
+
+    /* But show the labels, so the structure of the form is understood if needed. */
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+}

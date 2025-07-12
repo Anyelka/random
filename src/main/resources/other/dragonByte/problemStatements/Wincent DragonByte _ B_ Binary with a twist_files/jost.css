@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'Jost';
+  src: url('/static/fonts/Jost-VariableFont_wght.ttf') format('truetype-variations');
+  /* The 'format('truetype-variations')' is crucial for variable fonts */
+  font-weight: 100 900; /* Defines the available weight range from thin to black */
+  font-style: normal;
+  font-display: swap; /* Improves performance by displaying text with a fallback font until Jost loads */
+}
+
+@font-face {
+  font-family: 'Jost';
+  src: url('/static/fonts/Jost-Italic-VariableFont_wght.ttf') format('truetype-variations');
+  font-weight: 100 900;
+  font-style: italic; /* Specifies this is the italic version */
+  font-display: swap;
+}

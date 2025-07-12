@@ -1,0 +1,196 @@
+/* /static/mobile.css */
+/* Applies when screen width is 768px or less */
+
+/* --- Root Variables Override for Mobile (Optional) --- */
+/* If you defined --corner-image-width or --half-container-outer-width in main.css :root,
+   they are not strictly needed here if images are hidden.
+*/
+
+/* --- General Adjustments --- */
+body {
+    font-size: 15px; /* Slightly smaller base font size */
+}
+
+.container {
+    padding: 10px; /* Reduce container padding */
+    max-width: 100%; /* Allow container to use full width */
+}
+
+h1, h2 {
+    font-size: 1.5em; /* Adjust heading sizes */
+}
+
+h1, h2, h3 {
+    text-align: left;
+}
+
+h1.centered, h2.centered {
+    width: 85%; /* Allow centered headings to use more width */
+    text-align: center; /* Ensure centering if not inherited */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.narrow-text-content {
+    width: 85%; /* Make narrow text content wider on mobile */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Navigation Adjustments for Mobile --- */
+nav {
+    position: relative; /* For positioning the expanded menu and hamburger */
+    display: flex;      /* Use flex to position the hamburger */
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 0; 
+    border-bottom: 1px solid #eee; /* Keep a bottom border for the main nav bar */
+    min-height: 45px; /* Ensure nav has some height for the hamburger */
+    font-family: 'Jost', sans-serif; /* Ensure nav font is consistent if overridden elsewhere */
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Hamburger Button Styles */
+.hamburger-menu {
+    display: block; /* Show on mobile */
+    background: none;
+    border: none;
+    padding: 10px;
+    margin-left: 5px; /* MODIFIED: margin for left side */
+    cursor: pointer;
+    z-index: 1001; 
+    order: -1; /* MODIFIED: Ensure hamburger comes first in flex order if other items were in nav */
+}
+
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #162730; /* Color of the hamburger lines */
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Collapsible Links Container - Styles when hidden and when active */
+.collapsible-nav-links {
+    display: none; /* Hidden by default on mobile */
+    position: absolute; 
+    top: 100%; /* Position below the nav bar */
+    left: 0;
+    width: 100%;
+    background-color: #fff; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 1000; /* Below hamburger but above other content */
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+}
+
+.collapsible-nav-links.nav-active {
+    display: block; /* Show when active */
+}
+
+/* Style for ALL links (including Home) inside the expanded mobile menu */
+.collapsible-nav-links a { /* Target .user-info as a block too */
+    display: block;
+    text-align: left; 
+    padding: 12px 20px; /* Padding for each link */
+    margin: 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #162730;
+    text-decoration: none;
+    font-size: 0.95em; /* Slightly smaller font for menu items */
+}
+.collapsible-nav-links a:hover {
+    background-color: #f9f9f9;
+    color: #ed02e1;
+    text-decoration: none;
+}
+.collapsible-nav-links a.nogap {
+    margin-right: 0; /* Already block, so not strictly needed */
+}
+
+.collapsible-nav-links .user-info {
+    padding: 12px 20px;
+    border-bottom: none; 
+    background-color: #f8f8f8; 
+    color: #555; /* Match desktop user-info color */
+}
+/* Links *inside* user-info span */
+.collapsible-nav-links .user-info a {
+    padding: 0; 
+    margin: 0 3px; 
+    border-bottom: none;
+    background-color: transparent; 
+    display: inline; /* Make them flow inline */
+    color: #162730; /* Match nav link color */
+    text-decoration: none;
+}
+.collapsible-nav-links .user-info a:hover {
+    background-color: transparent;
+    text-decoration: underline; /* Add underline on hover for these inner links */
+    color: #ed02e1; /* Hover color */
+}
+
+/* Optional: Transform hamburger to an 'X' when active */
+.hamburger-menu.is-active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.hamburger-menu.is-active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger-menu.is-active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Ensure clearfix (if used on nav in main.css) is not applied on mobile if nav is flex */
+nav.clearfix::after {
+    content: none;
+    display: none;
+}
+
+/* --- Form Adjustments --- */
+.form-group input, 
+.form-group select,
+textarea#postal_address { /* Targeting your specific textarea in register/edit profile */
+    width: calc(100% - 20px); /* Adjust width calculation based on new padding for inputs if any */
+    padding: 8px; /* Slightly smaller padding for form elements */
+}
+.form-group label {
+    margin-bottom: 3px; /* Less space for labels */
+}
+.btn {
+    padding: 8px 12px; /* Smaller buttons */
+    font-size: 0.9em;
+}
+
+/* --- Message Banners --- */
+.message {
+    padding: 8px;
+    font-size: 0.9em;
+}
+
+/* --- Table Adjustments (Example, if needed) --- */
+/* ... */
+
+/* --- Corner Images --- */
+/* Hide corner images as soon as mobile view is active */
+.corner-image {
+    display: none !important; 
+}
+
+.container {
+    padding: 0px;
+}
+
+.splash-top {
+    display: block; /* Ensures the image behaves like a block element for layout purposes */
+    max-width: 100%; /* Crucial: Image will not exceed the width of its parent (.container) */
+    height: auto;   /* Crucial: Maintains the image's aspect ratio as it scales */
+    margin-left: auto;  /* Optional: Center the image if it's narrower than the container */
+    margin-right: auto; /* Optional: Center the image */
+}
+
+.hide-on-mobile {
+    display: none;
+}

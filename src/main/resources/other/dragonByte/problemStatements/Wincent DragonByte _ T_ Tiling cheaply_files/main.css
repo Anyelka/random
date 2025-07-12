@@ -1,0 +1,212 @@
+
+:root {
+    --corner-image-width: 760px;
+    --container-content-max-width: 1000px; 
+    --container-padding: 20px;
+    --half-container-outer-width: calc( (var(--container-content-max-width) + (2 * var(--container-padding))) / 2 );
+}
+
+body { 
+    font-family: 'Jost', sans-serif; 
+    margin: 0px;
+    background-color: #162730;
+    color: #333; 
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    min-height: 2380px; 
+    /* min-height: calc(100vh - 40px); */
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+.corner-image {
+    position: absolute;
+    width: var(--corner-image-width);
+    height: auto;
+    z-index: 1; 
+    user-select: none;
+    pointer-events: none; 
+}
+
+.corner-top-left {
+    top: 0;
+    left: calc(50% - var(--half-container-outer-width) - var(--corner-image-width));
+}
+
+.corner-top-right {
+    top: 0;
+    right: calc(50% - var(--half-container-outer-width) - var(--corner-image-width));
+}
+
+.corner-bottom-left {
+    bottom: 0;
+    left: calc(50% - var(--half-container-outer-width) - var(--corner-image-width));
+}
+
+.corner-bottom-right {
+    bottom: 0;
+    right: calc(50% - var(--half-container-outer-width) - var(--corner-image-width));
+}
+
+.container { 
+    background-color: #fff; 
+    padding: 20px; 
+    max-width: 1000px; /* Keeps the max width constraint */
+    width: 100%; /* Allow it to fill available width (within body's margins) up to max-width */
+    margin-left: auto;  /* For horizontal centering */
+    margin-right: auto; /* For horizontal centering */
+    flex-grow: 1; /* This is key: allows the container to grow and fill vertical space */
+}
+
+.narrow-text-content { 
+    width: 80%; 
+    margin: 0 auto; 
+    text-align: justify; 
+}
+.narrow-text-content h2, h3 { margin-top: 2.5em; }
+
+h2, h3 { font-family: 'Press Start 2P', sans-serif; text-transform: uppercase; }
+h2 { font-size: 120%; }
+h3 { font-size: 100%; font-weight: 400; line-height: 140%; }
+
+h1, h2 { color: #333; }
+h1.centered { width: 100%; text-align: center; }
+h2.centered { font-size: 160%; line-height: 140%; width: 80%; text-align: center; margin: 0 auto; padding-top: 20px; padding-bottom: 20px; }
+
+nav { 
+    font-family: 'Jost', sans-serif; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    padding-bottom: 10px; 
+    border-bottom: 1px solid #eee; 
+}
+
+.hamburger-menu {
+    display: none; 
+}
+
+.collapsible-nav-links {
+    display: flex; /* Use Flexbox */
+    align-items: center; /* Vertically align items */
+    /* justify-content: space-between; /* This would push groups apart */
+}
+
+.collapsible-nav-links a { 
+    margin-right: 15px; 
+    text-decoration: none; 
+    color: #162730; 
+    padding: 5px 0; /* Example padding */
+}
+.collapsible-nav-links a:hover { 
+    text-decoration: underline; 
+    color: #ed02e1; 
+}
+
+/* For right-aligned items, push them using margin-left: auto on the first one */
+.collapsible-nav-links a.nav-align-right-first {
+    margin-left: auto; /* This pushes this item and subsequent siblings to the right */
+}
+.nav-align-right-first {
+    margin-left: auto; /* This pushes this item and subsequent siblings to the right */
+}
+.collapsible-nav-links a.nav-align-right:first-of-type {
+    margin-left: auto; /* This pushes this item and subsequent siblings to the right */
+}
+/* Adjust margins for right-aligned items */
+.collapsible-nav-links a.nav-align-right {
+    margin-right: 0; /* Remove default right margin */
+    /*margin-left: 15px; /* Add left margin instead (except for the very first one handled above) */
+}
+/* Specifically the first nav-align-right item, if it's not also the very first one after margin-left: auto */
+.collapsible-nav-links a.nav-align-right:first-of-type:not(:first-child) { /* If it's the first of the right group but not the very first link */
+    margin-left: auto; /* Keep this */
+}
+.collapsible-nav-links a.nav-align-right:first-of-type { /* Overrides general margin-left:15px for the first in the right group */
+    margin-left: auto;
+}
+
+
+/* Nogap for left-aligned items */
+.collapsible-nav-links a.nogap:not(.nav-align-right) {
+    margin-right: 0;
+}
+
+/*
+nav a { margin-right: 15px; text-decoration: none; color: #162730; }
+nav a.nogap { margin-right: 0px; text-decoration: none; color: #162730; }
+nav a:hover { text-decoration: underline; color: #ed02e1; }
+*/
+nav a.join { color: #ed02e1; font-weight: 700; }
+
+.user-info { float: right; color: #555; }
+.form-group { margin-bottom: 15px; }
+.form-group label { display: block; margin-bottom: 5px; }
+.form-group input, .form-group select { width: calc(100% - 22px); padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+.btn { padding: 10px 15px; background-color: #ed02e1; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: inline-block; text-transform: uppercase; font-weight: 700; }
+.btn:hover { background-color: #b102a8; }
+.message { padding: 10px; margin-bottom: 15px; border-radius: 4px; }
+.message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+.message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.clearfix::after { content: ""; clear: both; display: table; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+th { background-color: #f0f0f0; }
+a { text-decoration: none; color: #ed02e1; }
+a:hover { text-decoration: underline; }
+.regform label { font-weight: 700; }
+.faqitem { margin-top: 2em; font-weight: 700; }
+
+footer, footer a { 
+    color: white;
+    font-weight: 600;
+    background-color: #155228; 
+    padding: 0px;
+    margin: 0px;
+    text-align: center;
+    max-width: 1040px; /* Keeps the max width constraint */
+    width: 100%; /* Allow it to fill available width (within body's margins) up to max-width */
+    margin-left: auto;  /* For horizontal centering */
+    margin-right: auto; /* For horizontal centering */
+}
+footer a p { margin-top: 5px; margin-bottom: 5px; }
+
+/* The wrapper div that contains the pre tag and the button */
+.code-block-wrapper {
+    position: relative;
+}
+
+/* Your existing styles for <pre> can remain, just ensure it doesn't have position:relative */
+pre {
+    border: solid thin black;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+/* Styling for the copy button */
+.copy-code-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Show the button when hovering over the WRAPPER */
+.code-block-wrapper:hover .copy-code-button {
+    opacity: 1;
+}
+
+#problem_statement h2, #problem_statement h3 { font-family: 'Jost', sans-serif; text-transform: none; }
+table.io td { vertical-align: top; }
+
+#scoreboard td, #scoreboard th { text-align: right; }
+#scoreboard td.text, #scoreboard th.text { text-align: left; }
+
