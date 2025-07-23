@@ -29,6 +29,28 @@ fun convertArrayToTreeNode(array: Array<Int?>): TreeNode? {
     return root
 }
 
+fun convertTreeNodeToArray(root: TreeNode?): Array<Int?> {
+    if(root == null) return arrayOf()
+
+    val result = mutableListOf<Int?>()
+
+    val queue = ArrayDeque<TreeNode?>().also { it.add(root) }
+
+    while(queue.isNotEmpty()) {
+        val node = queue.removeFirst()
+        result.add(node?.`val`)
+        if(node != null) {
+            queue.add(node.left)
+            queue.add(node.right)
+        }
+    }
+
+    var i = result.lastIndex
+    while(result[i] == null) i--
+
+    return result.take(i+1).toTypedArray()
+}
+
 fun convertBack(root: ListNode?): IntArray {
     var current = root
     val list = mutableListOf<Int>()

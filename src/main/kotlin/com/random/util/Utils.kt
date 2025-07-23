@@ -142,7 +142,7 @@ fun Pair<Any, Any>.testWithoutPrintInput(method: (Any) -> Any) {
     println("Result is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
 }
 
-private fun <T> format(value: T): String =
+fun <T> format(value: T): String =
     when (value) {
         is Array<*> -> shortFormatArrayIfNeeded(value)
         is IntArray -> shortFormatArrayIfNeeded(value.toTypedArray())
