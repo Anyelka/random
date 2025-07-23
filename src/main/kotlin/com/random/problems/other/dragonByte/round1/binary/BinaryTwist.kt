@@ -1,10 +1,10 @@
-package com.random.problems.other.dragonByte.binary
+package com.random.problems.other.dragonByte.round1.binary
 
 import java.nio.file.Files
 import java.nio.file.Paths
 import kotlin.math.sqrt
 
-const val directory = "/other/dragonByte/binary"
+const val directory = "/other/dragonByte/round1/binary"
 
 fun getResourceAsText(path: String): String? =
     object {}.javaClass.getResource(path)?.readText()

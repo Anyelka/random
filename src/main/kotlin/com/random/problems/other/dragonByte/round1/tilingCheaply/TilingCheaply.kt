@@ -1,9 +1,9 @@
-package com.random.problems.other.dragonByte.tilingCheaply
+package com.random.problems.other.dragonByte.round1.tilingCheaply
 
 import java.nio.file.Files
 import java.nio.file.Paths
 
-const val directory = "/other/dragonByte/tilingCheaply"
+const val directory = "/other/dragonByte/round1/tilingCheaply"
 
 fun getResourceAsText(path: String): String? =
     object {}.javaClass.getResource(path)?.readText()
@@ -20,7 +20,7 @@ private fun solve(filename: String) {
 }
 
 private fun getInputTestCases(filename: String) =
-    getResourceAsText("${directory}/$filename.in")!!
+    getResourceAsText("$directory/$filename.in")!!
         .lines().drop(1).filter { it.isNotEmpty() }.map { it.toInt() }
 
 fun solve(n: Int): Array<CharArray>? {

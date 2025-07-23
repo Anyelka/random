@@ -1,10 +1,10 @@
-package com.random.problems.other.dragonByte.numberPairs
+package com.random.problems.other.dragonByte.round1.numberPairs
 
 import java.math.BigInteger
 import java.nio.file.Files
 import java.nio.file.Paths
 
-const val directory = "/other/dragonByte/numberPairs"
+const val directory = "/other/dragonByte/round1/numberPairs"
 
 fun getResourceAsText(path: String): String? =
     object {}.javaClass.getResource(path)?.readText()

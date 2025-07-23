@@ -44,7 +44,7 @@ fun collectPows(number: Int, remainingSum: Int, power: Int, previousPows: Mutabl
     collectPows(number + 1, remainingSum, power, previousPows, collectedPows)
 }
 
-fun Double.pow(power: Double): Double {
+private fun Double.pow(power: Double): Double {
     if(power == 0.0) {
         return 1.0
     }
