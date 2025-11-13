@@ -1,0 +1,21 @@
+package com.random.problems.leetCode.largestMultipleOfThree
+
+import com.random.util.test
+
+fun main() {
+    val input = listOf(
+        intArrayOf(8,1,9) to "981",
+        intArrayOf(8,6,7,1,0) to "8760",
+        intArrayOf(1) to "",
+        intArrayOf(8,6,7,5,3,4) to "876543",
+        intArrayOf(8,6,7,5,4,4) to "87654",
+        intArrayOf(8,1,4) to "84",
+        intArrayOf(4,3,1,8,7) to "7431"
+    )
+
+    input.forEach {
+        val digits = it.first
+        it.test { Solution1().largestMultipleOfThree(digits) }
+    }
+
+}
