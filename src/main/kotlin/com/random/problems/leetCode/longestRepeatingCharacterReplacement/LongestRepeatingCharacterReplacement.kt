@@ -13,11 +13,12 @@ fun main() {
         ("ABBB" to 2) to 4,
         ("KRSCDCSONAJNHLBMDQGIFCPEKPOHQIHLTDIQGEKLRLCQNBOHNDQGHJPNDQPERNFSSSRDEQLFPCCCARFMDLHADJADAGNNSBNCJQOF" to 4) to 7,
         ("BAAAB" to 2) to 5,
-        ("BAAA" to 1) to 4
+        ("BAAA" to 1) to 4,
+        ("AAAA" to 0) to 4
     )
 
     input.forEach {
         val (s, k) = it.first
-        it.test { Solution1().characterReplacement(s, k) }
+        it.test { Solution2().characterReplacement(s, k) }
     }
 }
