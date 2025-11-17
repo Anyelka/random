@@ -1,6 +1,5 @@
 package com.random.util
 
-import com.random.problems.leetCode.reverseLinkedList.Solution1
 import kotlin.math.pow
 
 fun getResourceAsText(path: String): String? =
@@ -39,10 +38,14 @@ operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> = first 
 fun Pair<Int, Int>.isIn(board: Array<CharArray>) =
     first < board.size && second < board[0].size && first >= 0 && second >= 0
 
-const val SHORT_FORMAT_THRESHOLD = 25
+const val SHORT_FORMAT_ARRAY_THRESHOLD = 25
+
+const val SHORT_FORMAT_STRING_THRESHOLD = 100
+
+fun shortFormatStringIfNeeded(string: String) = if(string.length > SHORT_FORMAT_STRING_THRESHOLD) (string.take(SHORT_FORMAT_STRING_THRESHOLD) + "...") else string
 
 fun <T> shortFormatArrayIfNeeded(array: Array<T>) =
-    if (array.size > SHORT_FORMAT_THRESHOLD) shortFormatArray(array) else "[${array.joinToString(", ") { format(it) }}]"
+    if (array.size > SHORT_FORMAT_ARRAY_THRESHOLD) shortFormatArray(array) else "[${array.joinToString(", ") { format(it) }}]"
 
 fun shortFormatArrayIfNeeded(array: IntArray) = shortFormatArrayIfNeeded(array.toTypedArray())
 fun shortFormatArrayIfNeeded(array: CharArray) = shortFormatArrayIfNeeded(array.toTypedArray())
@@ -150,6 +153,7 @@ fun <T> format(value: T): String =
         is Pair<*, *> -> (format(value.first!!) to format(value.second!!)).toString()
         is Triple<*, *, *> -> "(${format(value.first)}, ${format(value.second)}, ${format(value.third)})"
         is List<*> -> shortFormatArrayIfNeeded(value.toTypedArray())
+        is String -> shortFormatStringIfNeeded(value.toString())
         else -> value.toString()
     }
 

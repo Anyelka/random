@@ -15,6 +15,8 @@ class Solution1 {
 
         // TC: O(n ^ 2)
 
+        // TOO SLOW
+
         var result = 0
         for(i in 0..s.lastIndex) {
             var zeros = 0
@@ -31,15 +33,18 @@ class Solution1 {
         return result
     }
 
+    //
+    //  TC: O(n * sqrt(n))
+    //  SC: O(n)
     fun numberOfSubstrings2(s: String): Int {
         val n = s.length
         val nextZeros = IntArray(n)
         var prevZero = n
         for(i in s.lastIndex downTo 0) {
-            if(i < s.lastIndex && s[i + 1] == '0') {
-                prevZero = i + 1
-            }
             nextZeros[i] = prevZero
+            if(s[i] == '0') {
+                prevZero = i
+            }
         }
 
         var result = 0
@@ -49,7 +54,6 @@ class Solution1 {
             var r = l
 
             while(zeroes * zeroes <= n) {
-                //val nextZero = nextZeros[r]
                 val nextZero = if(r < n) nextZeros[r] else n
                 val ones = (nextZero - l) - zeroes
                 if(ones >= zeroes * zeroes) {
