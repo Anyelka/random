@@ -12,6 +12,6 @@ fun main() {
 
     input.forEach {
         val tokens = it.first
-        it.test { Solution1().evalRPN(tokens) }
+        it.test { Solution2().evalRPN(tokens) }
     }
 }

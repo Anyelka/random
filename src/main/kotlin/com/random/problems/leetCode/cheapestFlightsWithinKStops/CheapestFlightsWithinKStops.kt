@@ -23,6 +23,6 @@ fun main() {
 
     input.forEach {
         val (n, flights, src, dst, k) = it.first
-        it.test { Solution1().findCheapestPrice(n as Int, flights as Array<IntArray>, src as Int, dst as Int, k as Int) }
+        it.test { Solution2().findCheapestPrice(n as Int, flights as Array<IntArray>, src as Int, dst as Int, k as Int) }
     }
 }
