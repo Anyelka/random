@@ -15,6 +15,6 @@ fun main() {
 
     input.forEach {
         val nums = it.first
-        it.test { Solution1().maxSubArray(nums) }
+        it.test { Solution2().maxSubArray(nums) }
     }
 }
