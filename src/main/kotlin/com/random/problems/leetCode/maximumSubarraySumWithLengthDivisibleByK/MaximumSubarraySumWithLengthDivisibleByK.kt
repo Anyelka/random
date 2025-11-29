@@ -12,6 +12,7 @@ fun main() {
         (intArrayOf(-1,-2,-3,-4,-5) to 4) to -10,
         (intArrayOf(-5,1,2,-3,4) to 2) to 4,
         (intArrayOf(-5,1,2,-3,-4) to 2) to 3,
+        (intArrayOf(-8) to 1) to -8,
         getBigInput1(),
         getBigInput2(),
         getTestCase655()
@@ -19,7 +20,7 @@ fun main() {
 
     input.forEach {
         val (nums, k) = it.first
-        (it.first to it.second.toLong()).test { Solution1().maxSubarraySum(nums, k) }
+        (it.first to it.second.toLong()).test { Solution2().maxSubarraySum(nums, k) }
     }
 
 }
