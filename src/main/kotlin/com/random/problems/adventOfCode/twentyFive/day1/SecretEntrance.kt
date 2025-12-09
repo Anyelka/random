@@ -10,6 +10,7 @@ fun main() {
 
     val timeTaken = measureTime {
         println("AOC day 1 - Part 1 solution: ${Part1.getZeroCount(lines)}")
+        println("AOC day 1 - Part 2 solution: ${Part2.getZeroCount(lines)}")
     }
     println("       -> Time taken: $timeTaken")
 }
@@ -21,16 +22,31 @@ object Part1 {
         var i = STARTING_POINT
         var result = 0
         for(line in lines) {
-            i = i.getNext(line)
+            val direction = line[0]
+            val value = line.substring(1).toInt()
+            val diff = if(direction == 'L') - value else value
+            i = (i + diff) % 100
             if(i == 0) result++
         }
         return result
     }
+}
 
-    private fun Int.getNext(line: String): Int {
-        val direction = line[0]
-        val value = line.substring(1).toInt()
-        val diff = if(direction == 'L') - value else value
-        return (this + diff) % 100
+object Part2 {
+    fun getZeroCount(lines: List<String>): Int {
+        var i = STARTING_POINT
+        var result = 0
+        for(line in lines) {
+            val operation: (Int,Int) -> Int = if(line[0]  == 'L') Int::minus else Int::plus
+            val revOp: (Int,Int) -> Int = if(line[0]  == 'R') Int::minus else Int::plus
+            var value = operation(0,line.substring(1).toInt())
+            while (value != 0) {
+                i = operation(i,1)
+                value = revOp(value, 1)
+                i %= 100
+                if(i == 0) result++
+            }
+        }
+        return result
     }
 }
