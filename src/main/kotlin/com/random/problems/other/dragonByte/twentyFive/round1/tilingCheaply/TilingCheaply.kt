@@ -1,9 +1,9 @@
-package com.random.problems.other.dragonByte.round1.tilingCheaply
+package com.random.problems.other.dragonByte.twentyFive.round1.tilingCheaply
 
 import java.nio.file.Files
 import java.nio.file.Paths
 
-const val directory = "/other/dragonByte/round1/tilingCheaply"
+const val directory = "/other/dragonByte/twentyFive/round1/tilingCheaply"
 
 fun getResourceAsText(path: String): String? =
     object {}.javaClass.getResource(path)?.readText()

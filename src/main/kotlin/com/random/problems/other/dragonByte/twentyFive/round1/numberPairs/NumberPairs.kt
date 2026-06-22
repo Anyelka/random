@@ -1,17 +1,17 @@
-package com.random.problems.other.dragonByte.round1.numberPairs
+package com.random.problems.other.dragonByte.twentyFive.round1.numberPairs
 
 import java.math.BigInteger
 import java.nio.file.Files
 import java.nio.file.Paths
 
-const val directory = "/other/dragonByte/round1/numberPairs"
+const val directory = "/other/dragonByte/twentyFive/round1/numberPairs"
 
 fun getResourceAsText(path: String): String? =
     object {}.javaClass.getResource(path)?.readText()
 
 fun main() {
-    //listOf("N1", "N2").forEach { test(it) }
-    solve("N3")
+    listOf("N1", "N2").forEach { test(it) }
+    //solve("N3")
 }
 
 private fun test(filename: String) {

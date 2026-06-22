@@ -1,4 +1,4 @@
-package com.random.problems.other.dragonByte.round1.numberPairs
+package com.random.problems.other.dragonByte.twentyFive.round1.numberPairs
 
 class Solution {
     fun solve(n: Long): String {

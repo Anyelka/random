@@ -1,10 +1,10 @@
-package com.random.problems.other.dragonByte.round2.heap
+package com.random.problems.other.dragonByte.twentyFive.round2.heap
 
-import com.random.problems.other.dragonByte.round1.numberPairs.Solution
+import com.random.problems.other.dragonByte.twentyFive.round1.numberPairs.Solution
 import java.nio.file.Files
 import java.nio.file.Paths
 
-const val directory = "/other/dragonByte/round2/heap"
+const val directory = "/other/dragonByte/twentyFive/heap"
 
 fun main() {
     test("H0")

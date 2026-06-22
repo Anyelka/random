@@ -1,6 +1,6 @@
 package com.random.problems.adventOfCode.twentyFive.day1
 
-import com.random.problems.other.dragonByte.round1.binary.getResourceAsText
+import com.random.problems.other.dragonByte.twentyFive.round1.binary.getResourceAsText
 import kotlin.time.measureTime
 
 const val FILE_PATH = "/adventOfCode/2025/day1/TestCase1"
