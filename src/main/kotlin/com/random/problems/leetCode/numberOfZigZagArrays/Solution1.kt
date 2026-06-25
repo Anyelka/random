@@ -1,15 +1,13 @@
 package com.random.problems.leetCode.numberOfZigZagArrays
 
 import com.random.util.pow
-import java.math.BigInteger
 
 class Solution1 {
     fun zigZagArrays(n: Int, l: Int, r: Int): Int {
-        return zigZagArrays1(n, l, r)
+        return zigZagArrays2(n, l, r)
     }
 
     val modulo = (10.pow(9) + 7).toLong()
-
 
     // 1. Memoization
     fun zigZagArrays1(n: Int, l: Int, r: Int): Int {
@@ -37,6 +35,34 @@ class Solution1 {
     private fun strictlyIncreasingOrDecreasing(num1: Int?, num2: Int?, num3: Int): Boolean {
         if(num1 == null || num2 == null) return false
         return (num1 < num2) == (num2 < num3)
+    }
+
+
+    // 2. Bottom-up DP with prefix-sum optimization
+    fun zigZagArrays2(n: Int, l: Int, r: Int): Int {
+        val m = r - l
+        val dp = Array(n) { LongArray(m + 1) { 0 } }
+
+        for(i in 0..m) {
+            dp[0][i] = 1
+        }
+
+        for(i in 1..<n) {
+            var prefix = 0L
+            if(i % 2 == 1) {
+                for(j in 0..m) {
+                    dp[i][j] = prefix
+                    prefix = (prefix + dp[i-1][j]) % modulo
+                }
+            } else {
+                for(j in m downTo 0) {
+                    dp[i][j] = prefix
+                    prefix = (prefix + dp[i-1][j]) % modulo
+                }
+            }
+        }
+
+        return ((dp[n-1].sum() * 2) % modulo).toInt()
     }
 
 }
