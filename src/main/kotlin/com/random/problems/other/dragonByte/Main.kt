@@ -1,20 +1,12 @@
 package com.random.problems.other.dragonByte
 
-import com.random.problems.other.dragonByte.twentySix.round1.kitchenDutyRoster.KitchenDutyRoster
-import com.random.problems.other.dragonByte.twentySix.round1.subtractFirstDigit.SubtractFirstDigit
-import com.random.problems.other.dragonByte.twentySix.round1.waterSlides.WaterSlides
+import com.random.problems.other.dragonByte.twentySix.round2.betterDataTransfer.BetterDataTransfer
 
-val subtractFirstDigit = SubtractFirstDigit()
-val kitchenDutyRoster = KitchenDutyRoster()
-val waterSlides = WaterSlides()
+val betterDataTransfer = BetterDataTransfer()
 
 fun main() {
-    /*subtractFirstDigit.test("S0_1", "S1", "S0_2", "S2")
-    subtractFirstDigit.solve("S00")*/
-
-    /*kitchenDutyRoster.test("K1", "K2", "K3")
-    kitchenDutyRoster.solve("K5")*/
-
-    waterSlides.test("W1")
-    waterSlides.solveAndTestWithChecker("W1", "W2")
+    //betterDataTransfer.test("B0")
+    betterDataTransfer.solve("B00")
+    betterDataTransfer.solve("B0")
+    betterDataTransfer.solve("B1")
 }
