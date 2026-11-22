@@ -1,6 +1,7 @@
 package com.random.util
 
 import kotlin.math.pow
+import kotlin.system.measureTimeMillis
 
 fun getResourceAsText(path: String): String? =
     object {}.javaClass.getResource(path)?.readText()
@@ -97,6 +98,20 @@ private fun expectedStringFromArrayOfCharArrays(areEqual: Boolean, expected: Arr
 fun Pair<Any, Any>.test(method: (Any) -> Any) {
     val result = method { first }
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpected(result, second)}")
+}
+
+fun Pair<Any, Any>.testWithMeasuredTime(method: (Any) -> Any) {
+    var result: Any? = null
+
+    val elapsedMs = measureTimeMillis {
+        result = method(first)
+    }
+
+    println(
+        "Result for ${format(first)} is: ${format(result)} - " +
+                "${isCorrectStringWithExpected(result!!, second)} " +
+                "(${elapsedMs} ms)"
+    )
 }
 
 fun Pair<Any, Any>.testInPlace(method: (Any) -> Unit) {
