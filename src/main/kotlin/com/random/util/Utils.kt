@@ -137,6 +137,20 @@ fun <T> Pair<Any, List<T>>.testWithSet(method: (Any) -> List<T>) {
     println("Result for ${format(first)} is: ${format(result)} - ${isCorrectStringWithExpectedWithSet(result, second)}")
 }
 
+fun <T> Pair<Any, List<T>>.testWitSetAndhMeasuredTime(method: (Any) -> List<T>) {
+    var result: List<T>? = null
+
+    val elapsedMs = measureTimeMillis {
+        result = method(first)
+    }
+
+    println(
+        "Result for ${format(first)} is: ${format(result)} - " +
+                "${isCorrectStringWithExpectedWithSet(result!!, second)} " +
+                "(${elapsedMs} ms)"
+    )
+}
+
 fun <T> Pair<Any, List<List<T>>>.testWithSetOfSets(method: (Any) -> List<List<T>>) {
     val result = method { first }
     println(

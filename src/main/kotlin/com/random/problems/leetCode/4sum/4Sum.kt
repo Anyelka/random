@@ -1,5 +1,6 @@
 package com.random.problems.leetCode.`4sum`
 
+import com.random.util.testWitSetAndhMeasuredTime
 import com.random.util.testWithSet
 
 fun main() {
@@ -16,7 +17,7 @@ fun main() {
 
     input.forEach {
         val (nums, target) = it.first
-        it.testWithSet { Solution1().fourSum(nums, target) }
+        it.testWitSetAndhMeasuredTime { Solution2().fourSum(nums, target) }
     }
 
 }
