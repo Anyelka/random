@@ -141,10 +141,11 @@ class Solution1 {
         return maxOf(maxLength, currentLength)
     }
 
-    fun maxSelectedElements2(nums: IntArray): Int {
+    fun maxSelectedElements3(nums: IntArray): Int {
         val sorted = nums.sorted()
 
-        [1,1,1,2,5]
-        [1,1,2,3,5]
+        /*[1,1,1,2,5]
+        [1,1,2,3,5]*/
+        return 0
     }
 }
