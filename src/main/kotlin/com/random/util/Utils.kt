@@ -39,7 +39,7 @@ operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> = first 
 fun Pair<Int, Int>.isIn(board: Array<CharArray>) =
     first < board.size && second < board[0].size && first >= 0 && second >= 0
 
-const val SHORT_FORMAT_ARRAY_THRESHOLD = 5
+const val SHORT_FORMAT_ARRAY_THRESHOLD = 25
 
 const val SHORT_FORMAT_STRING_THRESHOLD = 100
 
