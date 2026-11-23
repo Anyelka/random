@@ -39,7 +39,7 @@ operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> = first 
 fun Pair<Int, Int>.isIn(board: Array<CharArray>) =
     first < board.size && second < board[0].size && first >= 0 && second >= 0
 
-const val SHORT_FORMAT_ARRAY_THRESHOLD = 25
+const val SHORT_FORMAT_ARRAY_THRESHOLD = 5
 
 const val SHORT_FORMAT_STRING_THRESHOLD = 100
 
@@ -182,6 +182,7 @@ fun <T> format(value: T): String =
         is Pair<*, *> -> (format(value.first!!) to format(value.second!!)).toString()
         is Triple<*, *, *> -> "(${format(value.first)}, ${format(value.second)}, ${format(value.third)})"
         is List<*> -> shortFormatArrayIfNeeded(value.toTypedArray())
+        is Set<*> -> shortFormatArrayIfNeeded(value.toTypedArray())
         is String -> shortFormatStringIfNeeded(value.toString())
         else -> value.toString()
     }

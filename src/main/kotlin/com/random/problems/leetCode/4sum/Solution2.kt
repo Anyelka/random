@@ -3,7 +3,7 @@ package com.random.problems.leetCode.`4sum`
 class Solution2 {
     fun fourSum(nums: IntArray, target: Int): List<List<Int>> {
         val sortedNums = nums.sorted()
-        return fourSumSorted(sortedNums, target)
+        return nSumSorted(sortedNums, target.toLong(), 4, -1)
     }
 
     fun fourSumSorted(nums: List<Int>, target: Int): List<List<Int>> {
@@ -49,5 +49,21 @@ class Solution2 {
             }
         }
         return results
+    }
+
+    // General N-SUM
+    fun nSumSorted(nums: List<Int>, target: Long, n: Int, prevIndex: Int): List<List<Int>> {
+        if(n == 2) return twoSumImproved(nums, target, prevIndex).toList()
+
+        val results = mutableSetOf<List<Int>>()
+        for(i in (prevIndex + 1)..nums.lastIndex) {
+            val current = nums[i]
+            val nextTarget = target - current
+            val nextSubsets = nSumSorted(nums, nextTarget, n-1, i)
+            results.addAll(
+                nextSubsets.map { listOf(current) + it}
+            )
+        }
+        return results.toList()
     }
 }

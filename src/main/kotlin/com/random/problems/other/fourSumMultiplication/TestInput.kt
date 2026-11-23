@@ -85,7 +85,7 @@ private fun getInput(filePath: String) =
     getResourceAsText("${filePath}_in")!!.toIntArray() to getResourceAsText("${filePath}_out")!!.toListOfIntLists()
 
 private fun String.toListOfIntLists() = this.split("],").map {
-    it.split(",").map { i -> i.stripParentheses().strip().toInt() }.toList()
+    it.split(",").map { i -> i.stripParentheses().toInt() }.toList()
 }.toList()
 
 private fun String.toIntArray() = this.stripParentheses().split(",").map { it.toInt() }.toIntArray()
