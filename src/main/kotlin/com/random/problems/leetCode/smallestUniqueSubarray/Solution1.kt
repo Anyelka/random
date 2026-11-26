@@ -2,7 +2,7 @@ package com.random.problems.leetCode.smallestUniqueSubarray
 
 class Solution1 {
     fun smallestUniqueSubarray(nums: IntArray): Int {
-        return smallestUniqueSubarray4(nums)
+        return smallestUniqueSubarray5(nums)
     }
 
     // 1. Brute force
